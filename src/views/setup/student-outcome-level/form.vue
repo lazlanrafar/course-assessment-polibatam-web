@@ -131,7 +131,7 @@ export default {
             }
           });
         } else {
-          this.$store.dispatch("CreateStudentOutcome").then((res) => {
+          this.$store.dispatch("CreateStudentOutcomeLevel").then((res) => {
             if (res) {
               this.handleClose();
             }
