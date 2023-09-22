@@ -107,7 +107,6 @@ const assessmentMethod = {
         });
 
         context.state.form = {
-          code: result.data.data.code,
           title: result.data.data.title,
         };
       } catch (error) {
