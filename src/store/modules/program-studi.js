@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  code: "",
+  id_jurusan: "",
   title: "",
 };
 
@@ -18,6 +18,7 @@ const programStudi = {
       search: "",
     },
     reports: [],
+    list_jurusan: [],
     form: { ...form },
     isUpdate: false,
   },
@@ -30,6 +31,9 @@ const programStudi = {
     },
     SET_REPORTS_PROGRAM_STUDI(state, payload) {
       state.reports = payload;
+    },
+    SET_LIST_JURUSAN_PROGRAM_STUDI(state, payload) {
+      state.list_jurusan = payload;
     },
     SET_FORM_PROGRAM_STUDI(state, payload) {
       state.form[payload.key] = payload.value;
@@ -54,6 +58,23 @@ const programStudi = {
         });
 
         context.commit("SET_REPORTS_PROGRAM_STUDI", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_PROGRAM_STUDI", false);
+      }
+    },
+    async FetchBeforeFormProgramStudi(context) {
+      context.commit("SET_IS_LOADING_PROGRAM_STUDI", true);
+      try {
+        const jurusan = await axios({
+          url: `${apiUrl}/program-studi/jurusan`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_JURUSAN_PROGRAM_STUDI", jurusan.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {

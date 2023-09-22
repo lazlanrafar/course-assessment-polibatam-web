@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Student Outcomes (SOs)</h3>
+          <h3 class="card-title fw-medium">Form Program Studi</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
@@ -13,27 +13,30 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12">
-            <v-text-field
-              label="Code"
+            <v-select
+              :items="list_jurusan"
+              item-text="title"
+              item-value="id"
+              label="Jurusan"
               dense
               outlined
-              v-model="code"
+              v-model="id_jurusan"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Code');
+                  return genericRequiredRule(value, 'Jurusan');
                 },
               ]"
             />
           </div>
           <div class="col-12">
-            <v-textarea
-              label="Description"
+            <v-text-field
+              label="Program Studi"
               dense
               outlined
               v-model="title"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Description');
+                  return genericRequiredRule(value, 'Program Studi');
                 },
               ]"
             />
@@ -54,35 +57,38 @@
 import validationRules from "@/mixins/validation-rules";
 
 export default {
-  name: "StudentOutcomeForm",
+  name: "ProgramStudiForm",
   mixins: [validationRules],
   data() {
     return {};
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.programStudi.isLoading;
     },
     isUpdate() {
-      return this.$store.state.studentOutcome.isUpdate;
+      return this.$store.state.programStudi.isUpdate;
     },
-    code: {
+    list_jurusan() {
+      return this.$store.state.programStudi.list_jurusan;
+    },
+    id_jurusan: {
       get() {
-        return this.$store.state.studentOutcome.form.code;
+        return this.$store.state.programStudi.form.id_jurusan;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
-          key: "code",
+        this.$store.commit("SET_FORM_PROGRAM_STUDI", {
+          key: "id_jurusan",
           value,
         });
       },
     },
     title: {
       get() {
-        return this.$store.state.studentOutcome.form.title;
+        return this.$store.state.programStudi.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
+        this.$store.commit("SET_FORM_PROGRAM_STUDI", {
           key: "title",
           value,
         });
@@ -92,21 +98,21 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_STUDENT_OUTCOME");
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", false);
+      this.$store.commit("RESET_FORM_PROGRAM_STUDI");
+      this.$store.commit("SET_IS_UPDATE_PROGRAM_STUDI", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateStudentOutcome", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateprogramStudi", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateStudentOutcome").then((res) => {
+          this.$store.dispatch("CreateprogramStudi").then((res) => {
             if (res) {
               this.handleClose();
             }
