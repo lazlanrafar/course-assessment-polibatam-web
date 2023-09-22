@@ -42,6 +42,13 @@ const sidebar_menus = [
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
   },
+  {
+    title: "Program Studi",
+    icon: "fa-solid fa-building",
+    link: "/program-studi",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
 ];
 
 export default sidebar_menus;
