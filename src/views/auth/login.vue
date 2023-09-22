@@ -10,13 +10,13 @@
         <v-form ref="initialReport" @submit.prevent="handleSubmit">
           <div class="">
             <v-text-field
-              label="username/email address"
-              v-model="uid"
+              label="username"
+              v-model="username"
               dense
               outlined
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'username/email address');
+                  return genericRequiredRule(value, 'username');
                 },
               ]"
             />
@@ -49,10 +49,56 @@
 </template>
 
 <script>
+import validationRules from "@/mixins/validation-rules";
+
 export default {
   name: "LoginPage",
+  mixins: [validationRules],
   components: {
     LayoutAuth: () => import("@/layouts/layout-auth.vue"),
+  },
+  data() {
+    return {
+      showPassword: false,
+    };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.app.isLoading;
+    },
+    username: {
+      get() {
+        return this.$store.state.app.login.username;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_LOGIN_APP", {
+          key: "username",
+          value,
+        });
+      },
+    },
+    password: {
+      get() {
+        return this.$store.state.app.login.password;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_LOGIN_APP", {
+          key: "password",
+          value,
+        });
+      },
+    },
+  },
+  methods: {
+    handleSubmit() {
+      if (this.$refs.initialReport.validate()) {
+        this.$store.dispatch("Login").then((response) => {
+          if (response) {
+            this.$router.push({ path: "/" });
+          }
+        });
+      }
+    },
   },
 };
 </script>
