@@ -5,8 +5,9 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  code: "",
+  level: "",
   title: "",
+  description: "",
 };
 
 const studentOutcomeLevel = {

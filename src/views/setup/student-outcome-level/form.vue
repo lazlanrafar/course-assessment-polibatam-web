@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Student Outcomes (SOs)</h3>
+          <h3 class="card-title fw-medium">Form Support Level to SO</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
@@ -14,13 +14,27 @@
         <div class="row">
           <div class="col-12">
             <v-text-field
-              label="Code"
+              label="Level"
               dense
               outlined
-              v-model="code"
+              v-model="level"
+              type="number"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Code');
+                  return genericRequiredRule(value, 'Level');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-text-field
+              label="Title"
+              dense
+              outlined
+              v-model="title"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Title');
                 },
               ]"
             />
@@ -30,7 +44,7 @@
               label="Description"
               dense
               outlined
-              v-model="title"
+              v-model="description"
               :rules="[
                 (value) => {
                   return genericRequiredRule(value, 'Description');
@@ -61,29 +75,40 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.studentOutcomeLevel.isLoading;
     },
     isUpdate() {
-      return this.$store.state.studentOutcome.isUpdate;
+      return this.$store.state.studentOutcomeLevel.isUpdate;
     },
-    code: {
+    level: {
       get() {
-        return this.$store.state.studentOutcome.form.code;
+        return this.$store.state.studentOutcomeLevel.form.level;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
-          key: "code",
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
+          key: "level",
           value,
         });
       },
     },
     title: {
       get() {
-        return this.$store.state.studentOutcome.form.title;
+        return this.$store.state.studentOutcomeLevel.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
           key: "title",
+          value,
+        });
+      },
+    },
+    description: {
+      get() {
+        return this.$store.state.studentOutcomeLevel.form.description;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
+          key: "description",
           value,
         });
       },
@@ -92,8 +117,8 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_STUDENT_OUTCOME");
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", false);
+      this.$store.commit("RESET_FORM_STUDENT_OUTCOME_LEVEL");
+      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME_LEVEL", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
