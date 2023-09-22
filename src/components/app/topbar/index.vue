@@ -16,12 +16,10 @@
             alt="User Image"
           />
           <span class="hidden-xs fw-medium" style="color: black">
-            <!-- {{ user.name }} -->
-            Udin
+            {{ user.nama }}
           </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <div class="dropdown-divider"></div>
           <button class="dropdown-item text-danger" @click="handleLogout()">
             <i class="fas fa-sign-out-alt mr-2"></i> Logout
           </button>
