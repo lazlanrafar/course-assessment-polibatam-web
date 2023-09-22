@@ -136,6 +136,38 @@ const rubrik = {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
+    async UpdateRubrik(context, id) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/rubrik/${id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetRubrik");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
   },
 };
 
