@@ -129,7 +129,7 @@ const programStudi = {
         });
 
         context.state.form = {
-          code: result.data.data.code,
+          id_jurusan: result.data.data.id_jurusan,
           title: result.data.data.title,
         };
       } catch (error) {
