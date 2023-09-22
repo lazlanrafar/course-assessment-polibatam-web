@@ -1,20 +1,33 @@
 <template>
   <div id="app">
-    <layout-app>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem placeat, molestiae architecto perspiciatis at
-        voluptatibus sed iusto. Fugiat at, quod, illum voluptatem excepturi neque assumenda, ea est iure amet officiis!
-      </p>
-    </layout-app>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  components: {
-    layoutApp: () => import("@/layouts/layout-app.vue"),
-    // layoutAuth: () => import("@/layouts/layout-auth.vue"),
-  },
   name: "App",
+  components: {},
+  computed: {
+    token() {
+      return this.$store.state.app.token;
+    },
+  },
+  created() {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+
+    if (token) {
+      this.$store.commit("SET_TOKEN_APP", token);
+      this.$store.commit("SET_USER_APP", JSON.parse(user));
+    }
+  },
+  mounted() {
+    localStorage.setItem("AdminLTE:IFrame:Options", JSON.stringify({ autoIframeMode: false, autoItemActive: false }));
+  },
 };
 </script>
+
+<style>
+@import "@/assets/scss/app.scss";
+</style>

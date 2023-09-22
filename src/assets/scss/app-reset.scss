@@ -1,0 +1,16 @@
+.v-application--wrap,
+.theme--light.v-application {
+  background: transparent !important;
+  min-height: 0 !important;
+}
+
+label {
+  font-weight: normal !important;
+  margin-bottom: 0 !important;
+}
+
+.btn {
+  text-transform: capitalize !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+}

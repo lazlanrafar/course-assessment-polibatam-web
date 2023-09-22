@@ -1,6 +1,6 @@
 <template>
   <footer class="main-footer">
-    <strong>Copyright &copy; {{ year }} <a href="https://lazlanrafar.vercel.app/">L Azlan Rafar</a>.</strong>
+    <strong>Copyright &copy; {{ year }} <a href="https://lazlanrafar.vercel.app/" target="_blank">L Azlan Rafar</a>.</strong>
     All rights reserved.
   </footer>
 </template>

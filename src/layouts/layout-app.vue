@@ -3,7 +3,9 @@
     <app-topbar />
     <app-sidebar />
     <div class="content-wrapper">
-      <slot />
+      <v-app>
+        <slot />
+      </v-app>
     </div>
     <app-footer />
   </div>

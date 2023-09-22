@@ -1,6 +1,8 @@
 <template>
-  <div class="wrapper">
-    <slot />
+  <div class="login-page">
+    <v-app>
+      <slot />
+    </v-app>
   </div>
 </template>
 
@@ -10,3 +12,12 @@ export default {
   components: {},
 };
 </script>
+
+<style lang="scss">
+.login-page {
+  background-image: url("@/assets/bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
