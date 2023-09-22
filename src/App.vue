@@ -1,23 +1,16 @@
 <template>
   <div id="app">
-    <div class="wrapper">
-      <app-topbar />
-      <app-sidebar />
-      <div class="content-wrapper">
-        <router-view />
-      </div>
-      <app-footer />
-    </div>
+    <app-layout>
+      <router-view />
+    </app-layout>
   </div>
 </template>
 
 <script>
+import appLayout from "./layouts/app-layout.vue";
+
 export default {
+  components: { appLayout },
   name: "App",
-  components: {
-    AppTopbar: () => import("./components/app/topbar/index.vue"),
-    AppSidebar: () => import("./components/app/sidebar/index.vue"),
-    AppFooter: () => import("./components/app/footer/index.vue"),
-  },
 };
 </script>
