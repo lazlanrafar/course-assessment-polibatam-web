@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "AppLayout",
+  name: "LayoutApp",
   components: {
     AppTopbar: () => import("@/components/app/topbar/index.vue"),
     AppSidebar: () => import("@/components/app/sidebar/index.vue"),
