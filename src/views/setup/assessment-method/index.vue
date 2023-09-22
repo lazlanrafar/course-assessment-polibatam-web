@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "StudentOutcomePage",
+  name: "AssessmentMethodPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
@@ -62,8 +62,7 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Code", value: "code" },
-        { text: "Description", value: "title" },
+        { text: "Assessment Method", value: "title" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -71,17 +70,17 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.assessmentMethod.isLoading;
     },
     reports() {
-      return this.$store.state.studentOutcome.reports;
+      return this.$store.state.assessmentMethod.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.studentOutcome.optionsTable;
+        return this.$store.state.assessmentMethod.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_STUDENT_OUTCOME", value);
+        this.$store.commit("SET_OPTIONS_TABLE_ASSESSMENT_METHOD", value);
       },
     },
   },
@@ -90,13 +89,13 @@ export default {
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateStudentOutcome", id);
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", id);
+      this.$store.dispatch("SetFormUpdateAssessmentMethod", id);
+      this.$store.commit("SET_IS_UPDATE_ASSESSMENT_METHOD", id);
       this.handleModalForm(true);
     },
   },
   mounted() {
-    this.$store.dispatch("GetStudentOutcome");
+    this.$store.dispatch("GetAssessmentMethod");
   },
 };
 </script>
