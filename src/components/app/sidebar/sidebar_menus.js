@@ -28,6 +28,13 @@ const sidebar_menus = [
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
   },
+  {
+    title: "Support Level to SO",
+    icon: "fa-solid fa-layer-group",
+    link: "/student-outcome-level",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
 ];
 
 export default sidebar_menus;

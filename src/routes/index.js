@@ -11,6 +11,7 @@ import Dashboard from "@/views/dashboard/index.vue";
 // SETUP
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
+import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,14 @@ const routes = [
     path: "/student-outcome",
     name: "StudentOutcome",
     component: StudentOutcome,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/student-outcome-level",
+    name: "StudentOutcomeLevel",
+    component: StudentOutcomeLevel,
     meta: {
       middleware: [auth],
     },
