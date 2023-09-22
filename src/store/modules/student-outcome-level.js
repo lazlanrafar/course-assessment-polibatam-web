@@ -105,8 +105,9 @@ const studentOutcomeLevel = {
         });
 
         context.state.form = {
-          code: result.data.data.code,
+          level: result.data.data.level,
           title: result.data.data.title,
+          description: result.data.data.description,
         };
       } catch (error) {
         catchUnauthorized(error);
