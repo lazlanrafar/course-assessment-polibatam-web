@@ -12,6 +12,9 @@ import studentOutcome from "./modules/student-outcome";
 import studentOutcomeLevel from "./modules/student-outcome-level";
 import programStudi from "./modules/program-studi";
 
+// UTILITY
+import userManagement from "./modules/user-management";
+
 export default new Vuex.Store({
   modules: {
     app,
@@ -20,5 +23,6 @@ export default new Vuex.Store({
     studentOutcome,
     studentOutcomeLevel,
     programStudi,
+    userManagement,
   },
 });

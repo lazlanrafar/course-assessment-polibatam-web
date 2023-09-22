@@ -15,6 +15,9 @@ import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
 import ProgramStudi from "@/views/setup/program-studi/index.vue";
 
+// UTILITY
+import UserManagement from "@/views/utility/user-management/index.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -73,6 +76,17 @@ const routes = [
     path: "/program-studi",
     name: "ProgramStudi",
     component: ProgramStudi,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  // ===================================================
+  // UTILITY
+  // ===================================================
+  {
+    path: "/user-management",
+    name: "UserManagement",
+    component: UserManagement,
     meta: {
       middleware: [auth],
     },

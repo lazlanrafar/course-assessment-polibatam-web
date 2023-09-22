@@ -49,6 +49,17 @@ const sidebar_menus = [
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
   },
+  {
+    header: "UTILITY",
+    roles: ["Administrator", "Hub", "Agent"],
+  },
+  {
+    title: "User Management",
+    icon: "fa-solid fa-users",
+    link: "/user-management",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
 ];
 
 export default sidebar_menus;
