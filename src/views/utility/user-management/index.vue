@@ -42,8 +42,8 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                      <v-icon small>mdi-pencil</v-icon>
+                    <v-btn icon color="white" class="bg-primary mr-2" @click="handleModalDetail(true, item.NIP)">
+                      <v-icon small>mdi-eye</v-icon>
                     </v-btn>
                     <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
                       <v-icon small>mdi-delete</v-icon>
@@ -56,15 +56,20 @@
         </div>
       </div>
     </section>
+
+    <v-dialog v-model="modalDetail" persistent max-width="800">
+      <Detail @handleModalDetail="handleModalDetail" />
+    </v-dialog>
   </layout-app>
 </template>
 
 <script>
 export default {
-  name: "StudentOutcomePage",
+  name: "UserManagementPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
+    Detail: () => import("./detail.vue"),
   },
   data() {
     return {
@@ -110,6 +115,10 @@ export default {
     },
   },
   methods: {
+    handleModalDetail(value, nip) {
+      if (value) this.$store.dispatch("GetPegawaiByNIP", nip);
+      this.modalDetail = value;
+    },
     handleFetch() {
       this.$store.dispatch("GetUserManagement");
     },
