@@ -125,7 +125,7 @@ export default {
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateStudentOutcome", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateStudentOutcomeLevel", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
