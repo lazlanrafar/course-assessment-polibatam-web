@@ -62,6 +62,7 @@ export default {
   data() {
     return {
       headers: [
+        { text: "No", value: "no" },
         { text: "Assessment Method", value: "title" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],

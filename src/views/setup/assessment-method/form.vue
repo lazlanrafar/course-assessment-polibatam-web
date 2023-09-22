@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Student Outcomes (SOs)</h3>
+          <h3 class="card-title fw-medium">Form Assessment Method</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
@@ -12,19 +12,6 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col-12">
-            <v-text-field
-              label="Code"
-              dense
-              outlined
-              v-model="code"
-              :rules="[
-                (value) => {
-                  return genericRequiredRule(value, 'Code');
-                },
-              ]"
-            />
-          </div>
           <div class="col-12">
             <v-textarea
               label="Description"
@@ -54,35 +41,24 @@
 import validationRules from "@/mixins/validation-rules";
 
 export default {
-  name: "StudentOutcomeForm",
+  name: "AssessmentMethodForm",
   mixins: [validationRules],
   data() {
     return {};
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.assessmentMethod.isLoading;
     },
     isUpdate() {
-      return this.$store.state.studentOutcome.isUpdate;
-    },
-    code: {
-      get() {
-        return this.$store.state.studentOutcome.form.code;
-      },
-      set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
-          key: "code",
-          value,
-        });
-      },
+      return this.$store.state.assessmentMethod.isUpdate;
     },
     title: {
       get() {
-        return this.$store.state.studentOutcome.form.title;
+        return this.$store.state.assessmentMethod.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
+        this.$store.commit("SET_FORM_ASSESSMENT_METHOD", {
           key: "title",
           value,
         });
@@ -92,8 +68,8 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_STUDENT_OUTCOME");
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", false);
+      this.$store.commit("RESET_FORM_ASSESSMENT_METHOD");
+      this.$store.commit("SET_IS_UPDATE_ASSESSMENT_METHOD", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
@@ -106,7 +82,7 @@ export default {
             }
           });
         } else {
-          this.$store.dispatch("CreateStudentOutcome").then((res) => {
+          this.$store.dispatch("CreateAssessmentMethod").then((res) => {
             if (res) {
               this.handleClose();
             }

@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  code: "",
   title: "",
 };
 
@@ -51,6 +50,10 @@ const assessmentMethod = {
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
+        });
+
+        result.data.data.forEach((item, i) => {
+          item.no = i + 1;
         });
 
         context.commit("SET_REPORTS_ASSESSMENT_METHOD", result.data.data);
