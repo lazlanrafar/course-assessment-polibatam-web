@@ -26,7 +26,7 @@
             />
           </div>
           <div class="col-12">
-            <v-text-field
+            <v-textarea
               label="Description"
               dense
               outlined
@@ -42,7 +42,7 @@
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-end">
-          <v-btn class="btn mr-3" @click="handleClose" :loading="isLoading">Cancel</v-btn>
+          <v-btn class="btn mr-3" @click="handleClose">Cancel</v-btn>
           <v-btn class="btn bg-navy" type="submit" :loading="isLoading">Submit</v-btn>
         </div>
       </div>

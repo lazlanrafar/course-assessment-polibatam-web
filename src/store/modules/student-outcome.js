@@ -104,8 +104,7 @@ const studentOutcome = {
         });
 
         context.state.form = {
-          id_cdio_syllabus: result.data.data.id_cdio_syllabus,
-          level: result.data.data.level,
+          code: result.data.data.code,
           title: result.data.data.title,
         };
       } catch (error) {

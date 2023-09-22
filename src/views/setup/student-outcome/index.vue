@@ -87,7 +87,6 @@ export default {
   },
   methods: {
     handleModalForm(value) {
-      if (value) this.$store.dispatch("FetchBeforeFormStudentOutcome");
       this.modalForm = value;
     },
     handleUpdate(id) {
