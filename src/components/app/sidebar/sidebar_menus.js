@@ -21,6 +21,13 @@ const sidebar_menus = [
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
   },
+  {
+    title: "Student Outcomes (SOs)",
+    icon: "fa-solid fa-graduation-cap",
+    link: "/student-outcome",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
 ];
 
 export default sidebar_menus;
