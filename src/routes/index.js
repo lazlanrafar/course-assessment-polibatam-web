@@ -9,6 +9,7 @@ import Login from "@/views/auth/login.vue";
 import Dashboard from "@/views/dashboard/index.vue";
 
 // SETUP
+import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
@@ -28,6 +29,17 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  // ===================================================
+  // SETUP
+  // ===================================================
+  {
+    path: "/assessment-method",
+    name: "AssessmentMethod",
+    component: AssessmentMethod,
     meta: {
       middleware: [auth],
     },
