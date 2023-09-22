@@ -16,19 +16,13 @@
           role="menu"
           data-accordion="false"
         >
-          <li class="nav-header">MAIN</li>
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li class="nav-header">SETUP</li>
-          <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>Calendar</p>
-            </a>
+          <li v-for="(item, i) in sidebar_menus" :key="i" :class="`${item.header ? 'nav-header' : 'nav-item'}`">
+            <span v-if="item.header">{{ item.header }}</span>
+
+            <router-link v-else :to="item.link" class="nav-link">
+              <i :class="`nav-icon mr-2 ${item.icon}`"></i>
+              <p>{{ item.title }}</p>
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -39,6 +33,11 @@
 <script>
 export default {
   name: "AppSidebar",
+  data() {
+    return {
+      sidebar_menus: require("./sidebar_menus").default,
+    };
+  },
   computed: {
     user() {
       return this.$store.state.app.user;
