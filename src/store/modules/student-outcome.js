@@ -14,7 +14,7 @@ const studentOutcome = {
     isLoading: false,
     optionsTable: {
       page: 1,
-      itemsPerPage: -1,
+      itemsPerPage: 10,
       search: "",
     },
     reports: [],

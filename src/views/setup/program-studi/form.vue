@@ -112,7 +112,7 @@ export default {
             }
           });
         } else {
-          this.$store.dispatch("CreateprogramStudi").then((res) => {
+          this.$store.dispatch("CreateProgramStudi").then((res) => {
             if (res) {
               this.handleClose();
             }

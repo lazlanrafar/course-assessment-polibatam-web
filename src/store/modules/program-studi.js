@@ -14,7 +14,7 @@ const programStudi = {
     isLoading: false,
     optionsTable: {
       page: 1,
-      itemsPerPage: -1,
+      itemsPerPage: 10,
       search: "",
     },
     reports: [],
@@ -55,6 +55,10 @@ const programStudi = {
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
+        });
+
+        result.data.data.forEach((item, i) => {
+          item.no = i + 1;
         });
 
         context.commit("SET_REPORTS_PROGRAM_STUDI", result.data.data);
