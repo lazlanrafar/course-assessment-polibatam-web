@@ -45,6 +45,10 @@
         </div>
       </div>
     </section>
+
+    <v-dialog v-model="modalForm" persistent max-width="600">
+      <Form @handleModalForm="handleModalForm" />
+    </v-dialog>
   </layout-app>
 </template>
 
@@ -54,13 +58,14 @@ export default {
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
+    Form: () => import("./form.vue"),
   },
   data() {
     return {
       headers: [
         { text: "Level", value: "level" },
         { text: "Description", value: "title" },
-        // { text: "Action", value: "action", align: "right", sortable: false },
+        { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
     };
@@ -81,7 +86,12 @@ export default {
       },
     },
   },
-  methods: {},
+  methods: {
+    handleModalForm(value) {
+      if (value) this.$store.dispatch("FetchBeforeFormRubrik");
+      this.modalForm = value;
+    },
+  },
   mounted() {
     this.$store.dispatch("GetRubrik");
   },

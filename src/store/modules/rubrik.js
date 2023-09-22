@@ -4,6 +4,12 @@ import catchUnauthorized from "@/utils/catch-unauthorized";
 
 const apiUrl = process.env.VUE_APP_API_URL;
 
+const form = {
+  id_cdio_syllabus: "",
+  level: "",
+  title: "",
+};
+
 const rubrik = {
   state: {
     isLoading: false,
@@ -13,6 +19,9 @@ const rubrik = {
       search: "",
     },
     reports: [],
+    list_cdio_syllabus: [],
+    form: { ...form },
+    isUpdate: false,
   },
   mutations: {
     SET_OPTIONS_TABLE_RUBRIK(state, payload) {
@@ -23,6 +32,18 @@ const rubrik = {
     },
     SET_REPORTS_RUBRIK(state, payload) {
       state.reports = payload;
+    },
+    SET_LIST_CDIO_SYLLABUS_RUBRIK(state, payload) {
+      state.list_cdio_syllabus = payload;
+    },
+    SET_FORM_RUBRIK(state, payload) {
+      state.form[payload.key] = payload.value;
+    },
+    RESET_FORM_RUBRIK(state) {
+      state.form = { ...form };
+    },
+    SET_IS_UPDATE_RUBRIK(state, payload) {
+      state.isUpdate = payload;
     },
   },
   actions: {
@@ -38,6 +59,23 @@ const rubrik = {
         });
 
         context.commit("SET_REPORTS_RUBRIK", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
+    async FetchBeforeFormRubrik(context) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const CDIOSyllabus = await axios({
+          url: `${apiUrl}/rubrik/cdio-syllabus`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_CDIO_SYLLABUS_RUBRIK", CDIOSyllabus.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {
