@@ -114,6 +114,28 @@ const rubrik = {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
+    async SetFormUpdateRubrik(context, id) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/rubrik/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.state.form = {
+          id_cdio_syllabus: result.data.data.id_cdio_syllabus,
+          level: result.data.data.level,
+          title: result.data.data.title,
+        };
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
   },
 };
 

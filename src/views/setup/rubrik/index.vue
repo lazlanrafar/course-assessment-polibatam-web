@@ -91,6 +91,11 @@ export default {
       if (value) this.$store.dispatch("FetchBeforeFormRubrik");
       this.modalForm = value;
     },
+    handleUpdate(id) {
+      this.$store.dispatch("SetFormUpdateRubrik", id);
+      this.$store.commit("SET_IS_UPDATE_RUBRIK", id);
+      this.handleModalForm(true);
+    },
   },
   mounted() {
     this.$store.dispatch("GetRubrik");
