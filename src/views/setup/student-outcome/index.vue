@@ -28,7 +28,6 @@
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
-                  group-by="parent"
                 >
                   <template v-slot:[`item.action`]="{ item }">
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">

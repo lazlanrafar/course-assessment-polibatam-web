@@ -5,8 +5,7 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  id_cdio_syllabus: "",
-  level: "",
+  code: "",
   title: "",
 };
 
@@ -19,7 +18,6 @@ const studentOutcome = {
       search: "",
     },
     reports: [],
-    list_cdio_syllabus: [],
     form: { ...form },
     isUpdate: false,
   },
@@ -32,9 +30,6 @@ const studentOutcome = {
     },
     SET_REPORTS_STUDENT_OUTCOME(state, payload) {
       state.reports = payload;
-    },
-    SET_LIST_CDIO_SYLLABUS_STUDENT_OUTCOME(state, payload) {
-      state.list_cdio_syllabus = payload;
     },
     SET_FORM_STUDENT_OUTCOME(state, payload) {
       state.form[payload.key] = payload.value;
@@ -59,23 +54,6 @@ const studentOutcome = {
         });
 
         context.commit("SET_REPORTS_STUDENT_OUTCOME", result.data.data);
-      } catch (error) {
-        catchUnauthorized(error);
-      } finally {
-        context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
-      }
-    },
-    async FetchBeforeFormStudentOutcome(context) {
-      context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
-      try {
-        const CDIOSyllabus = await axios({
-          url: `${apiUrl}/student-outcome/cdio-syllabus`,
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${context.rootState.app.token}`,
-          },
-        });
-        context.commit("SET_LIST_CDIO_SYLLABUS_STUDENT_OUTCOME", CDIOSyllabus.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {

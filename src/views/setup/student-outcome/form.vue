@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Rubrik</h3>
+          <h3 class="card-title fw-medium">Form Student Outcomes (SOs)</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
@@ -13,31 +13,14 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12">
-            <v-select
-              label="CDIO Syllabus"
-              dense
-              outlined
-              v-model="id_cdio_syllabus"
-              :items="list_cdio_syllabus"
-              item-text="title"
-              item-value="id"
-              :rules="[
-                (value) => {
-                  return genericRequiredRule(value, 'CDIO Syllabus');
-                },
-              ]"
-            />
-          </div>
-          <div class="col-12">
             <v-text-field
-              label="Level"
+              label="Code"
               dense
               outlined
-              v-model="level"
-              type="number"
+              v-model="code"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Level');
+                  return genericRequiredRule(value, 'Code');
                 },
               ]"
             />
@@ -78,42 +61,28 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.rubrik.isLoading;
+      return this.$store.state.studentOutcome.isLoading;
     },
     isUpdate() {
-      return this.$store.state.rubrik.isUpdate;
+      return this.$store.state.studentOutcome.isUpdate;
     },
-    list_cdio_syllabus() {
-      return this.$store.state.rubrik.list_cdio_syllabus;
-    },
-    id_cdio_syllabus: {
+    code: {
       get() {
-        return this.$store.state.rubrik.form.id_cdio_syllabus;
+        return this.$store.state.studentOutcome.form.code;
       },
       set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
-          key: "id_cdio_syllabus",
-          value,
-        });
-      },
-    },
-    level: {
-      get() {
-        return this.$store.state.rubrik.form.level;
-      },
-      set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
-          key: "level",
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
+          key: "code",
           value,
         });
       },
     },
     title: {
       get() {
-        return this.$store.state.rubrik.form.title;
+        return this.$store.state.studentOutcome.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
           key: "title",
           value,
         });
@@ -123,8 +92,8 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_RUBRIK");
-      this.$store.commit("SET_IS_UPDATE_RUBRIK", false);
+      this.$store.commit("RESET_FORM_STUDENT_OUTCOME");
+      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
@@ -137,7 +106,7 @@ export default {
             }
           });
         } else {
-          this.$store.dispatch("CreateRubrik").then((res) => {
+          this.$store.dispatch("CreateStudentOutcome").then((res) => {
             if (res) {
               this.handleClose();
             }
