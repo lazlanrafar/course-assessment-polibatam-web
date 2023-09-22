@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import auth from "@/middleware/auth";
+import auth from "@/middleware/auth";
+import guest from "@/middleware/guest";
 
 import Login from "@/views/auth/login.vue";
 
@@ -15,7 +16,7 @@ const routes = [
     name: "Login",
     component: Login,
     meta: {
-      middleware: [],
+      middleware: [guest],
     },
   },
   {
@@ -23,7 +24,7 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: {
-      middleware: [],
+      middleware: [auth],
     },
   },
 ];
@@ -39,33 +40,33 @@ router.beforeEach((to, from, next) => {
   return next();
 });
 
-// function nextFactory(context, middleware, index) {
-//   const subsequentMiddleware = middleware[index];
-//   if (!subsequentMiddleware) return context.next;
+function nextFactory(context, middleware, index) {
+  const subsequentMiddleware = middleware[index];
+  if (!subsequentMiddleware) return context.next;
 
-//   return (...parameters) => {
-//     context.next(...parameters);
-//     const nextMiddleware = nextFactory(context, middleware, index + 1);
-//     subsequentMiddleware({ ...context, next: nextMiddleware });
-//   };
-// }
+  return (...parameters) => {
+    context.next(...parameters);
+    const nextMiddleware = nextFactory(context, middleware, index + 1);
+    subsequentMiddleware({ ...context, next: nextMiddleware });
+  };
+}
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.middleware) {
-//     const middleware = Array.isArray(to.meta.middleware) ? to.meta.middleware : [to.meta.middleware];
+router.beforeEach((to, from, next) => {
+  if (to.meta.middleware) {
+    const middleware = Array.isArray(to.meta.middleware) ? to.meta.middleware : [to.meta.middleware];
 
-//     const context = {
-//       from,
-//       next,
-//       router,
-//       to,
-//     };
-//     const nextMiddleware = nextFactory(context, middleware, 1);
+    const context = {
+      from,
+      next,
+      router,
+      to,
+    };
+    const nextMiddleware = nextFactory(context, middleware, 1);
 
-//     return middleware[0]({ ...context, next: nextMiddleware });
-//   }
+    return middleware[0]({ ...context, next: nextMiddleware });
+  }
 
-//   return next();
-// });
+  return next();
+});
 
 export default router;

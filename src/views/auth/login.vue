@@ -93,9 +93,7 @@ export default {
     handleSubmit() {
       if (this.$refs.initialReport.validate()) {
         this.$store.dispatch("Login").then((response) => {
-          if (response) {
-            this.$router.push({ path: "/" });
-          }
+          if (response) this.$router.push("/dashboard");
         });
       }
     },
