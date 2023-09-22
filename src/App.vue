@@ -6,7 +6,14 @@
 
 <script>
 export default {
-  components: {},
   name: "App",
+  components: {},
+  mounted() {
+    localStorage.setItem("AdminLTE:IFrame:Options", JSON.stringify({ autoIframeMode: false, autoItemActive: false }));
+  },
 };
 </script>
+
+<style>
+@import "@/assets/scss/app.scss";
+</style>
