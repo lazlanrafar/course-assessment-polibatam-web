@@ -1,6 +1,6 @@
 import axios from "axios";
 import catchUnauthorized from "@/utils/catch-unauthorized";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 const apiUrl = process.env.VUE_APP_API_URL;
 
@@ -78,6 +78,38 @@ const rubrik = {
         context.commit("SET_LIST_CDIO_SYLLABUS_RUBRIK", CDIOSyllabus.data.data);
       } catch (error) {
         catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
+    async CreateRubrik(context) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/rubrik`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetRubrik");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
       } finally {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }

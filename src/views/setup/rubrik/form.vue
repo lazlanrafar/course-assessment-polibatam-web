@@ -59,8 +59,8 @@
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-end">
-          <v-btn class="btn mr-3" @click="handleClose">Cancel</v-btn>
-          <v-btn class="btn bg-navy" type="submit">Submit</v-btn>
+          <v-btn class="btn mr-3" @click="handleClose" :loading="isLoading">Cancel</v-btn>
+          <v-btn class="btn bg-navy" type="submit" :loading="isLoading">Submit</v-btn>
         </div>
       </div>
     </v-card>
@@ -131,13 +131,13 @@ export default {
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateCity", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateRubrik", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateCity").then((res) => {
+          this.$store.dispatch("CreateRubrik").then((res) => {
             if (res) {
               this.handleClose();
             }

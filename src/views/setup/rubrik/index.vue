@@ -34,9 +34,9 @@
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
                       <v-icon small>mdi-delete</v-icon>
-                    </v-btn>
+                    </v-btn> -->
                   </template>
                 </v-data-table>
               </div>
