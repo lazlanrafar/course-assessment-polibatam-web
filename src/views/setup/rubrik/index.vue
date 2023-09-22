@@ -1,0 +1,89 @@
+<template>
+  <layout-app>
+    <ContentHeader header="Setup" title="Rubrik" />
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none border">
+              <div class="card-body">
+                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                  <i class="fa fa-plus"></i>
+                  Tambah
+                </v-btn>
+                <div class="d-flex justify-content-end">
+                  <v-text-field
+                    label="Cari..."
+                    style="max-width: 300px"
+                    prepend-inner-icon="mdi-magnify"
+                    outlined
+                    dense
+                    v-model="optionsTable.search"
+                  />
+                </div>
+                <v-data-table
+                  :headers="headers"
+                  :items="reports"
+                  :loading="isLoading"
+                  :options.sync="optionsTable"
+                  :search="optionsTable.search"
+                  group-by="parent"
+                >
+                  <template v-slot:[`item.action`]="{ item }">
+                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                      <v-icon small>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                      <v-icon small>mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                </v-data-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </layout-app>
+</template>
+
+<script>
+export default {
+  name: "RubrikPage",
+  components: {
+    LayoutApp: () => import("@/layouts/layout-app.vue"),
+    ContentHeader: () => import("@/components/molecules/content-header.vue"),
+  },
+  data() {
+    return {
+      headers: [
+        { text: "Level", value: "level" },
+        { text: "Description", value: "title" },
+        // { text: "Action", value: "action", align: "right", sortable: false },
+      ],
+      modalForm: false,
+    };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.rubrik.isLoading;
+    },
+    reports() {
+      return this.$store.state.rubrik.reports;
+    },
+    optionsTable: {
+      get() {
+        return this.$store.state.rubrik.optionsTable;
+      },
+      set(value) {
+        this.$store.commit("SET_OPTIONS_TABLE_RUBRIK", value);
+      },
+    },
+  },
+  methods: {},
+  mounted() {
+    this.$store.dispatch("GetRubrik");
+  },
+};
+</script>

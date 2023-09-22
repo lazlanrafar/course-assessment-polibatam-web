@@ -8,6 +8,9 @@ import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
 
+// SETUP
+import Rubrik from "@/views/setup/rubrik/index.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,6 +26,14 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/rubrik",
+    name: "Rubrik",
+    component: Rubrik,
     meta: {
       middleware: [auth],
     },
