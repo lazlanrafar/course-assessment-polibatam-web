@@ -34,6 +34,7 @@ const course = {
     list_program_studi: [],
     form: { ...form },
     isUpdate: false,
+    list_assessment_method: [],
   },
   mutations: {
     SET_OPTIONS_TABLE_COURSE(state, payload) {
@@ -59,6 +60,9 @@ const course = {
     },
     SET_IS_UPDATE_COURSE(state, payload) {
       state.isUpdate = payload;
+    },
+    SET_LIST_ASSESSMENT_METHOD_COURSE(state, payload) {
+      state.list_assessment_method = payload;
     },
   },
   actions: {
@@ -220,6 +224,23 @@ const course = {
           title: "Oops...",
           text: error.response.data.message,
         });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async FetchBeforeFormCourseCLO(context) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const assessmentMethod = await axios({
+          url: `${apiUrl}/assessment-method`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_ASSESSMENT_METHOD_COURSE", assessmentMethod.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
       } finally {
         context.commit("SET_IS_LOADING_COURSE", false);
       }

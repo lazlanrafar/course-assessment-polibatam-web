@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: "RubrikPage",
+  name: "CDIOSyllabusPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
@@ -72,33 +72,33 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.rubrik.isLoading;
+      return this.$store.state.CDIOSyllabus.isLoading;
     },
     reports() {
-      return this.$store.state.rubrik.reports;
+      return this.$store.state.CDIOSyllabus.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.rubrik.optionsTable;
+        return this.$store.state.CDIOSyllabus.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_RUBRIK", value);
+        this.$store.commit("SET_OPTIONS_TABLE_CDIO_SYLLABUS", value);
       },
     },
   },
   methods: {
     handleModalForm(value) {
-      if (value) this.$store.dispatch("FetchBeforeFormRubrik");
+      if (value) this.$store.dispatch("FetchBeforeFormCDIOSyllabus");
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateRubrik", id);
-      this.$store.commit("SET_IS_UPDATE_RUBRIK", id);
+      this.$store.dispatch("SetFormUpdateCDIOSyllabus", id);
+      this.$store.commit("SET_IS_UPDATE_CDIO_SYLLABUS", id);
       this.handleModalForm(true);
     },
   },
   mounted() {
-    this.$store.dispatch("GetRubrik");
+    this.$store.dispatch("GetCDIOSyllabus");
   },
 };
 </script>

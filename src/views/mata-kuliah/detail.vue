@@ -24,8 +24,30 @@
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none border">
+              <div class="card-header fw-medium fs-15">Course Learning Outcomes (CLOs)</div>
+              <div class="card-body">
+                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormCLO(true)">
+                  <i class="fa fa-plus"></i>
+                  Tambah CLO
+                </v-btn>
+                <div class="d-flex justify-content-end">
+                  <v-text-field label="Cari..." style="max-width: 300px" prepend-inner-icon="mdi-magnify" outlined dense />
+                </div>
+                <v-data-table :headers="headers" :items="[]"> </v-data-table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <v-dialog v-if="modalFormCLO" v-model="modalFormCLO" persistent max-width="600">
+      <FormCLO @handleModalFormCLO="handleModalFormCLO" />
+    </v-dialog>
   </layout-app>
 </template>
 
@@ -36,9 +58,18 @@ export default {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     TableCustom: () => import("@/components/molecules/table-custom.vue"),
+    FormCLO: () => import("./form-course-learning-outcome.vue"),
   },
   data() {
-    return {};
+    return {
+      headers: [
+        { text: "No", value: "no" },
+        { text: "Course Learning Outcomes (CLOs)", value: "title" },
+        { text: "Assessment Method", value: "program_studi" },
+        { text: "Action", value: "action", align: "right", sortable: false },
+      ],
+      modalFormCLO: false,
+    };
   },
   computed: {
     isLoading() {
@@ -48,7 +79,12 @@ export default {
       return this.$store.state.course.report;
     },
   },
-  methods: {},
+  methods: {
+    handleModalFormCLO(value) {
+      if (value) this.$store.dispatch("FetchBeforeFormCourseCLO");
+      this.modalFormCLO = value;
+    },
+  },
   mounted() {
     this.$store.dispatch("GetCourseById", this.$route.params.id);
   },

@@ -5,9 +5,11 @@
   font-family: "Poppins", sans-serif;
 }
 
-.main-sidebar,
-.main-header {
-  z-index: 10 !important;
+@media screen and (min-width: 768px) {
+  .main-sidebar,
+  .main-header {
+    z-index: 10 !important;
+  }
 }
 
 .nav-header {

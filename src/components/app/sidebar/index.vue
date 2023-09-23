@@ -1,7 +1,7 @@
 <template>
   <aside class="main-sidebar sidebar-light-navy border-right">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/" class="brand-link">
       <img src="@/assets/logo.svg" alt="AdminLTE Logo" class="brand-image" />
       <span class="brand-text fw-medium">CLO Polibatam</span>
     </a>

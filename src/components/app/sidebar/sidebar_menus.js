@@ -29,9 +29,9 @@ const sidebar_menus = [
     children: false,
   },
   {
-    title: "Rubrik",
+    title: "CDIO Syllabus",
     icon: "fa-solid fa-boxes-stacked",
-    link: "/rubrik",
+    link: "/cdio-syllabus",
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
   },

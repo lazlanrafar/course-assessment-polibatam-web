@@ -17,7 +17,7 @@
               label="CDIO Syllabus"
               dense
               outlined
-              v-model="id_cdio_syllabus"
+              v-model="id_cdio_syllabus_parent"
               :items="list_cdio_syllabus"
               item-text="title"
               item-value="id"
@@ -71,38 +71,38 @@
 import validationRules from "@/mixins/validation-rules";
 
 export default {
-  name: "RubrikForm",
+  name: "CDIOSyllabusForm",
   mixins: [validationRules],
   data() {
     return {};
   },
   computed: {
     isLoading() {
-      return this.$store.state.rubrik.isLoading;
+      return this.$store.state.CDIOSyllabus.isLoading;
     },
     isUpdate() {
-      return this.$store.state.rubrik.isUpdate;
+      return this.$store.state.CDIOSyllabus.isUpdate;
     },
     list_cdio_syllabus() {
-      return this.$store.state.rubrik.list_cdio_syllabus;
+      return this.$store.state.CDIOSyllabus.list_cdio_syllabus;
     },
-    id_cdio_syllabus: {
+    id_cdio_syllabus_parent: {
       get() {
-        return this.$store.state.rubrik.form.id_cdio_syllabus;
+        return this.$store.state.CDIOSyllabus.form.id_cdio_syllabus_parent;
       },
       set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
-          key: "id_cdio_syllabus",
+        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
+          key: "id_cdio_syllabus_parent",
           value,
         });
       },
     },
     level: {
       get() {
-        return this.$store.state.rubrik.form.level;
+        return this.$store.state.CDIOSyllabus.form.level;
       },
       set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
+        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
           key: "level",
           value,
         });
@@ -110,10 +110,10 @@ export default {
     },
     title: {
       get() {
-        return this.$store.state.rubrik.form.title;
+        return this.$store.state.CDIOSyllabus.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_RUBRIK", {
+        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
           key: "title",
           value,
         });
@@ -123,21 +123,21 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_RUBRIK");
-      this.$store.commit("SET_IS_UPDATE_RUBRIK", false);
+      this.$store.commit("RESET_FORM_CDIO_SYLLABUS");
+      this.$store.commit("SET_IS_UPDATE_CDIO_SYLLABUS", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateRubrik", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateCDIOSyllabus", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateRubrik").then((res) => {
+          this.$store.dispatch("CreateCDIOSyllabus").then((res) => {
             if (res) {
               this.handleClose();
             }

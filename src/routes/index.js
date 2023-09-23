@@ -12,7 +12,7 @@ import MataKuliahDetail from "@/views/mata-kuliah/detail.vue";
 
 // SETUP
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
-import Rubrik from "@/views/setup/rubrik/index.vue";
+import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
 import ProgramStudi from "@/views/setup/program-studi/index.vue";
@@ -67,9 +67,9 @@ const routes = [
     },
   },
   {
-    path: "/rubrik",
-    name: "Rubrik",
-    component: Rubrik,
+    path: "/cdio-syllabus",
+    name: "CDIOSyllabus",
+    component: CDIOSyllabus,
     meta: {
       middleware: [auth],
     },
