@@ -7,6 +7,7 @@ import guest from "@/middleware/guest";
 import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
+import MataKuliah from "@/views/mata-kuliah/index.vue";
 
 // SETUP
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
@@ -33,6 +34,14 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/mata-kuliah",
+    name: "MataKuliah",
+    component: MataKuliah,
     meta: {
       middleware: [auth],
     },

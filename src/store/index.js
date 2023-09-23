@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 import app from "./modules/app";
 
+import course from "./modules/course";
+
 // SETUP
 import assessmentMethod from "./modules/assessment-method";
 import rubrik from "./modules/rubrik";
@@ -18,6 +20,7 @@ import userManagement from "./modules/user-management";
 export default new Vuex.Store({
   modules: {
     app,
+    course,
     assessmentMethod,
     rubrik,
     studentOutcome,

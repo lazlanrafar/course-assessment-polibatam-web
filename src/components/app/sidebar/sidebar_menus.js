@@ -11,6 +11,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Mata Kuliah",
+    icon: "fa-solid fa-book",
+    link: "/mata-kuliah",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     header: "SETUP",
     roles: ["Administrator", "Hub", "Agent"],
   },
