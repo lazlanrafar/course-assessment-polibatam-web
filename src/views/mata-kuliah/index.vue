@@ -30,12 +30,22 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                      <v-icon small>mdi-pencil</v-icon>
-                    </v-btn>
-                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
-                      <v-icon small>mdi-delete</v-icon>
-                    </v-btn> -->
+                    <v-menu offset-y>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                          <span class="fw-light mr-1">Action</span>
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </v-btn>
+                      </template>
+                      <v-list min-width="150">
+                        <v-list-item @click="handleUpdate(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Edit</span>
+                          </v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </template>
                 </v-data-table>
               </div>
@@ -45,7 +55,7 @@
       </div>
     </section>
 
-    <v-dialog v-model="modalForm" persistent max-width="800">
+    <v-dialog v-if="modalForm" v-model="modalForm" persistent max-width="800">
       <Form @handleModalForm="handleModalForm" />
     </v-dialog>
   </layout-app>
@@ -95,8 +105,8 @@ export default {
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateStudentOutcome", id);
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", id);
+      this.$store.dispatch("SetFormUpdateCourse", id);
+      this.$store.commit("SET_IS_UPDATE_COURSE", id);
       this.handleModalForm(true);
     },
   },

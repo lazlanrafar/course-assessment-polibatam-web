@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 
+:root {
+  --color-primary: #183a64;
+  --color-orange: #ff7f00;
+  --color-skyblue: #ade7f7;
+}
+
 @import "./app-reset.scss";
 @import "./partials/fonts.scss";
+@import "./partials/button.scss";

@@ -203,9 +203,7 @@ export default {
   name: "CourseForm",
   mixins: [validationRules],
   data() {
-    return {
-      bobot_total: 0,
-    };
+    return {};
   },
   computed: {
     isLoading() {
@@ -334,6 +332,17 @@ export default {
       set(value) {
         this.$store.commit("SET_FORM_COURSE", {
           key: "bobot_presentation",
+          value,
+        });
+      },
+    },
+    bobot_total: {
+      get() {
+        return this.$store.state.course.form.bobot_total;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_COURSE", {
+          key: "bobot_total",
           value,
         });
       },

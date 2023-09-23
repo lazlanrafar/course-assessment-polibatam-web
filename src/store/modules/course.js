@@ -17,6 +17,8 @@ const form = {
   bobot_final_exam: 0,
   bobot_practice_or_project: 0,
   bobot_presentation: 0,
+
+  bobot_total: 0,
 };
 
 const course = {
@@ -138,10 +140,29 @@ const course = {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
         });
+        const data = result.data.data;
 
         context.state.form = {
-          code: result.data.data.code,
-          title: result.data.data.title,
+          id_program_studi: data.id_program_studi,
+          code: data.code,
+          title: data.title,
+          sks: data.sks,
+          target_level: data.target_level,
+
+          bobot_assignment: data.bobot_assignment,
+          bobot_quiz: data.bobot_quiz,
+          bobot_mid_exam: data.bobot_mid_exam,
+          bobot_final_exam: data.bobot_final_exam,
+          bobot_practice_or_project: data.bobot_practice_or_project,
+          bobot_presentation: data.bobot_presentation,
+
+          bobot_total:
+            +data.bobot_assignment +
+            +data.bobot_quiz +
+            +data.bobot_mid_exam +
+            +data.bobot_final_exam +
+            +data.bobot_practice_or_project +
+            +data.bobot_presentation,
         };
       } catch (error) {
         catchUnauthorized(error);
