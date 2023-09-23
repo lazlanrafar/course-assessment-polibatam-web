@@ -30,6 +30,7 @@ const course = {
       search: "",
     },
     reports: [],
+    report: {},
     list_program_studi: [],
     form: { ...form },
     isUpdate: false,
@@ -43,6 +44,9 @@ const course = {
     },
     SET_REPORTS_COURSE(state, payload) {
       state.reports = payload;
+    },
+    SET_REPORT_COURSE(state, payload) {
+      state.report = payload;
     },
     SET_LIST_PROGRAM_STUDI_COURSE(state, payload) {
       state.list_program_studi = payload;
@@ -74,6 +78,24 @@ const course = {
         });
 
         context.commit("SET_REPORTS_COURSE", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async GetCourseById(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_REPORT_COURSE", result.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {

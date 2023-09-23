@@ -38,6 +38,12 @@
                         </v-btn>
                       </template>
                       <v-list min-width="150">
+                        <v-list-item @click="handleDetail(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-eye mr-2"></i>
+                            <span>Detail</span>
+                          </v-list-item-title>
+                        </v-list-item>
                         <v-list-item @click="handleUpdate(item.id)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
@@ -108,6 +114,9 @@ export default {
       this.$store.dispatch("SetFormUpdateCourse", id);
       this.$store.commit("SET_IS_UPDATE_COURSE", id);
       this.handleModalForm(true);
+    },
+    handleDetail(id) {
+      this.$router.push(`/mata-kuliah/${id}`);
     },
   },
   mounted() {

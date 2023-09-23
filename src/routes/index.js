@@ -8,6 +8,7 @@ import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
 import MataKuliah from "@/views/mata-kuliah/index.vue";
+import MataKuliahDetail from "@/views/mata-kuliah/detail.vue";
 
 // SETUP
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
@@ -42,6 +43,14 @@ const routes = [
     path: "/mata-kuliah",
     name: "MataKuliah",
     component: MataKuliah,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/mata-kuliah/:id",
+    name: "MataKuliahDetail",
+    component: MataKuliahDetail,
     meta: {
       middleware: [auth],
     },
