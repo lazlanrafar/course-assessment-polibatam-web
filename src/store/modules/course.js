@@ -67,6 +67,10 @@ const course = {
           },
         });
 
+        result.data.data.forEach((item, i) => {
+          item.no = i + 1;
+        });
+
         context.commit("SET_REPORTS_COURSE", result.data.data);
       } catch (error) {
         catchUnauthorized(error);

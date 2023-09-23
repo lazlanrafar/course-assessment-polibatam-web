@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "MataKuliahPage",
+  name: "CoursePage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
@@ -62,8 +62,12 @@ export default {
   data() {
     return {
       headers: [
+        { text: "No", value: "no" },
         { text: "Code", value: "code" },
-        { text: "Description", value: "title" },
+        { text: "Name", value: "title" },
+        { text: "Program Studi", value: "program_studi.title" },
+        { text: "SKS", value: "sks" },
+        { text: "Target Level", value: "target_level" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -71,17 +75,17 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.course.isLoading;
     },
     reports() {
-      return this.$store.state.studentOutcome.reports;
+      return this.$store.state.course.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.studentOutcome.optionsTable;
+        return this.$store.state.course.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_STUDENT_OUTCOME", value);
+        this.$store.commit("SET_OPTIONS_TABLE_COURSE", value);
       },
     },
   },
@@ -97,7 +101,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("GetStudentOutcome");
+    this.$store.dispatch("GetCourse");
   },
 };
 </script>
