@@ -21,6 +21,8 @@ const form = {
 const rubrik = {
   state: {
     isLoading: false,
+    isLoadingForm: false,
+
     optionsTable: {
       page: 1,
       itemsPerPage: 10,
@@ -41,6 +43,9 @@ const rubrik = {
     },
     SET_IS_LOADING_RUBRIK(state, payload) {
       state.isLoading = payload;
+    },
+    SET_IS_LOADING_FORM_RUBRIK(state, payload) {
+      state.isLoadingForm = payload;
     },
 
     SET_REPORTS_PROGRAM_STUDI_RUBRIK(state, payload) {
@@ -166,24 +171,34 @@ const rubrik = {
       }
     },
     async SetFormUpdateRubrik(context, id) {
-      context.commit("SET_IS_LOADING_RUBRIK", true);
+      context.commit("SET_IS_LOADING_FORM_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/program-studi/${id}`,
+          url: `${apiUrl}/rubrik/${id}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
         });
 
+        const data = result.data.data;
         context.state.form = {
-          id_jurusan: result.data.data.id_jurusan,
-          title: result.data.data.title,
+          id_program_studi: data.id_program_studi,
+          id_student_outcome: data.id_student_outcome,
+          id_cdio_syllabus: data.id_cdio_syllabus,
+          code: data.code,
+          title: data.title,
+
+          desc_level_1: data.desc_level_1,
+          desc_level_2: data.desc_level_2,
+          desc_level_3: data.desc_level_3,
+          desc_level_4: data.desc_level_4,
+          desc_level_5: data.desc_level_5,
         };
       } catch (error) {
         catchUnauthorized(error);
       } finally {
-        context.commit("SET_IS_LOADING_RUBRIK", false);
+        context.commit("SET_IS_LOADING_FORM_RUBRIK", false);
       }
     },
     async UpdateRubrik(context, id) {

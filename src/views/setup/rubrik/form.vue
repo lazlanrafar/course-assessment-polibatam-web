@@ -1,6 +1,6 @@
 <template>
   <v-form ref="initialReport" @submit.prevent="handleSubmit">
-    <v-card :loading="isLoading">
+    <v-card :loading="isLoadingForm">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
           <h3 class="card-title fw-medium">Form Rubrik</h3>
@@ -127,8 +127,8 @@
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-end">
-          <v-btn class="btn mr-3" @click="handleClose" :loading="isLoading">Cancel</v-btn>
-          <v-btn class="btn bg-navy" type="submit" :loading="isLoading">Submit</v-btn>
+          <v-btn class="btn mr-3" @click="handleClose">Cancel</v-btn>
+          <v-btn class="btn bg-navy" type="submit" :loading="isLoadingForm">Submit</v-btn>
         </div>
       </div>
     </v-card>
@@ -145,8 +145,8 @@ export default {
     return {};
   },
   computed: {
-    isLoading() {
-      return this.$store.state.rubrik.isLoading;
+    isLoadingForm() {
+      return this.$store.state.rubrik.isLoadingForm;
     },
     isUpdate() {
       return this.$store.state.rubrik.isUpdate;

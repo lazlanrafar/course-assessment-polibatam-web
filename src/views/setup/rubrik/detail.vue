@@ -127,8 +127,8 @@ export default {
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateCDIOSyllabus", id);
-      this.$store.commit("SET_IS_UPDATE_CDIO_SYLLABUS", id);
+      this.$store.dispatch("SetFormUpdateRubrik", id);
+      this.$store.commit("SET_IS_UPDATE_RUBRIK", id);
       this.handleModalForm(true);
     },
   },
