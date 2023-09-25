@@ -11,6 +11,7 @@ import MataKuliah from "@/views/mata-kuliah/index.vue";
 import MataKuliahDetail from "@/views/mata-kuliah/detail.vue";
 
 // SETUP
+import Rubrik from "@/views/setup/rubrik/index.vue";
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
@@ -58,6 +59,14 @@ const routes = [
   // ===================================================
   // SETUP
   // ===================================================
+  {
+    path: "/rubrik",
+    name: "Rubrik",
+    component: Rubrik,
+    meta: {
+      middleware: [auth],
+    },
+  },
   {
     path: "/assessment-method",
     name: "AssessmentMethod",

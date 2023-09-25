@@ -22,6 +22,13 @@ const sidebar_menus = [
     roles: ["Administrator", "Hub", "Agent"],
   },
   {
+    title: "Rubrik",
+    icon: "fa-solid fa-book-open",
+    link: "/rubrik",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     title: "Assessment Method",
     icon: "fa-solid fa-bars-progress",
     link: "/assessment-method",
