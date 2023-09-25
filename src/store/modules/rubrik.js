@@ -35,6 +35,7 @@ const rubrik = {
     list_student_outcome: [],
     list_cdio_syllabus: [],
     form: { ...form },
+    form_import: [],
     isUpdate: false,
   },
   mutations: {
@@ -66,6 +67,9 @@ const rubrik = {
     },
     RESET_FORM_RUBRIK(state) {
       state.form = { ...form };
+    },
+    SET_FORM_IMPORT_RUBRIK(state, payload) {
+      state.form_import = payload;
     },
     SET_IS_UPDATE_RUBRIK(state, payload) {
       state.isUpdate = payload;

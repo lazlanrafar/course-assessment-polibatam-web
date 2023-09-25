@@ -13,7 +13,7 @@
                     <i class="fa fa-plus"></i>
                     Tambah Rubrik
                   </v-btn>
-                  <HandleImportRubrik />
+                  <!-- <HandleImportRubrik /> -->
                 </div>
                 <div class="d-flex justify-content-end">
                   <v-text-field
@@ -84,19 +84,21 @@ export default {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     Form: () => import("./form.vue"),
-    HandleImportRubrik: () => import("./handle-import-rubrik.vue"),
+    // HandleImportRubrik: () => import("./handle-import-rubrik.vue"),
   },
   data() {
     return {
       headers: [
         { text: "Student Outcome", value: "student_outcome.code" },
         { text: "CDIO Syllabus", value: "cdio_syllabus.level" },
-        { text: "Performance Indicators", value: "label" },
-        { text: "Proficiency Level 1", value: "desc_level_1" },
-        { text: "Proficiency Level 2", value: "desc_level_2" },
-        { text: "Proficiency Level 3", value: "desc_level_3" },
-        { text: "Proficiency Level 4", value: "desc_level_4" },
-        { text: "Proficiency Level 5", value: "desc_level_5" },
+        { text: "Performance Code", value: "code" },
+        { text: "Performance Indicators", value: "title" },
+        // { text: "Performance Indicators", value: "label" },
+        // { text: "Proficiency Level 1", value: "desc_level_1" },
+        // { text: "Proficiency Level 2", value: "desc_level_2" },
+        // { text: "Proficiency Level 3", value: "desc_level_3" },
+        // { text: "Proficiency Level 4", value: "desc_level_4" },
+        // { text: "Proficiency Level 5", value: "desc_level_5" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
