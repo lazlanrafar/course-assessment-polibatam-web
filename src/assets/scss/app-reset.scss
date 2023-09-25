@@ -28,3 +28,12 @@ label {
   font-weight: normal !important;
   box-shadow: none !important;
 }
+
+table {
+  tr {
+    th,
+    td {
+      vertical-align: top !important;
+    }
+  }
+}
