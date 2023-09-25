@@ -74,19 +74,54 @@
 
         <div class="row">
           <div class="col-12">
-            <v-textarea label="Proficiency Level 1" dense outlined rows="3" v-model="desc_level_1" />
+            <v-textarea
+              label="Proficiency Level 1"
+              dense
+              outlined
+              rows="3"
+              @input="handleDeleleteDoubleSpaceAndEnter()"
+              v-model="desc_level_1"
+            />
           </div>
           <div class="col-12">
-            <v-textarea label="Proficiency Level 2" dense outlined rows="3" v-model="desc_level_2" />
+            <v-textarea
+              label="Proficiency Level 2"
+              dense
+              outlined
+              rows="3"
+              @input="handleDeleleteDoubleSpaceAndEnter()"
+              v-model="desc_level_2"
+            />
           </div>
           <div class="col-12">
-            <v-textarea label="Proficiency Level 3" dense outlined rows="3" v-model="desc_level_3" />
+            <v-textarea
+              label="Proficiency Level 3"
+              dense
+              outlined
+              rows="3"
+              @input="handleDeleleteDoubleSpaceAndEnter()"
+              v-model="desc_level_3"
+            />
           </div>
           <div class="col-12">
-            <v-textarea label="Proficiency Level 4" dense outlined rows="3" v-model="desc_level_4" />
+            <v-textarea
+              label="Proficiency Level 4"
+              dense
+              outlined
+              rows="3"
+              @input="handleDeleleteDoubleSpaceAndEnter()"
+              v-model="desc_level_4"
+            />
           </div>
           <div class="col-12">
-            <v-textarea label="Proficiency Level 5" dense outlined rows="3" v-model="desc_level_5" />
+            <v-textarea
+              label="Proficiency Level 5"
+              dense
+              outlined
+              rows="3"
+              @input="handleDeleleteDoubleSpaceAndEnter()"
+              v-model="desc_level_5"
+            />
           </div>
         </div>
       </div>
@@ -227,6 +262,13 @@ export default {
       this.$emit("handleModalForm", false);
       this.$store.commit("RESET_FORM_RUBRIK");
       this.$store.commit("SET_IS_UPDATE_RUBRIK", false);
+    },
+    handleDeleleteDoubleSpaceAndEnter() {
+      this.desc_level_1 = this.desc_level_1.replace(/\s\s+/g, " ").trim();
+      this.desc_level_2 = this.desc_level_2.replace(/\s\s+/g, " ").trim();
+      this.desc_level_3 = this.desc_level_3.replace(/\s\s+/g, " ").trim();
+      this.desc_level_4 = this.desc_level_4.replace(/\s\s+/g, " ").trim();
+      this.desc_level_5 = this.desc_level_5.replace(/\s\s+/g, " ").trim();
     },
     handleSubmit() {
       this.$refs.initialReport.validate();

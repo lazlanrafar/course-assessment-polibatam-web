@@ -28,14 +28,37 @@
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
+                  group-by="student_outcome.code"
                 >
+                  <template v-slot:[`item.desc_level_1`]="{ item }">
+                    <span style="font-size: 0.8rem">
+                      {{ item.desc_level_1 }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.desc_level_2`]="{ item }">
+                    <span style="font-size: 0.8rem">
+                      {{ item.desc_level_2 }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.desc_level_3`]="{ item }">
+                    <span style="font-size: 0.8rem">
+                      {{ item.desc_level_3 }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.desc_level_4`]="{ item }">
+                    <span style="font-size: 0.8rem">
+                      {{ item.desc_level_4 }}
+                    </span>
+                  </template>
+                  <template v-slot:[`item.desc_level_5`]="{ item }">
+                    <span style="font-size: 0.8rem">
+                      {{ item.desc_level_5 }}
+                    </span>
+                  </template>
                   <template v-slot:[`item.action`]="{ item }">
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
-                      <v-icon small>mdi-delete</v-icon>
-                    </v-btn> -->
                   </template>
                 </v-data-table>
               </div>
@@ -62,14 +85,14 @@ export default {
   data() {
     return {
       headers: [
-        { text: "CDIO Syllabus", value: "no" },
-        { text: "Performance Indicators", value: "no" },
-        { text: "Proficiency Level", value: "no" },
-        // { text: "Level 1", value: "no" },
-        // { text: "Level 2", value: "no" },
-        // { text: "Level 3", value: "no" },
-        // { text: "Level 4", value: "no" },
-        // { text: "Level 5", value: "no" },
+        { text: "Student Outcome", value: "student_outcome.code" },
+        { text: "CDIO Syllabus", value: "cdio_syllabus.level" },
+        { text: "Performance Indicators", value: "label" },
+        { text: "Level 1", value: "desc_level_1" },
+        { text: "Level 2", value: "desc_level_2" },
+        { text: "Level 3", value: "desc_level_3" },
+        { text: "Level 4", value: "desc_level_4" },
+        { text: "Level 5", value: "desc_level_5" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
