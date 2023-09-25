@@ -72,10 +72,10 @@ export default {
     },
     optionsTable: {
       get() {
-        return this.$store.state.rubrik.optionsTable;
+        return this.$store.state.programStudi.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_RUBRIK", value);
+        this.$store.commit("SET_OPTIONS_TABLE_PROGRAM_STUDI", value);
       },
     },
   },

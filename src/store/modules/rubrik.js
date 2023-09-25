@@ -205,7 +205,7 @@ const rubrik = {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/program-studi/${id}`,
+          url: `${apiUrl}/rubrik/${id}`,
           method: "PUT",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -219,7 +219,7 @@ const rubrik = {
           text: result.data.message,
         });
 
-        context.dispatch("GetRubrik");
+        context.dispatch("GetRubrikByIdProgramStudi", context.state.form.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);

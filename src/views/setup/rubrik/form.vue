@@ -275,7 +275,7 @@ export default {
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateCDIOSyllabus", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateRubrik", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
