@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Rubrik" />
+    <ContentHeader header="Setup Rubrik" :title="reports.program_studi.title" />
 
     <section class="content">
       <div class="container-fluid">
@@ -8,6 +8,10 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
+                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                  <i class="fa fa-plus"></i>
+                  Tambah Rubrik
+                </v-btn>
                 <div class="d-flex justify-content-end">
                   <v-text-field
                     label="Cari..."
@@ -20,15 +24,18 @@
                 </div>
                 <v-data-table
                   :headers="headers"
-                  :items="reports_program_studi"
+                  :items="reports.data"
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-primary mr-2" @click="handleDetail(item.id)">
-                      <v-icon small>mdi-eye</v-icon>
+                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                      <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
+                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                      <v-icon small>mdi-delete</v-icon>
+                    </v-btn> -->
                   </template>
                 </v-data-table>
               </div>
@@ -46,7 +53,7 @@
 
 <script>
 export default {
-  name: "RubrikPage",
+  name: "CDIOSyllabusPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
@@ -55,20 +62,25 @@ export default {
   data() {
     return {
       headers: [
-        { text: "No", value: "no" },
-        { text: "Jurusan", value: "jurusan.title" },
-        { text: "Program Studi", value: "title" },
-        { text: "Total Rubrik", value: "_count.rubrik" },
+        { text: "CDIO Syllabus", value: "no" },
+        { text: "Performance Indicators", value: "no" },
+        { text: "Proficiency Level", value: "no" },
+        // { text: "Level 1", value: "no" },
+        // { text: "Level 2", value: "no" },
+        // { text: "Level 3", value: "no" },
+        // { text: "Level 4", value: "no" },
+        // { text: "Level 5", value: "no" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
+      modalForm: false,
     };
   },
   computed: {
     isLoading() {
       return this.$store.state.rubrik.isLoading;
     },
-    reports_program_studi() {
-      return this.$store.state.rubrik.reports_program_studi;
+    reports() {
+      return this.$store.state.rubrik.reports;
     },
     optionsTable: {
       get() {
@@ -80,12 +92,25 @@ export default {
     },
   },
   methods: {
-    handleDetail(id) {
-      this.$router.push(`/rubrik/${id}`);
+    handleModalForm(value) {
+      if (value) {
+        this.$store.dispatch("FetchBeforeFormRubrik");
+
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "id_program_studi",
+          value: this.$route.params.id,
+        });
+      }
+      this.modalForm = value;
+    },
+    handleUpdate(id) {
+      this.$store.dispatch("SetFormUpdateCDIOSyllabus", id);
+      this.$store.commit("SET_IS_UPDATE_CDIO_SYLLABUS", id);
+      this.handleModalForm(true);
     },
   },
   mounted() {
-    this.$store.dispatch("GetProgramStudiRubrik");
+    this.$store.dispatch("GetRubrikByIdProgramStudi", this.$route.params.id);
   },
 };
 </script>

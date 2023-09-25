@@ -14,13 +14,29 @@
         <div class="row">
           <div class="col-12">
             <v-select
+              label="Student Outcome"
+              dense
+              outlined
+              :items="list_student_outcome"
+              item-text="code"
+              item-value="id"
+              v-model="id_student_outcome"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Student Outcome');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-select
               label="CDIO Syllabus"
               dense
               outlined
-              v-model="id_cdio_syllabus_parent"
               :items="list_cdio_syllabus"
-              item-text="title"
+              item-text="label"
               item-value="id"
+              v-model="id_cdio_syllabus"
               :rules="[
                 (value) => {
                   return genericRequiredRule(value, 'CDIO Syllabus');
@@ -30,30 +46,47 @@
           </div>
           <div class="col-12">
             <v-text-field
-              label="Level"
+              label="Code"
               dense
               outlined
-              v-model="level"
-              type="number"
+              v-model="code"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Level');
+                  return genericRequiredRule(value, 'Code');
                 },
               ]"
             />
           </div>
           <div class="col-12">
             <v-text-field
-              label="Description"
+              label="Performance Indicator"
               dense
               outlined
               v-model="title"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Description');
+                  return genericRequiredRule(value, 'Performance Indicator');
                 },
               ]"
             />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <v-textarea label="Proficiency Level 1" dense outlined rows="3" v-model="desc_level_1" />
+          </div>
+          <div class="col-12">
+            <v-textarea label="Proficiency Level 2" dense outlined rows="3" v-model="desc_level_2" />
+          </div>
+          <div class="col-12">
+            <v-textarea label="Proficiency Level 3" dense outlined rows="3" v-model="desc_level_3" />
+          </div>
+          <div class="col-12">
+            <v-textarea label="Proficiency Level 4" dense outlined rows="3" v-model="desc_level_4" />
+          </div>
+          <div class="col-12">
+            <v-textarea label="Proficiency Level 5" dense outlined rows="3" v-model="desc_level_5" />
           </div>
         </div>
       </div>
@@ -71,50 +104,119 @@
 import validationRules from "@/mixins/validation-rules";
 
 export default {
-  name: "CDIOSyllabusForm",
+  name: "RubrikForm",
   mixins: [validationRules],
   data() {
     return {};
   },
   computed: {
     isLoading() {
-      return this.$store.state.CDIOSyllabus.isLoading;
+      return this.$store.state.rubrik.isLoading;
     },
     isUpdate() {
-      return this.$store.state.CDIOSyllabus.isUpdate;
+      return this.$store.state.rubrik.isUpdate;
+    },
+    list_student_outcome() {
+      return this.$store.state.rubrik.list_student_outcome;
     },
     list_cdio_syllabus() {
-      return this.$store.state.CDIOSyllabus.list_cdio_syllabus;
+      return this.$store.state.rubrik.list_cdio_syllabus;
     },
-    id_cdio_syllabus_parent: {
+    id_student_outcome: {
       get() {
-        return this.$store.state.CDIOSyllabus.form.id_cdio_syllabus_parent;
+        return this.$store.state.rubrik.form.id_student_outcome;
       },
       set(value) {
-        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
-          key: "id_cdio_syllabus_parent",
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "id_student_outcome",
           value,
         });
       },
     },
-    level: {
+    id_cdio_syllabus: {
       get() {
-        return this.$store.state.CDIOSyllabus.form.level;
+        return this.$store.state.rubrik.form.id_cdio_syllabus;
       },
       set(value) {
-        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
-          key: "level",
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "id_cdio_syllabus",
+          value,
+        });
+      },
+    },
+    code: {
+      get() {
+        return this.$store.state.rubrik.form.code;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "code",
           value,
         });
       },
     },
     title: {
       get() {
-        return this.$store.state.CDIOSyllabus.form.title;
+        return this.$store.state.rubrik.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_CDIO_SYLLABUS", {
+        this.$store.commit("SET_FORM_RUBRIK", {
           key: "title",
+          value,
+        });
+      },
+    },
+    desc_level_1: {
+      get() {
+        return this.$store.state.rubrik.form.desc_level_1;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "desc_level_1",
+          value,
+        });
+      },
+    },
+    desc_level_2: {
+      get() {
+        return this.$store.state.rubrik.form.desc_level_2;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "desc_level_2",
+          value,
+        });
+      },
+    },
+    desc_level_3: {
+      get() {
+        return this.$store.state.rubrik.form.desc_level_3;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "desc_level_3",
+          value,
+        });
+      },
+    },
+    desc_level_4: {
+      get() {
+        return this.$store.state.rubrik.form.desc_level_4;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "desc_level_4",
+          value,
+        });
+      },
+    },
+    desc_level_5: {
+      get() {
+        return this.$store.state.rubrik.form.desc_level_5;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_RUBRIK", {
+          key: "desc_level_5",
           value,
         });
       },
@@ -123,8 +225,8 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_CDIO_SYLLABUS");
-      this.$store.commit("SET_IS_UPDATE_CDIO_SYLLABUS", false);
+      this.$store.commit("RESET_FORM_RUBRIK");
+      this.$store.commit("SET_IS_UPDATE_RUBRIK", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
@@ -137,7 +239,7 @@ export default {
             }
           });
         } else {
-          this.$store.dispatch("CreateCDIOSyllabus").then((res) => {
+          this.$store.dispatch("CreateRubrik").then((res) => {
             if (res) {
               this.handleClose();
             }

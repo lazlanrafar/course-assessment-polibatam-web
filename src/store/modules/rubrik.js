@@ -5,8 +5,17 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  id_jurusan: "",
+  id_program_studi: "",
+  id_student_outcome: "",
+  id_cdio_syllabus: "",
+  code: "",
   title: "",
+
+  desc_level_1: "",
+  desc_level_2: "",
+  desc_level_3: "",
+  desc_level_4: "",
+  desc_level_5: "",
 };
 
 const rubrik = {
@@ -17,9 +26,12 @@ const rubrik = {
       itemsPerPage: 10,
       search: "",
     },
+
     reports_program_studi: [],
     reports: [],
-    list_jurusan: [],
+
+    list_student_outcome: [],
+    list_cdio_syllabus: [],
     form: { ...form },
     isUpdate: false,
   },
@@ -30,14 +42,19 @@ const rubrik = {
     SET_IS_LOADING_RUBRIK(state, payload) {
       state.isLoading = payload;
     },
+
     SET_REPORTS_PROGRAM_STUDI_RUBRIK(state, payload) {
       state.reports_program_studi = payload;
     },
     SET_REPORTS_RUBRIK(state, payload) {
       state.reports = payload;
     },
-    SET_LIST_JURUSAN_RUBRIK(state, payload) {
-      state.list_jurusan = payload;
+
+    SET_LIST_STUDENT_OUTCOME_RUBRIK(state, payload) {
+      state.list_student_outcome = payload;
+    },
+    SET_LIST_CDIO_SYLLABUS_RUBRIK(state, payload) {
+      state.list_cdio_syllabus = payload;
     },
     SET_FORM_RUBRIK(state, payload) {
       state.form[payload.key] = payload.value;
@@ -50,7 +67,7 @@ const rubrik = {
     },
   },
   actions: {
-    async GetRubrikProgramStudi(context) {
+    async GetProgramStudiRubrik(context) {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
@@ -72,17 +89,44 @@ const rubrik = {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
-    async FetchBeforeFormRubrik(context) {
+    async GetRubrikByIdProgramStudi(context, id_program_studi) {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
-        const jurusan = await axios({
-          url: `${apiUrl}/program-studi/jurusan`,
+        const result = await axios({
+          url: `${apiUrl}/rubrik/program-studi/${id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
         });
-        context.commit("SET_LIST_JURUSAN_RUBRIK", jurusan.data.data);
+
+        context.commit("SET_REPORTS_RUBRIK", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
+    async FetchBeforeFormRubrik(context) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const studentOutcome = await axios({
+          url: `${apiUrl}/student-outcome`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_STUDENT_OUTCOME_RUBRIK", studentOutcome.data.data);
+
+        const CDIOSyllabus = await axios({
+          url: `${apiUrl}/cdio-syllabus`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_CDIO_SYLLABUS_RUBRIK", CDIOSyllabus.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {
@@ -93,7 +137,7 @@ const rubrik = {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/program-studi`,
+          url: `${apiUrl}/rubrik`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -107,7 +151,7 @@ const rubrik = {
           text: result.data.message,
         });
 
-        context.dispatch("GetRubrik");
+        context.dispatch("GetRubrikByIdProgramStudi", context.state.form.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);

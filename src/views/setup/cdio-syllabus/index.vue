@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Rubrik" />
+    <ContentHeader header="Setup" title="CDIO Syllabus" />
 
     <section class="content">
       <div class="container-fluid">

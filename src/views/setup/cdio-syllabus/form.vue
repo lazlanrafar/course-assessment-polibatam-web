@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Rubrik</h3>
+          <h3 class="card-title fw-medium">Form CDIO Syllabus</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
