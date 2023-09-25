@@ -8,10 +8,13 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
-                  <i class="fa fa-plus"></i>
-                  Tambah Rubrik
-                </v-btn>
+                <div class="d-flex gap-3">
+                  <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                    <i class="fa fa-plus"></i>
+                    Tambah Rubrik
+                  </v-btn>
+                  <HandleImportRubrik />
+                </div>
                 <div class="d-flex justify-content-end">
                   <v-text-field
                     label="Cari..."
@@ -81,6 +84,7 @@ export default {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     Form: () => import("./form.vue"),
+    HandleImportRubrik: () => import("./handle-import-rubrik.vue"),
   },
   data() {
     return {
