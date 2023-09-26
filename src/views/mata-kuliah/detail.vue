@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     handleModalFormCLO(value) {
-      if (value) this.$store.dispatch("FetchBeforeFormCourseCLO");
+      if (value) this.$store.dispatch("FetchBeforeFormCourseCLO", this.$route.params.id);
       this.modalFormCLO = value;
     },
   },

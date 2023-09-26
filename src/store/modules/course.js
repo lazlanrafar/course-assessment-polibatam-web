@@ -34,6 +34,8 @@ const course = {
     list_program_studi: [],
     form: { ...form },
     isUpdate: false,
+
+    list_rubrik: [],
     list_assessment_method: [],
   },
   mutations: {
@@ -60,6 +62,9 @@ const course = {
     },
     SET_IS_UPDATE_COURSE(state, payload) {
       state.isUpdate = payload;
+    },
+    SET_LIST_RUBRIK_COURSE(state, payload) {
+      state.list_rubrik = payload;
     },
     SET_LIST_ASSESSMENT_METHOD_COURSE(state, payload) {
       state.list_assessment_method = payload;
@@ -228,9 +233,18 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
-    async FetchBeforeFormCourseCLO(context) {
+    async FetchBeforeFormCourseCLO(context, id_course) {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
+        const rubrik = await axios({
+          url: `${apiUrl}/rubrik/list-by-course/${id_course}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_RUBRIK_COURSE", rubrik.data.data);
+
         const assessmentMethod = await axios({
           url: `${apiUrl}/assessment-method`,
           method: "GET",

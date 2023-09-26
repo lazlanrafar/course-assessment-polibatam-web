@@ -84,7 +84,7 @@
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Weight of Course</legend>
           <div class="row">
-            <div class="col-12">
+            <div class="col-md-6">
               <v-text-field
                 label="Assignment"
                 v-model="bobot_assignment"
@@ -99,6 +99,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-md-6">
               <v-text-field
                 label="Quizzes"
                 v-model="bobot_quiz"
@@ -113,6 +115,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-md-6">
               <v-text-field
                 label="Mid-semester Exam"
                 v-model="bobot_mid_exam"
@@ -127,6 +131,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-md-6">
               <v-text-field
                 label="Final-semester Exam"
                 v-model="bobot_final_exam"
@@ -141,6 +147,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-md-6">
               <v-text-field
                 label="Practice / Project"
                 v-model="bobot_practice_or_project"
@@ -155,6 +163,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-md-6">
               <v-text-field
                 label="Project Presentation"
                 v-model="bobot_presentation"
@@ -169,6 +179,8 @@
                   },
                 ]"
               />
+            </div>
+            <div class="col-12">
               <v-text-field
                 label="Weight Total (%)"
                 readonly

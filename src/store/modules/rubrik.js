@@ -30,7 +30,10 @@ const rubrik = {
     },
 
     reports_program_studi: [],
-    reports: [],
+    reports: {
+      program_studi: {},
+      data: [],
+    },
 
     list_student_outcome: [],
     list_cdio_syllabus: [],

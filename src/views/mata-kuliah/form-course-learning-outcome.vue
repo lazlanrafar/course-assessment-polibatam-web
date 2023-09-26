@@ -13,6 +13,30 @@
       <div class="card-body">
         <div class="row">
           <div class="col-12">
+            <v-text-field
+              label="Code CLOs"
+              dense
+              outlined
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Code CLOs');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-textarea
+              label="Course Learning Outcome (CLOs)"
+              dense
+              outlined
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Course Learning Outcome (CLOs)');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
             <v-autocomplete
               label="Assessment Method"
               :items="list_assessment_method"
@@ -28,13 +52,16 @@
             />
           </div>
           <div class="col-12">
-            <v-textarea
-              label="Course Learning Outcome (CLOs)"
+            <v-autocomplete
+              label="Related SO-PI"
+              :items="list_rubrik"
+              item-text="label"
+              item-value="id"
               dense
               outlined
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Course Learning Outcome (CLOs)');
+                  return genericRequiredRule(value, 'Related SO-PI');
                 },
               ]"
             />
@@ -69,6 +96,9 @@ export default {
     },
     list_assessment_method() {
       return this.$store.state.course.list_assessment_method;
+    },
+    list_rubrik() {
+      return this.$store.state.course.list_rubrik;
     },
     id_program_studi: {
       get() {

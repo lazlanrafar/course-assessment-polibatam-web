@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup Rubrik" :title="reports.program_studi.title" />
+    <ContentHeader header="Setup Rubrik" :title="reports?.program_studi.title" />
 
     <section class="content">
       <div class="container-fluid">
@@ -27,7 +27,7 @@
                 </div>
                 <v-data-table
                   :headers="headers"
-                  :items="reports.data"
+                  :items="reports?.data"
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
