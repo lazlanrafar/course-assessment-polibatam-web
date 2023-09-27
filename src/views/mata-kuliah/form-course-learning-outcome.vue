@@ -17,6 +17,7 @@
               label="Code CLOs"
               dense
               outlined
+              v-model="code"
               :rules="[
                 (value) => {
                   return genericRequiredRule(value, 'Code CLOs');
@@ -29,6 +30,7 @@
               label="Course Learning Outcome (CLOs)"
               dense
               outlined
+              v-model="title"
               :rules="[
                 (value) => {
                   return genericRequiredRule(value, 'Course Learning Outcome (CLOs)');
@@ -42,6 +44,7 @@
               :items="list_assessment_method"
               item-text="title"
               item-value="id"
+              v-model="id_assessment_method"
               dense
               outlined
               :rules="[
@@ -52,11 +55,14 @@
             />
           </div>
           <div class="col-12">
-            <v-autocomplete
-              label="Related SO-PI"
+            <v-combobox
               :items="list_rubrik"
               item-text="label"
               item-value="id"
+              v-model="rubrik"
+              multiple
+              small-chips
+              label="Related SO-PI"
               dense
               outlined
               :rules="[
@@ -91,8 +97,8 @@ export default {
     isLoading() {
       return this.$store.state.course.isLoading;
     },
-    isUpdate() {
-      return this.$store.state.course.isUpdate;
+    isUpdateCLO() {
+      return this.$store.state.course.isUpdateCLO;
     },
     list_assessment_method() {
       return this.$store.state.course.list_assessment_method;
@@ -100,13 +106,57 @@ export default {
     list_rubrik() {
       return this.$store.state.course.list_rubrik;
     },
-    id_program_studi: {
+    id_course: {
       get() {
-        return this.$store.state.course.form.id_program_studi;
+        return this.$store.state.course.form_clo.id_course;
       },
       set(value) {
-        this.$store.commit("SET_FORM_COURSE", {
-          key: "id_program_studi",
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "id_course",
+          value,
+        });
+      },
+    },
+    rubrik: {
+      get() {
+        return this.$store.state.course.form_clo.rubrik;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "rubrik",
+          value,
+        });
+      },
+    },
+    id_assessment_method: {
+      get() {
+        return this.$store.state.course.form_clo.id_assessment_method;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "id_assessment_method",
+          value,
+        });
+      },
+    },
+    code: {
+      get() {
+        return this.$store.state.course.form_clo.code;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "code",
+          value,
+        });
+      },
+    },
+    title: {
+      get() {
+        return this.$store.state.course.form_clo.title;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "title",
           value,
         });
       },
@@ -115,22 +165,21 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalFormCLO", false);
-      this.$store.commit("RESET_FORM_COURSE");
-      this.$store.commit("SET_IS_UPDATE_COURSE", false);
-      this.bobot_total = 0;
+      this.$store.commit("RESET_FORM_COURSE_CLO");
+      this.$store.commit("SET_IS_UPDATE_COURSE_CLO", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
 
       if (this.$refs.initialReport.validate()) {
-        if (this.isUpdate) {
-          this.$store.dispatch("UpdateCourse", this.isUpdate).then((res) => {
+        if (this.isUpdateCLO) {
+          this.$store.dispatch("UpdateCourse", this.isUpdateCLO).then((res) => {
             if (res) {
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateCourse").then((res) => {
+          this.$store.dispatch("CreateCourseLearningOutcome").then((res) => {
             if (res) {
               this.handleClose();
             }

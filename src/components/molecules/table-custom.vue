@@ -15,7 +15,7 @@ export default {
   name: "TableCustom",
   props: {
     items: {
-      type: Object,
+      type: Array,
       require: true,
     },
   },

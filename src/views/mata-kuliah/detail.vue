@@ -1,10 +1,10 @@
 <template>
   <layout-app>
-    <ContentHeader header="Mata Kuliah" :title="report.title" />
+    <ContentHeader header="Mata Kuliah" :title="report.title || 'Loading...'" />
 
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row" v-if="report.title">
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
@@ -35,9 +35,36 @@
                   Tambah CLO
                 </v-btn>
                 <div class="d-flex justify-content-end">
-                  <v-text-field label="Cari..." style="max-width: 300px" prepend-inner-icon="mdi-magnify" outlined dense />
+                  <v-text-field
+                    label="Cari..."
+                    style="max-width: 300px"
+                    prepend-inner-icon="mdi-magnify"
+                    outlined
+                    dense
+                    v-model="optionsTable.search"
+                  />
                 </div>
-                <v-data-table :headers="headers" :items="[]"> </v-data-table>
+                <v-data-table
+                  :headers="headers"
+                  :items="report.course_learning_outcome || []"
+                  :loading="isLoading"
+                  :options.sync="optionsTable"
+                  :search="optionsTable.search"
+                >
+                  <template v-slot:[`item.rubrik`]="{ item }">
+                    <v-chip v-for="(rubrik, i) in item.details" :key="i" small color="primary" class="mr-3">
+                      {{ rubrik.rubrik.label }}
+                    </v-chip>
+                  </template>
+                  <template v-slot:[`item.action`]="{ item }">
+                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                      <v-icon small>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                      <v-icon small>mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                </v-data-table>
               </div>
             </div>
           </div>
@@ -62,10 +89,16 @@ export default {
   },
   data() {
     return {
+      optionsTable: {
+        page: 1,
+        itemsPerPage: -1,
+        search: "",
+      },
       headers: [
-        { text: "No", value: "no" },
+        { text: "Code", value: "code" },
         { text: "Course Learning Outcomes (CLOs)", value: "title" },
-        { text: "Assessment Method", value: "program_studi" },
+        { text: "Assessment Method", value: "assessment_method.title" },
+        { text: "Support Level for each SO and CDIO Syllabus", value: "rubrik" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalFormCLO: false,
@@ -81,7 +114,14 @@ export default {
   },
   methods: {
     handleModalFormCLO(value) {
-      if (value) this.$store.dispatch("FetchBeforeFormCourseCLO", this.$route.params.id);
+      if (value) {
+        this.$store.commit("SET_FORM_COURSE_CLO", {
+          key: "id_course",
+          value: this.$route.params.id,
+        });
+
+        this.$store.dispatch("FetchBeforeFormCourseLearningOutcome", this.$route.params.id);
+      }
       this.modalFormCLO = value;
     },
   },

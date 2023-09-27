@@ -21,6 +21,14 @@ const form = {
   bobot_total: 0,
 };
 
+const form_clo = {
+  id_course: "",
+  rubrik: "",
+  id_assessment_method: "",
+  code: "",
+  title: "",
+};
+
 const course = {
   state: {
     isLoading: false,
@@ -37,6 +45,8 @@ const course = {
 
     list_rubrik: [],
     list_assessment_method: [],
+    form_clo: { ...form_clo },
+    isUpdateCLO: false,
   },
   mutations: {
     SET_OPTIONS_TABLE_COURSE(state, payload) {
@@ -51,6 +61,7 @@ const course = {
     SET_REPORT_COURSE(state, payload) {
       state.report = payload;
     },
+
     SET_LIST_PROGRAM_STUDI_COURSE(state, payload) {
       state.list_program_studi = payload;
     },
@@ -63,11 +74,21 @@ const course = {
     SET_IS_UPDATE_COURSE(state, payload) {
       state.isUpdate = payload;
     },
+
     SET_LIST_RUBRIK_COURSE(state, payload) {
       state.list_rubrik = payload;
     },
     SET_LIST_ASSESSMENT_METHOD_COURSE(state, payload) {
       state.list_assessment_method = payload;
+    },
+    SET_FORM_COURSE_CLO(state, payload) {
+      state.form_clo[payload.key] = payload.value;
+    },
+    RESET_FORM_COURSE_CLO(state) {
+      state.form_clo = { ...form_clo };
+    },
+    SET_IS_UPDATE_COURSE_CLO(state, payload) {
+      state.isUpdateCLO = payload;
     },
   },
   actions: {
@@ -233,7 +254,7 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
-    async FetchBeforeFormCourseCLO(context, id_course) {
+    async FetchBeforeFormCourseLearningOutcome(context, id_course) {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
         const rubrik = await axios({
@@ -255,6 +276,38 @@ const course = {
         context.commit("SET_LIST_ASSESSMENT_METHOD_COURSE", assessmentMethod.data.data);
       } catch (error) {
         catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async CreateCourseLearningOutcome(context) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/clo`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form_clo,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetCourseById", context.state.form_clo.id_course);
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
       } finally {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
