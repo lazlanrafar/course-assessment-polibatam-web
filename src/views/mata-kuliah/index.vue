@@ -39,7 +39,13 @@
                         </v-btn>
                       </template>
                       <v-list min-width="150">
-                        <v-list-item @click="handleDetail(item.id)">
+                        <v-list-item @click="handleModalPI(true, item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-eye mr-1"></i>
+                            <span> Performance Indicator </span>
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="handleCourseLearningOutcome(item.id)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-book mr-2"></i>
                             <span>Course Learning Outcomes</span>
@@ -65,6 +71,9 @@
     <v-dialog v-if="modalForm" v-model="modalForm" persistent max-width="800">
       <Form @handleModalForm="handleModalForm" />
     </v-dialog>
+    <v-dialog v-if="modalPI" v-model="modalPI" persistent max-width="1200">
+      <PerformanceIndicator @handleModalPI="handleModalPI" />
+    </v-dialog>
   </layout-app>
 </template>
 
@@ -75,6 +84,7 @@ export default {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     Form: () => import("./form.vue"),
+    PerformanceIndicator: () => import("./performance-indicator.vue"),
   },
   data() {
     return {
@@ -88,6 +98,7 @@ export default {
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
+      modalPI: false,
     };
   },
   computed: {
@@ -116,8 +127,12 @@ export default {
       this.$store.commit("SET_IS_UPDATE_COURSE", id);
       this.handleModalForm(true);
     },
-    handleDetail(id) {
+    handleCourseLearningOutcome(id) {
       this.$router.push(`/mata-kuliah/${id}`);
+    },
+    handleModalPI(value, id) {
+      if (value) this.$store.dispatch("GetCoursePerformanceIndicatorById", id);
+      this.modalPI = value;
     },
   },
   mounted() {

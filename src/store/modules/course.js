@@ -47,6 +47,8 @@ const course = {
     list_assessment_method: [],
     form_clo: { ...form_clo },
     isUpdateCLO: false,
+
+    performance_indicator: {},
   },
   mutations: {
     SET_OPTIONS_TABLE_COURSE(state, payload) {
@@ -90,6 +92,10 @@ const course = {
     SET_IS_UPDATE_COURSE_CLO(state, payload) {
       state.isUpdateCLO = payload;
     },
+
+    SET_PERFORMANCE_INDICATOR_COURSE(state, payload) {
+      state.performance_indicator = payload;
+    },
   },
   actions: {
     async GetCourse(context) {
@@ -126,6 +132,24 @@ const course = {
         });
 
         context.commit("SET_REPORT_COURSE", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async GetCoursePerformanceIndicatorById(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/performance-indicator/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_PERFORMANCE_INDICATOR_COURSE", result.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {
