@@ -65,16 +65,16 @@
                         </v-btn>
                       </template>
                       <v-list min-width="150">
-                        <v-list-item @click="handleDetail(item.id)">
-                          <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-eye mr-2"></i>
-                            <span>Detail</span>
-                          </v-list-item-title>
-                        </v-list-item>
                         <v-list-item @click="handleUpdate(item.id)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
                             <span>Edit</span>
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="handleDelete(item.id)">
+                          <v-list-item-title class="text-danger fs-12">
+                            <i class="fas fa-trash mr-2"></i>
+                            <span>Delete</span>
                           </v-list-item-title>
                         </v-list-item>
                       </v-list>
@@ -95,6 +95,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "CourseDetailPage",
   components: {
@@ -145,6 +147,24 @@ export default {
       this.$store.commit("SET_IS_UPDATE_COURSE_CLO", id);
 
       this.handleModalFormCLO(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Anda akan menghapus data ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Tidak, batalkan!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteCourseLearningOutcome", {
+            id,
+            id_course: this.$route.params.id,
+          });
+        }
+      });
     },
   },
   mounted() {

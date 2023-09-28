@@ -372,6 +372,37 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
+    async DeleteCourseLearningOutcome(context, payload) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/clo/${payload.id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetCourseById", payload.id_course);
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
   },
 };
 
