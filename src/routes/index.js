@@ -8,7 +8,7 @@ import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
 import MataKuliah from "@/views/mata-kuliah/index.vue";
-import MataKuliahDetail from "@/views/mata-kuliah/detail.vue";
+import MataKuliahCLO from "@/views/mata-kuliah/course-learning-outcome.vue";
 
 // SETUP
 import Rubrik from "@/views/setup/rubrik/index.vue";
@@ -51,8 +51,8 @@ const routes = [
   },
   {
     path: "/mata-kuliah/:id",
-    name: "MataKuliahDetail",
-    component: MataKuliahDetail,
+    name: "MataKuliahCLO",
+    component: MataKuliahCLO,
     meta: {
       middleware: [auth],
     },

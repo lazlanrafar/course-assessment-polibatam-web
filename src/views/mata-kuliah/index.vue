@@ -30,7 +30,8 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-menu offset-y>
+                    <!-- right aligned menu -->
+                    <v-menu offset-y left>
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
                           <span class="fw-light mr-1">Action</span>
@@ -40,8 +41,8 @@
                       <v-list min-width="150">
                         <v-list-item @click="handleDetail(item.id)">
                           <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-eye mr-2"></i>
-                            <span>Detail</span>
+                            <i class="fas fa-book mr-2"></i>
+                            <span>Course Learning Outcomes</span>
                           </v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="handleUpdate(item.id)">
