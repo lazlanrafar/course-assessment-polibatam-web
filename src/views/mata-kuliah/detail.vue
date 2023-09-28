@@ -142,6 +142,8 @@ export default {
     },
     handleUpdate(id) {
       this.$store.dispatch("SetFormUpdateCourseLearningOutcome", id);
+      this.$store.commit("SET_IS_UPDATE_COURSE_CLO", id);
+
       this.handleModalFormCLO(true);
     },
   },

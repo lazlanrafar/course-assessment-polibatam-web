@@ -173,7 +173,7 @@ export default {
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdateCLO) {
-          this.$store.dispatch("UpdateCourse", this.isUpdateCLO).then((res) => {
+          this.$store.dispatch("UpdateCourseLearningOutcome", this.isUpdateCLO).then((res) => {
             if (res) {
               this.handleClose();
             }
