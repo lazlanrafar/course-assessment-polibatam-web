@@ -254,6 +254,9 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
+    // ==================================================================================
+    // Course Learning Outcome
+    // ==================================================================================
     async FetchBeforeFormCourseLearningOutcome(context, id_course) {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
@@ -308,6 +311,31 @@ const course = {
           title: "Oops...",
           text: error.response.data.message,
         });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async SetFormUpdateCourseLearningOutcome(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/clo/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        const data = result.data.data;
+        context.state.form_clo = {
+          id_course: data.id_course,
+          id_assessment_method: data.id_assessment_method,
+          code: data.code,
+          title: data.title,
+          rubrik: data.rubrik,
+        };
+      } catch (error) {
+        catchUnauthorized(error);
       } finally {
         context.commit("SET_IS_LOADING_COURSE", false);
       }

@@ -52,17 +52,33 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.rubrik`]="{ item }">
-                    <v-chip v-for="(rubrik, i) in item.details" :key="i" small color="primary" class="mr-3">
+                    <v-chip v-for="(rubrik, i) in item.details" :key="i" small color="primary" class="m-1">
                       {{ rubrik.rubrik.label }}
                     </v-chip>
                   </template>
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                      <v-icon small>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
-                      <v-icon small>mdi-delete</v-icon>
-                    </v-btn>
+                    <v-menu offset-y>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                          <span class="fw-light mr-1">Action</span>
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </v-btn>
+                      </template>
+                      <v-list min-width="150">
+                        <v-list-item @click="handleDetail(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-eye mr-2"></i>
+                            <span>Detail</span>
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="handleUpdate(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Edit</span>
+                          </v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </template>
                 </v-data-table>
               </div>
@@ -95,7 +111,7 @@ export default {
         search: "",
       },
       headers: [
-        { text: "Code", value: "code" },
+        { text: "Code", value: "code", width: "100px" },
         { text: "Course Learning Outcomes (CLOs)", value: "title" },
         { text: "Assessment Method", value: "assessment_method.title" },
         { text: "Support Level for each SO and CDIO Syllabus", value: "rubrik" },
@@ -123,6 +139,10 @@ export default {
         this.$store.dispatch("FetchBeforeFormCourseLearningOutcome", this.$route.params.id);
       }
       this.modalFormCLO = value;
+    },
+    handleUpdate(id) {
+      this.$store.dispatch("SetFormUpdateCourseLearningOutcome", id);
+      this.handleModalFormCLO(true);
     },
   },
   mounted() {
