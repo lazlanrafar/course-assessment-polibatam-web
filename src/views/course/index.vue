@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Main" title="Mata Kuliah" />
+    <ContentHeader header="Main" title="Course Learning Outcomes (CLOs)" />
 
     <section class="content">
       <div class="container-fluid">
@@ -128,7 +128,7 @@ export default {
       this.handleModalForm(true);
     },
     handleCourseLearningOutcome(id) {
-      this.$router.push(`/mata-kuliah/${id}`);
+      this.$router.push(`/course/${id}`);
     },
     handleModalPI(value, id) {
       if (value) this.$store.dispatch("GetCoursePerformanceIndicatorById", id);

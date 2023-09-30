@@ -7,8 +7,8 @@ import guest from "@/middleware/guest";
 import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
-import MataKuliah from "@/views/mata-kuliah/index.vue";
-import MataKuliahCLO from "@/views/mata-kuliah/course-learning-outcome.vue";
+import Course from "@/views/course/index.vue";
+import CourseLearningOutcome from "@/views/course/course-learning-outcome.vue";
 
 // SETUP
 import Rubrik from "@/views/setup/rubrik/index.vue";
@@ -42,17 +42,17 @@ const routes = [
     },
   },
   {
-    path: "/mata-kuliah",
-    name: "MataKuliah",
-    component: MataKuliah,
+    path: "/course",
+    name: "Course",
+    component: Course,
     meta: {
       middleware: [auth],
     },
   },
   {
-    path: "/mata-kuliah/:id",
-    name: "MataKuliahCLO",
-    component: MataKuliahCLO,
+    path: "/course/:id",
+    name: "CourseLearningOutcome",
+    component: CourseLearningOutcome,
     meta: {
       middleware: [auth],
     },
