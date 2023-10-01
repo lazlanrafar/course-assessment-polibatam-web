@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Main" title="Course Learning Outcomes (CLOs)" />
+    <ContentHeader header="Main" title="Course" />
 
     <section class="content">
       <div class="container-fluid">

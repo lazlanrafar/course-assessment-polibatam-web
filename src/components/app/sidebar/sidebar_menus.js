@@ -11,14 +11,7 @@ const sidebar_menus = [
     children: false,
   },
   {
-    title: "Assessment Plan",
-    icon: "fa-solid fa-clipboard",
-    link: "/assessment-plan",
-    roles: ["Administrator", "Hub", "Agent"],
-    children: false,
-  },
-  {
-    title: "Course Outcome (CLOs)",
+    title: "Course",
     icon: "fa-solid fa-book",
     link: "/course",
     roles: ["Administrator", "Hub", "Agent"],
