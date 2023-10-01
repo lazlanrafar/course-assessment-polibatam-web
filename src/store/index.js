@@ -10,6 +10,7 @@ import course from "./modules/course";
 // SETUP
 import rubrik from "./modules/rubrik";
 import assessmentMethod from "./modules/assessment-method";
+import assessmentType from "./modules/assessment-type";
 import CDIOSyllabus from "./modules/cdio-syllabus";
 import studentOutcome from "./modules/student-outcome";
 import studentOutcomeLevel from "./modules/student-outcome-level";
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     course,
     rubrik,
     assessmentMethod,
+    assessmentType,
     CDIOSyllabus,
     studentOutcome,
     studentOutcomeLevel,

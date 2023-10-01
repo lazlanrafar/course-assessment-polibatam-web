@@ -36,6 +36,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Assessment Type",
+    icon: "fa-solid fa-bars-progress",
+    link: "/assessment-type",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     title: "CDIO Syllabus",
     icon: "fa-solid fa-boxes-stacked",
     link: "/cdio-syllabus",

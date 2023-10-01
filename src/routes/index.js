@@ -15,6 +15,7 @@ import CourseAssessmentPlan from "@/views/course/course-assessment-plan.vue";
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import RubrikDetail from "@/views/setup/rubrik/detail.vue";
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
+import AssessmentType from "@/views/setup/assessment-type/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
@@ -89,6 +90,14 @@ const routes = [
     path: "/assessment-method",
     name: "AssessmentMethod",
     component: AssessmentMethod,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/assessment-type",
+    name: "AssessmentType",
+    component: AssessmentType,
     meta: {
       middleware: [auth],
     },
