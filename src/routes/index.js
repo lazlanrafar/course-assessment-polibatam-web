@@ -9,6 +9,7 @@ import Login from "@/views/auth/login.vue";
 import Dashboard from "@/views/dashboard/index.vue";
 import Course from "@/views/course/index.vue";
 import CourseLearningOutcome from "@/views/course/course-learning-outcome.vue";
+import CourseAssessmentPlan from "@/views/course/course-assessment-plan.vue";
 
 // SETUP
 import Rubrik from "@/views/setup/rubrik/index.vue";
@@ -50,9 +51,17 @@ const routes = [
     },
   },
   {
-    path: "/course/:id",
+    path: "/course/clo/:id",
     name: "CourseLearningOutcome",
     component: CourseLearningOutcome,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/course/assessment-plan/:id",
+    name: "CourseAssessmentPlan",
+    component: CourseAssessmentPlan,
     meta: {
       middleware: [auth],
     },

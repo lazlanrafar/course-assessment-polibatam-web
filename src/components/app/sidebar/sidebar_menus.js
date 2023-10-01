@@ -11,15 +11,15 @@ const sidebar_menus = [
     children: false,
   },
   {
+    header: "SETUP",
+    roles: ["Administrator", "Hub", "Agent"],
+  },
+  {
     title: "Course",
     icon: "fa-solid fa-book",
     link: "/course",
     roles: ["Administrator", "Hub", "Agent"],
     children: false,
-  },
-  {
-    header: "SETUP",
-    roles: ["Administrator", "Hub", "Agent"],
   },
   {
     title: "Rubrik",

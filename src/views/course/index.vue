@@ -51,6 +51,12 @@
                             <span>Course Learning Outcomes</span>
                           </v-list-item-title>
                         </v-list-item>
+                        <v-list-item @click="handleCourseAssessmentPlan(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-book mr-2"></i>
+                            <span>Course Assessment Plan</span>
+                          </v-list-item-title>
+                        </v-list-item>
                         <v-list-item @click="handleUpdate(item.id)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
@@ -95,6 +101,7 @@ export default {
         { text: "Program Studi", value: "program_studi.title" },
         { text: "SKS", value: "sks" },
         { text: "Target Level", value: "target_level" },
+        { text: "Total CLOs", value: "_count.course_learning_outcome" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -128,7 +135,10 @@ export default {
       this.handleModalForm(true);
     },
     handleCourseLearningOutcome(id) {
-      this.$router.push(`/course/${id}`);
+      this.$router.push(`/course/clo/${id}`);
+    },
+    handleCourseAssessmentPlan(id) {
+      this.$router.push(`/course/assessment-plan/${id}`);
     },
     handleModalPI(value, id) {
       if (value) this.$store.dispatch("GetCoursePerformanceIndicatorById", id);

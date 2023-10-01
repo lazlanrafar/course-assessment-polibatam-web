@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Course" title="Course Learning Outcomes" />
+    <ContentHeader header="Course" title="Course Assessment Plan" />
 
     <section class="content">
       <div class="container-fluid">
@@ -28,59 +28,31 @@
         <div class="row">
           <div class="col-12">
             <div class="card shadow-none border">
-              <div class="card-header fw-medium fs-15">Course Learning Outcomes (CLOs)</div>
+              <div class="card-header fw-medium fs-15">Course Assessment Plan</div>
               <div class="card-body">
                 <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormCLO(true)">
-                  <i class="fa fa-plus"></i>
-                  Tambah CLO
+                  <i class="fa fa-clock-o mr-2"></i>
+                  Generate Assessment Plan
                 </v-btn>
-                <div class="d-flex justify-content-end">
-                  <v-text-field
-                    label="Cari..."
-                    style="max-width: 300px"
-                    prepend-inner-icon="mdi-magnify"
-                    outlined
-                    dense
-                    v-model="optionsTable.search"
-                  />
-                </div>
-                <v-data-table
-                  :headers="headers"
-                  :items="report.course_learning_outcome || []"
-                  :loading="isLoading"
-                  :options.sync="optionsTable"
-                  :search="optionsTable.search"
-                >
-                  <template v-slot:[`item.rubrik`]="{ item }">
-                    <v-chip v-for="(rubrik, i) in item.details" :key="i" small color="primary" class="m-1">
-                      {{ rubrik.rubrik.label }}
-                    </v-chip>
+                <br />
+                <br />
+                <v-simple-table>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="fs-12" v-for="(item, i) in headers" :key="i">
+                          {{ item.text }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, i) in []" :key="i">
+                        <td>name</td>
+                        <td>name</td>
+                      </tr>
+                    </tbody>
                   </template>
-                  <template v-slot:[`item.action`]="{ item }">
-                    <v-menu offset-y>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
-                          <span class="fw-light mr-1">Action</span>
-                          <i class="fa-solid fa-chevron-down"></i>
-                        </v-btn>
-                      </template>
-                      <v-list min-width="150">
-                        <v-list-item @click="handleUpdate(item.id)">
-                          <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-edit mr-2"></i>
-                            <span>Edit</span>
-                          </v-list-item-title>
-                        </v-list-item>
-                        <v-list-item @click="handleDelete(item.id)">
-                          <v-list-item-title class="text-danger fs-12">
-                            <i class="fas fa-trash mr-2"></i>
-                            <span>Delete</span>
-                          </v-list-item-title>
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
-                  </template>
-                </v-data-table>
+                </v-simple-table>
               </div>
             </div>
           </div>
@@ -113,10 +85,23 @@ export default {
         search: "",
       },
       headers: [
-        { text: "Code", value: "code", width: "100px" },
-        { text: "Course Learning Outcomes (CLOs)", value: "title" },
-        { text: "Assessment Method", value: "assessment_method.title" },
-        { text: "Support Level for each SO and CDIO Syllabus", value: "rubrik" },
+        { text: "SO-PI", value: "code" },
+        { text: "Week 1", value: "code" },
+        { text: "Week 2", value: "code" },
+        { text: "Week 3", value: "code" },
+        { text: "Week 4", value: "code" },
+        { text: "Week 5", value: "code" },
+        { text: "Week 6", value: "code" },
+        { text: "Week 7", value: "code" },
+        { text: "Mid-Sem", value: "code" },
+        { text: "Week 8", value: "code" },
+        { text: "Week 9", value: "code" },
+        { text: "Week 10", value: "code" },
+        { text: "Week 11", value: "code" },
+        { text: "Week 12", value: "code" },
+        { text: "Week 13", value: "code" },
+        { text: "Week 14", value: "code" },
+        { text: "Final-Sem", value: "code" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalFormCLO: false,
