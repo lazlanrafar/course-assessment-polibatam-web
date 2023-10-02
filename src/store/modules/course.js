@@ -29,6 +29,25 @@ const form_clo = {
   title: "",
 };
 
+const form_assessment_plan = {
+  week_1: "",
+  week_2: "",
+  week_3: "",
+  week_4: "",
+  week_5: "",
+  week_6: "",
+  week_7: "",
+  mid_sem: "",
+  week_8: "",
+  week_9: "",
+  week_10: "",
+  week_11: "",
+  week_12: "",
+  week_13: "",
+  week_14: "",
+  final_sem: "",
+};
+
 const course = {
   state: {
     isLoading: false,
@@ -49,6 +68,10 @@ const course = {
     isUpdateCLO: false,
 
     performance_indicator: {},
+
+    reports_assessment_plan: [],
+    form_assessment_plan: { ...form_assessment_plan },
+    isUpdateAssessmentPlan: false,
   },
   mutations: {
     SET_OPTIONS_TABLE_COURSE(state, payload) {
@@ -95,6 +118,19 @@ const course = {
 
     SET_PERFORMANCE_INDICATOR_COURSE(state, payload) {
       state.performance_indicator = payload;
+    },
+
+    SET_REPORTS_ASSESSMENT_PLAN_COURSE(state, payload) {
+      state.reports_assessment_plan = payload;
+    },
+    SET_FORM_COURSE_ASSESSMENT_PLAN(state, payload) {
+      state.form_assessment_plan[payload.key] = payload.value;
+    },
+    RESET_FORM_COURSE_ASSESSMENT_PLAN(state) {
+      state.form_assessment_plan = { ...form_assessment_plan };
+    },
+    SET_IS_UPDATE_COURSE_ASSESSMENT_PLAN(state, payload) {
+      state.isUpdateAssessmentPlan = payload;
     },
   },
   actions: {
@@ -430,11 +466,29 @@ const course = {
     // ==================================================================================
     // Course Assessment Plan
     // ==================================================================================
-    async GenerateCourseAssessmentPlan(context, id) {
+    async GetCourseAssessmentPlanByIdCourse(context, id_course) {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/course/assessment-plan/${id}`,
+          url: `${apiUrl}/course/assessment-plan/${id_course}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_REPORTS_ASSESSMENT_PLAN_COURSE", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async GenerateCourseAssessmentPlan(context, id_course) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/assessment-plan/${id_course}`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -447,6 +501,75 @@ const course = {
           text: result.data.message,
         });
 
+        context.dispatch("GetCourseAssessmentPlanByIdCourse", id_course);
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async SetFormUpdateCourseAssessmentPlan(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/assessment-plan/detail/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        const data = result.data.data;
+
+        context.state.form_assessment_plan = {
+          week_1: data.week_1,
+          week_2: data.week_2,
+          week_3: data.week_3,
+          week_4: data.week_4,
+          week_5: data.week_5,
+          week_6: data.week_6,
+          week_7: data.week_7,
+          mid_sem: data.mid_sem,
+          week_8: data.week_8,
+          week_9: data.week_9,
+          week_10: data.week_10,
+          week_11: data.week_11,
+          week_12: data.week_12,
+          week_13: data.week_13,
+          week_14: data.week_14,
+          final_sem: data.final_sem,
+        };
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async UpdateCourseAssessmentPlan(context, payload) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/assessment-plan/${payload.id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form_assessment_plan,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetCourseAssessmentPlanByIdCourse", payload.id_course);
         return true;
       } catch (error) {
         catchUnauthorized(error);
