@@ -3,7 +3,7 @@
     <v-card :loading="isLoading">
       <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-          <h3 class="card-title fw-medium">Form Course Assessment Plan</h3>
+          <h3 class="card-title fw-medium">Form Course Assessment Plan {{ report.so_pi }}</h3>
 
           <v-btn icon @click="handleClose">
             <v-icon>mdi-close</v-icon>
@@ -105,6 +105,9 @@ export default {
   computed: {
     isLoading() {
       return this.$store.state.course.isLoading;
+    },
+    report() {
+      return this.$store.state.course.reports_assessment_plan.find((item) => item.id === this.isUpdateAssessmentPlan);
     },
     isUpdateAssessmentPlan() {
       return this.$store.state.course.isUpdateAssessmentPlan;
