@@ -7,11 +7,11 @@ import guest from "@/middleware/guest";
 import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
-import Course from "@/views/course/index.vue";
-import CourseLearningOutcome from "@/views/course/course-learning-outcome.vue";
-import CourseAssessmentPlan from "@/views/course/course-assessment-plan.vue";
 
 // SETUP
+import Course from "@/views/setup/course/index.vue";
+import CourseLearningOutcome from "@/views/setup/course/course-learning-outcome.vue";
+import CourseAssessmentPlan from "@/views/setup/course/course-assessment-plan.vue";
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import RubrikDetail from "@/views/setup/rubrik/detail.vue";
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
