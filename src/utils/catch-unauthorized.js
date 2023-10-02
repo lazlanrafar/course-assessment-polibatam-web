@@ -1,7 +1,8 @@
-import store from "@/store";
-import router from "@/routes";
+import store from "../store";
+import router from "../routes";
 
 export default function catchUnauthorized(error) {
+  if (!error.response) return;
   if (error.response.status === 401) {
     localStorage.clear();
     store.commit("SET_USER_APP", "");

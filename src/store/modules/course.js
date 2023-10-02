@@ -427,6 +427,39 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
+    // ==================================================================================
+    // Course Assessment Plan
+    // ==================================================================================
+    async GenerateCourseAssessmentPlan(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/assessment-plan/${id}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
   },
 };
 

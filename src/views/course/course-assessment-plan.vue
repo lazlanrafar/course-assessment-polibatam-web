@@ -30,29 +30,27 @@
             <div class="card shadow-none border">
               <div class="card-header fw-medium fs-15">Course Assessment Plan</div>
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormCLO(true)">
+                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleGenerate()">
                   <i class="fa fa-clock-o mr-2"></i>
                   Generate Assessment Plan
                 </v-btn>
                 <br />
                 <br />
-                <v-simple-table>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="fs-12" v-for="(item, i) in headers" :key="i">
-                          {{ item.text }}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, i) in []" :key="i">
-                        <td>name</td>
-                        <td>name</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
+                <table class="table fs-12">
+                  <thead>
+                    <tr>
+                      <th class="fw-medium" v-for="(item, i) in headers" :key="i">
+                        {{ item.text }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, i) in []" :key="i">
+                      <td>name</td>
+                      <td>name</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -116,6 +114,21 @@ export default {
     },
   },
   methods: {
+    handleGenerate() {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Anda akan generate Assessment Plan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, Generate!",
+        cancelButtonText: "Tidak, batalkan!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("GenerateCourseAssessmentPlan", this.$route.params.id);
+        }
+      });
+    },
     handleModalFormCLO(value) {
       if (value) {
         this.$store.commit("SET_FORM_COURSE_CLO", {
