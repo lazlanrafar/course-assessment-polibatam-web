@@ -23,10 +23,6 @@
                 { label: 'PP', value: 'Project Presentation, demo, team meeting' },
               ]"
             />
-            <p class="mb-0 mt-3 fs-14">
-              <span class="fw-medium">Note : </span> Masukan Type dengan format <span class="fw-medium">(CODE-ANGKA)</span> contoh
-              : <b>A-1</b> (Assignment 1)
-            </p>
           </div>
         </div>
         <div class="row">
