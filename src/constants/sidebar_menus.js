@@ -11,6 +11,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Assessment",
+    icon: "fa-solid fa-chalkboard",
+    link: "/assessment",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     header: "SETUP",
     roles: ["Administrator", "Hub", "Agent"],
   },

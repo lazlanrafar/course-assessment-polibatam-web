@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Main" title="Course" />
+    <ContentHeader header="Setup" title="Course" />
 
     <section class="content">
       <div class="container-fluid">

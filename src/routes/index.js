@@ -7,6 +7,7 @@ import guest from "@/middleware/guest";
 import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
+import Assessment from "@/views/assessment/index.vue";
 
 // SETUP
 import Course from "@/views/setup/course/index.vue";
@@ -44,6 +45,17 @@ const routes = [
     },
   },
   {
+    path: "/assessment",
+    name: "Assessment",
+    component: Assessment,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  // ===================================================
+  // SETUP
+  // ===================================================
+  {
     path: "/course",
     name: "Course",
     component: Course,
@@ -67,9 +79,6 @@ const routes = [
       middleware: [auth],
     },
   },
-  // ===================================================
-  // SETUP
-  // ===================================================
   {
     path: "/rubrik",
     name: "Rubrik",

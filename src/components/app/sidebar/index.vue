@@ -35,7 +35,7 @@ export default {
   name: "AppSidebar",
   data() {
     return {
-      sidebar_menus: require("./sidebar_menus").default,
+      sidebar_menus: require("@/constants/sidebar_menus").default,
     };
   },
   computed: {
