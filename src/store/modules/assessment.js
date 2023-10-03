@@ -175,6 +175,37 @@ const assessment = {
         context.commit("SET_IS_LOADING_ASSESSMENT", false);
       }
     },
+    async DeleteAssessment(context, id) {
+      context.commit("SET_IS_LOADING_ASSESSMENT", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/${id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetAssessment");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
   },
 };
 

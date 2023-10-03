@@ -45,6 +45,12 @@
                             <span>Edit</span>
                           </v-list-item-title>
                         </v-list-item>
+                        <v-list-item @click="handleDelete(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-trash mr-2"></i>
+                            <span>Delete</span>
+                          </v-list-item-title>
+                        </v-list-item>
                       </v-list>
                     </v-menu>
                   </template>
@@ -63,6 +69,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "AssessmentPage",
   components: {
@@ -106,8 +114,24 @@ export default {
     },
     handleUpdate(id) {
       this.$store.dispatch("SetFormUpdateAssessment", id);
-      this.$store.commit("SET_IS_UPDATE_ASSESSMENT", true);
+      this.$store.commit("SET_IS_UPDATE_ASSESSMENT", id);
       this.handleModalForm(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteAssessment", id);
+        }
+      });
     },
   },
   mounted() {
