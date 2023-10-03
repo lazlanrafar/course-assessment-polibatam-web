@@ -31,52 +31,52 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <v-text-field label="Week 1" dense outlined v-model="week_1" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 1" dense outlined v-model="week_1" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 2" dense outlined v-model="week_2" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 2" dense outlined v-model="week_2" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 3" dense outlined v-model="week_3" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 3" dense outlined v-model="week_3" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 4" dense outlined v-model="week_4" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 4" dense outlined v-model="week_4" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 5" dense outlined v-model="week_5" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 5" dense outlined v-model="week_5" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 6" dense outlined v-model="week_6" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 6" dense outlined v-model="week_6" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 7" dense outlined v-model="week_7" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 7" dense outlined v-model="week_7" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Mid-Sem" dense outlined v-model="mid_sem" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Mid-Sem" dense outlined v-model="mid_sem" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 8" dense outlined v-model="week_8" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 8" dense outlined v-model="week_8" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 9" dense outlined v-model="week_9" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 9" dense outlined v-model="week_9" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 10" dense outlined v-model="week_10" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 10" dense outlined v-model="week_10" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 11" dense outlined v-model="week_11" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 11" dense outlined v-model="week_11" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 12" dense outlined v-model="week_12" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 12" dense outlined v-model="week_12" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 13" dense outlined v-model="week_13" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 13" dense outlined v-model="week_13" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Week 14" dense outlined v-model="week_14" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Week 14" dense outlined v-model="week_14" />
           </div>
           <div class="col-md-6">
-            <v-text-field label="Final-Sem" dense outlined v-model="final_sem" />
+            <v-autocomplete :items="list_assessment_plan_type" label="Final-Sem" dense outlined v-model="final_sem" />
           </div>
         </div>
       </div>
@@ -108,6 +108,9 @@ export default {
     },
     report() {
       return this.$store.state.course.reports_assessment_plan.find((item) => item.id === this.isUpdateAssessmentPlan);
+    },
+    list_assessment_plan_type() {
+      return this.$store.state.course.list_assessment_plan_type;
     },
     isUpdateAssessmentPlan() {
       return this.$store.state.course.isUpdateAssessmentPlan;

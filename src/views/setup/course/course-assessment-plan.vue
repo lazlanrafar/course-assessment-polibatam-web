@@ -177,6 +177,7 @@ export default {
       });
     },
     handleModalFormAssessmentPlan(value) {
+      if (value) this.$store.dispatch("FetchBeforeFormCourseAssessmentPlan", this.$route.params.id);
       this.modalFormAssessmentPlan = value;
     },
     handleUpdate(id) {
@@ -203,7 +204,9 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$store.dispatch("UpdateCourseIsReady", this.$route.params.id);
+          this.$store.dispatch("UpdateCourseIsReady", this.$route.params.id).then(() => {
+            this.$store.dispatch("GetCourseById", this.$route.params.id);
+          });
         }
       });
     },

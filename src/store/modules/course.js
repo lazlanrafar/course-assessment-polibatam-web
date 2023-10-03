@@ -80,6 +80,7 @@ const course = {
     performance_indicator: {},
 
     reports_assessment_plan: [],
+    list_assessment_plan_type: [],
     form_assessment_plan: { ...form_assessment_plan },
     isUpdateAssessmentPlan: false,
   },
@@ -138,6 +139,9 @@ const course = {
 
     SET_REPORTS_ASSESSMENT_PLAN_COURSE(state, payload) {
       state.reports_assessment_plan = payload;
+    },
+    SET_LIST_ASSESSMENT_PLAN_TYPE_COURSE(state, payload) {
+      state.list_assessment_plan_type = payload;
     },
     SET_FORM_COURSE_ASSESSMENT_PLAN(state, payload) {
       state.form_assessment_plan[payload.key] = payload.value;
@@ -618,6 +622,43 @@ const course = {
           title: "Oops...",
           text: error.response.data.message,
         });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async FetchBeforeFormCourseAssessmentPlan(context, id_course) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/${id_course}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        const data = result.data.data;
+
+        let list_assessment_plan_type = [];
+
+        for (let i = 0; i < data.total_assignment; i++) {
+          list_assessment_plan_type.push(`A${i + 1}`);
+        }
+        for (let i = 0; i < data.total_practice_or_project; i++) {
+          list_assessment_plan_type.push(`P${i + 1}`);
+        }
+        for (let i = 0; i < data.total_quiz; i++) {
+          list_assessment_plan_type.push(`Q${i + 1}`);
+        }
+        for (let i = 0; i < data.total_presentation; i++) {
+          list_assessment_plan_type.push(`PP${i + 1}`);
+        }
+
+        if (data.total_mid_exam > 0) list_assessment_plan_type.push(`MSE`);
+        if (data.total_final_exam > 0) list_assessment_plan_type.push(`FSE`);
+
+        context.state.list_assessment_plan_type = list_assessment_plan_type;
+      } catch (error) {
+        catchUnauthorized(error);
       } finally {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
