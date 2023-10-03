@@ -29,6 +29,25 @@
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
                 >
+                  <template v-slot:[`item.action`]="{ item }">
+                    <!-- right aligned menu -->
+                    <v-menu offset-y left>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                          <span class="fw-light mr-1">Action</span>
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </v-btn>
+                      </template>
+                      <v-list min-width="150">
+                        <v-list-item @click="handleUpdate(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Edit</span>
+                          </v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </template>
                 </v-data-table>
               </div>
             </div>
@@ -54,26 +73,29 @@ export default {
   data() {
     return {
       headers: [
-        { text: "No", value: "no" },
-        { text: "Code", value: "code" },
-        { text: "Assessment Type", value: "title" },
+        { text: "Course Code", value: "course.code" },
+        { text: "Course Name", value: "course.title" },
+        { text: "Semester", value: "semester" },
+        { text: "Academic Year", value: "academic_year" },
+        { text: "Class", value: "class" },
+        { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
     };
   },
   computed: {
     isLoading() {
-      return this.$store.state.assessmentType.isLoading;
+      return this.$store.state.assessment.isLoading;
     },
     reports() {
-      return this.$store.state.assessmentType.reports;
+      return this.$store.state.assessment.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.assessmentType.optionsTable;
+        return this.$store.state.assessment.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_ASSESSMENT_TYPE", value);
+        this.$store.commit("SET_OPTIONS_TABLE_ASSESSMENT", value);
       },
     },
   },
@@ -84,7 +106,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("GetAssessmentType");
+    this.$store.dispatch("GetAssessment");
   },
 };
 </script>

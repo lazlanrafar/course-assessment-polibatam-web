@@ -52,7 +52,7 @@ const assessment = {
       context.commit("SET_IS_LOADING_ASSESSMENT", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/assessment-method`,
+          url: `${apiUrl}/assessment`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -91,7 +91,7 @@ const assessment = {
       context.commit("SET_IS_LOADING_ASSESSMENT", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/assessment-method`,
+          url: `${apiUrl}/assessment`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -123,7 +123,7 @@ const assessment = {
       context.commit("SET_IS_LOADING_ASSESSMENT", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/assessment-method/${id}`,
+          url: `${apiUrl}/assessment/${id}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -143,7 +143,7 @@ const assessment = {
       context.commit("SET_IS_LOADING_ASSESSMENT", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/assessment-method/${id}`,
+          url: `${apiUrl}/assessment/${id}`,
           method: "PUT",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
