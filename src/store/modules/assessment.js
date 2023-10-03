@@ -20,6 +20,7 @@ const assessment = {
       search: "",
     },
     reports: [],
+    report: {},
     list_course: [],
     form: { ...form },
     isUpdate: false,
@@ -33,6 +34,9 @@ const assessment = {
     },
     SET_REPORTS_ASSESSMENT(state, payload) {
       state.reports = payload;
+    },
+    SET_REPORT_ASSESSMENT(state, payload) {
+      state.report = payload;
     },
     SET_LIST_COURSE_ASSESSMENT(state, payload) {
       state.list_course = payload;
@@ -64,6 +68,24 @@ const assessment = {
         });
 
         context.commit("SET_REPORTS_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
+    async GetAssessmentById(context, id) {
+      context.commit("SET_IS_LOADING_ASSESSMENT", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_REPORT_ASSESSMENT", result.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {

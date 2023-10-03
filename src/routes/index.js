@@ -8,6 +8,7 @@ import Login from "@/views/auth/login.vue";
 
 import Dashboard from "@/views/dashboard/index.vue";
 import Assessment from "@/views/assessment/index.vue";
+import AssessmentDetail from "@/views/assessment/detail.vue";
 
 // SETUP
 import Course from "@/views/setup/course/index.vue";
@@ -48,6 +49,14 @@ const routes = [
     path: "/assessment",
     name: "Assessment",
     component: Assessment,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/assessment/:id",
+    name: "AssessmentDetail",
+    component: AssessmentDetail,
     meta: {
       middleware: [auth],
     },

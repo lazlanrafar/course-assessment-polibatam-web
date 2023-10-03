@@ -39,6 +39,12 @@
                         </v-btn>
                       </template>
                       <v-list min-width="150">
+                        <v-list-item @click="handleDetail(item.id)">
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-eye mr-2"></i>
+                            <span>Detail</span>
+                          </v-list-item-title>
+                        </v-list-item>
                         <v-list-item @click="handleUpdate(item.id)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
@@ -116,6 +122,9 @@ export default {
       this.$store.dispatch("SetFormUpdateAssessment", id);
       this.$store.commit("SET_IS_UPDATE_ASSESSMENT", id);
       this.handleModalForm(true);
+    },
+    handleDetail(id) {
+      this.$router.push(`/assessment/${id}`);
     },
     handleDelete(id) {
       Swal.fire({
