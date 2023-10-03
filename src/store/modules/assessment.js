@@ -130,8 +130,12 @@ const assessment = {
           },
         });
 
+        const data = result.data.data;
         context.state.form = {
-          title: result.data.data.title,
+          id_course: data.id_course,
+          semester: data.semester,
+          academic_year: data.academic_year,
+          class: data.class,
         };
       } catch (error) {
         catchUnauthorized(error);

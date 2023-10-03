@@ -104,6 +104,11 @@ export default {
       if (value) this.$store.dispatch("FetchBeforeFormAssessment");
       this.modalForm = value;
     },
+    handleUpdate(id) {
+      this.$store.dispatch("SetFormUpdateAssessment", id);
+      this.$store.commit("SET_IS_UPDATE_ASSESSMENT", true);
+      this.handleModalForm(true);
+    },
   },
   mounted() {
     this.$store.dispatch("GetAssessment");
