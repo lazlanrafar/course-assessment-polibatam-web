@@ -8,6 +8,11 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
+                <v-chip :color="report.is_ready ? 'success' : 'error'" text-color="white" small class="text-capitalize">
+                  {{ report.is_ready ? "Course is Ready" : "Course is Not Ready" }}
+                </v-chip>
+                <br />
+                <br />
                 <TableCustom
                   :items="[
                     { label: 'Code', value: report.code },
@@ -30,10 +35,22 @@
             <div class="card shadow-none border">
               <div class="card-header fw-medium fs-15">Course Assessment Plan</div>
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleGenerate()">
-                  <i class="fa fa-clock-o mr-2"></i>
-                  Generate Assessment Plan
-                </v-btn>
+                <div class="d-sm-flex justify-content-between gap-2">
+                  <div class="d-sm-flex gap-2">
+                    <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleGenerate()">
+                      <i class="fa fa-clock-o mr-2"></i>
+                      Generate Assessment Plan
+                    </v-btn>
+                    <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormAssessmentPlanTotal(true)">
+                      <i class="fa fa-clock-o mr-2"></i>
+                      Total Type
+                    </v-btn>
+                  </div>
+                  <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleReadyCourse()" v-if="!report.is_ready">
+                    <i class="fa fa-check mr-2"></i>
+                    Set Ready
+                  </v-btn>
+                </div>
                 <br />
                 <br />
                 <div class="table-responsive">
@@ -83,6 +100,9 @@
     <v-dialog v-if="modalFormAssessmentPlan" v-model="modalFormAssessmentPlan" persistent max-width="800">
       <FormAssessmentPlan @handleModalFormAssessmentPlan="handleModalFormAssessmentPlan" />
     </v-dialog>
+    <v-dialog v-if="modalFormAssessmentPlanTotal" v-model="modalFormAssessmentPlanTotal" persistent max-width="800">
+      <FormAssessmentPlanTotal @handleModalFormAssessmentPlanTotal="handleModalFormAssessmentPlanTotal" />
+    </v-dialog>
   </layout-app>
 </template>
 
@@ -96,6 +116,7 @@ export default {
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     TableCustom: () => import("@/components/molecules/table-custom.vue"),
     FormAssessmentPlan: () => import("./form-course-assessment-plan.vue"),
+    FormAssessmentPlanTotal: () => import("./form-course-assessment-plan-total.vue"),
   },
   data() {
     return {
@@ -125,6 +146,7 @@ export default {
         { text: "Action" },
       ],
       modalFormAssessmentPlan: false,
+      modalFormAssessmentPlanTotal: false,
     };
   },
   computed: {
@@ -162,6 +184,28 @@ export default {
       this.$store.commit("SET_IS_UPDATE_COURSE_ASSESSMENT_PLAN", id);
 
       this.handleModalFormAssessmentPlan(true);
+    },
+    handleModalFormAssessmentPlanTotal(value) {
+      if (value) {
+        this.$store.dispatch("SetFormUpdateCourseAssessmentTotal", this.$route.params.id);
+        this.$store.commit("SET_IS_UPDATE_COURSE", this.$route.params.id);
+      }
+      this.modalFormAssessmentPlanTotal = value;
+    },
+    handleReadyCourse() {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Anda akan menyelesaikan Course!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, Selesaikan!",
+        cancelButtonText: "Tidak, batalkan!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("UpdateCourseIsReady", this.$route.params.id);
+        }
+      });
     },
   },
   mounted() {

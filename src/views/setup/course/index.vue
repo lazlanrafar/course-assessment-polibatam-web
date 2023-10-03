@@ -29,6 +29,11 @@
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
                 >
+                  <template v-slot:[`item.is_ready`]="{ item }">
+                    <v-chip :color="item.is_ready ? 'success' : 'error'" text-color="white" small class="text-capitalize">
+                      {{ item.is_ready ? "Ready" : "Not Ready" }}
+                    </v-chip>
+                  </template>
                   <template v-slot:[`item.action`]="{ item }">
                     <!-- right aligned menu -->
                     <v-menu offset-y left>
@@ -102,6 +107,7 @@ export default {
         { text: "SKS", value: "sks" },
         { text: "Target Level", value: "target_level" },
         { text: "Total CLOs", value: "_count.course_learning_outcome" },
+        { text: "Is Ready", value: "is_ready" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,

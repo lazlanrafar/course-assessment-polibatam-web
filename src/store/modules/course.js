@@ -48,6 +48,15 @@ const form_assessment_plan = {
   final_sem: "",
 };
 
+const form_assessment_plan_total = {
+  total_assignment: 0,
+  total_quiz: 0,
+  total_mid_exam: 0,
+  total_final_exam: 0,
+  total_practice_or_project: 0,
+  total_presentation: 0,
+};
+
 const course = {
   state: {
     isLoading: false,
@@ -60,6 +69,7 @@ const course = {
     report: {},
     list_program_studi: [],
     form: { ...form },
+    form_assessment_plan_total: { ...form_assessment_plan_total },
     isUpdate: false,
 
     list_rubrik: [],
@@ -95,6 +105,12 @@ const course = {
     },
     RESET_FORM_COURSE(state) {
       state.form = { ...form };
+    },
+    SET_FORM_ASSESSMENT_PLAN_TOTAL_COURSE(state, payload) {
+      state.form_assessment_plan_total[payload.key] = payload.value;
+    },
+    RESET_FORM_ASSESSMENT_PLAN_TOTAL_COURSE(state) {
+      state.form_assessment_plan_total = { ...form_assessment_plan_total };
     },
     SET_IS_UPDATE_COURSE(state, payload) {
       state.isUpdate = payload;
@@ -282,6 +298,31 @@ const course = {
         context.commit("SET_IS_LOADING_COURSE", false);
       }
     },
+    async SetFormUpdateCourseAssessmentTotal(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        const data = result.data.data;
+        context.state.form_assessment_plan_total = {
+          total_assignment: data.total_assignment,
+          total_quiz: data.total_quiz,
+          total_mid_exam: data.total_mid_exam,
+          total_final_exam: data.total_final_exam,
+          total_practice_or_project: data.total_practice_or_project,
+          total_presentation: data.total_presentation,
+        };
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
     async UpdateCourse(context, id) {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
@@ -292,6 +333,72 @@ const course = {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
           data: context.state.form,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetCourse");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async UpdateCourseAssessmentPlanTotal(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/${id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form_assessment_plan_total,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetCourse");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_COURSE", false);
+      }
+    },
+    async UpdateCourseIsReady(context, id) {
+      context.commit("SET_IS_LOADING_COURSE", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/course/${id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: {
+            is_ready: true,
+          },
         });
 
         Swal.fire({
