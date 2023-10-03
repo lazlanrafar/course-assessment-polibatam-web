@@ -4,10 +4,10 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import app from "./modules/app";
-
-import course from "./modules/course";
+import assessment from "./modules/assessment";
 
 // SETUP
+import course from "./modules/course";
 import rubrik from "./modules/rubrik";
 import assessmentMethod from "./modules/assessment-method";
 import assessmentType from "./modules/assessment-type";
@@ -22,6 +22,7 @@ import userManagement from "./modules/user-management";
 export default new Vuex.Store({
   modules: {
     app,
+    assessment,
     course,
     rubrik,
     assessmentMethod,

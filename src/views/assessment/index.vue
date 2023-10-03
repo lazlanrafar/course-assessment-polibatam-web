@@ -8,6 +8,10 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
+                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                  <i class="fa fa-plus"></i>
+                  Tambah
+                </v-btn>
                 <div class="d-flex justify-content-end">
                   <v-text-field
                     label="Cari..."
@@ -32,6 +36,10 @@
         </div>
       </div>
     </section>
+
+    <v-dialog v-model="modalForm" persistent max-width="600">
+      <Form @handleModalForm="handleModalForm" />
+    </v-dialog>
   </layout-app>
 </template>
 
@@ -41,6 +49,7 @@ export default {
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
+    Form: () => import("./form.vue"),
   },
   data() {
     return {
@@ -68,7 +77,12 @@ export default {
       },
     },
   },
-  methods: {},
+  methods: {
+    handleModalForm(value) {
+      if (value) this.$store.dispatch("FetchBeforeFormAssessment");
+      this.modalForm = value;
+    },
+  },
   mounted() {
     this.$store.dispatch("GetAssessmentType");
   },
