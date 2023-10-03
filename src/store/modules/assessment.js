@@ -11,6 +11,18 @@ const form = {
   class: "",
 };
 
+const form_mahasiswa = {
+  nim: "",
+  name: "",
+
+  quiz: [],
+  practice_or_project: [],
+  assignment: [],
+  mid_exam: "",
+  final_exam: "",
+  presentation: [],
+};
+
 const assessment = {
   state: {
     isLoading: false,
@@ -24,6 +36,9 @@ const assessment = {
     list_course: [],
     form: { ...form },
     isUpdate: false,
+
+    form_mahasiswa: { ...form_mahasiswa },
+    isUpdateMahasiswa: false,
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -49,6 +64,16 @@ const assessment = {
     },
     SET_IS_UPDATE_ASSESSMENT(state, payload) {
       state.isUpdate = payload;
+    },
+
+    SET_FORM_MAHASISWA_ASSESSMENT(state, payload) {
+      state.form_mahasiswa[payload.key] = payload.value;
+    },
+    RESET_FORM_MAHASISWA_ASSESSMENT(state) {
+      state.form_mahasiswa = { ...form_mahasiswa };
+    },
+    SET_IS_UPDATE_MAHASISWA_ASSESSMENT(state, payload) {
+      state.isUpdateMahasiswa = payload;
     },
   },
   actions: {
