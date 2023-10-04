@@ -66,7 +66,21 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item, i) in report.details" :key="i">
-                        <td>{{ item.so_pi }}</td>
+                        <td>{{ item.nim }}</td>
+                        <td>{{ item.name }}</td>
+                        <td v-for="(nQ, iQ) in report.course.total_quiz" :key="iQ">{{ item.quiz[iQ] }}</td>
+                        <td v-for="(nP, iP) in report.course.total_practice_or_project" :key="iP">
+                          {{ item.practice_or_project[iP] }}
+                        </td>
+                        <td v-for="(nA, iA) in report.course.total_assignment" :key="iA">
+                          {{ item.assignment[iA] }}
+                        </td>
+                        <td>{{ item.mid_exam }}</td>
+                        <td>{{ item.final_exam }}</td>
+                        <td v-for="(nPP, iPP) in report.course.total_presentation" :key="iPP">
+                          {{ item.presentation[iPP] }}
+                        </td>
+                        <td>{{ item.nilai_akhir }}</td>
                         <td>
                           <v-btn icon small color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                             <v-icon small>mdi-pencil</v-icon>
@@ -115,7 +129,14 @@ export default {
   },
   methods: {
     handleModalFormMahasiswa(value) {
-      if (value) this.$store.dispatch("GetAssessmentById", this.$route.params.id);
+      if (value) {
+        this.$store.dispatch("GetAssessmentById", this.$route.params.id);
+
+        this.$store.commit("SET_FORM_MAHASISWA_ASSESSMENT", {
+          key: "id_assessment",
+          value: this.$route.params.id,
+        });
+      }
       this.modalFormMahasiswa = value;
     },
   },

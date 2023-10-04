@@ -12,6 +12,7 @@ const form = {
 };
 
 const form_mahasiswa = {
+  id_assessment: "",
   nim: "",
   name: "",
 
@@ -240,6 +241,40 @@ const assessment = {
         });
 
         context.dispatch("GetAssessment");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
+    // ===========================================================
+    // ASSESSMENT DETAIL
+    // ===========================================================
+    async CreateAssessmentDetail(context) {
+      context.commit("SET_IS_LOADING_ASSESSMENT", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/detail`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form_mahasiswa,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
         return true;
       } catch (error) {
         catchUnauthorized(error);

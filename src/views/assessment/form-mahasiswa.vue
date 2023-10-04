@@ -42,8 +42,8 @@
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Quizzes</legend>
           <div class="row">
-            <div class="col-md-6" v-for="iQ in course.total_quiz" :key="iQ">
-              <v-text-field :label="`Quizzes ${iQ}`" v-model="quiz[iQ]" dense outlined type="number" />
+            <div class="col-md-6" v-for="(nQ, iQ) in course.total_quiz" :key="iQ">
+              <v-text-field :label="`Quizzes ${nQ}`" v-model="quiz[iQ]" dense outlined type="number" />
             </div>
           </div>
         </fieldset>
@@ -51,8 +51,8 @@
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Practice or Project</legend>
           <div class="row">
-            <div class="col-md-6" v-for="iP in course.total_practice_or_project" :key="iP">
-              <v-text-field :label="`Practice or Project ${iP}`" v-model="practice_or_project[iP]" dense outlined type="number" />
+            <div class="col-md-6" v-for="(nP, iP) in course.total_practice_or_project" :key="iP">
+              <v-text-field :label="`Practice or Project ${nP}`" v-model="practice_or_project[iP]" dense outlined type="number" />
             </div>
           </div>
         </fieldset>
@@ -60,8 +60,8 @@
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Assignment</legend>
           <div class="row">
-            <div class="col-md-6" v-for="iA in course.total_assignment" :key="iA">
-              <v-text-field :label="`Assignment ${iA}`" v-model="assignment[iA]" dense outlined type="number" />
+            <div class="col-md-6" v-for="(nA, iA) in course.total_assignment" :key="iA">
+              <v-text-field :label="`Assignment ${nA}`" v-model="assignment[iA]" dense outlined type="number" />
             </div>
           </div>
         </fieldset>
@@ -81,8 +81,8 @@
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Presentation</legend>
           <div class="row">
-            <div class="col-md-6" v-for="iPP in course.total_presentation" :key="iPP">
-              <v-text-field :label="`Presentation ${iPP}`" v-model="presentation[iPP]" dense outlined type="number" />
+            <div class="col-md-6" v-for="(nPP, iPP) in course.total_presentation" :key="iPP">
+              <v-text-field :label="`Presentation ${nPP}`" v-model="presentation[iPP]" dense outlined type="number" />
             </div>
           </div>
         </fieldset>
@@ -218,12 +218,14 @@ export default {
         if (this.isUpdate) {
           this.$store.dispatch("UpdateAssessment", this.isUpdate).then((res) => {
             if (res) {
+              this.$store.dispatch("GetAssessmentById", this.$route.params.id);
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateAssessment").then((res) => {
+          this.$store.dispatch("CreateAssessmentDetail").then((res) => {
             if (res) {
+              this.$store.dispatch("GetAssessmentById", this.$route.params.id);
               this.handleClose();
             }
           });
