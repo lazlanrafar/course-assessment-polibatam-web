@@ -288,6 +288,38 @@ const assessment = {
         context.commit("SET_IS_LOADING_ASSESSMENT", false);
       }
     },
+    async SetFormUpdateAssessmentDetail(context, id) {
+      context.commit("SET_IS_LOADING_ASSESSMENT", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/detail/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        const data = result.data.data;
+
+        context.state.form_mahasiswa = {
+          id_assessment: data.id_assessment,
+          nim: data.nim,
+          name: data.name,
+          quiz: data.quiz,
+          practice_or_project: data.practice_or_project,
+          assignment: data.assignment,
+          mid_exam: data.mid_exam,
+          final_exam: data.final_exam,
+          presentation: data.presentation,
+        };
+
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
   },
 };
 

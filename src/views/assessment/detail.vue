@@ -139,6 +139,12 @@ export default {
       }
       this.modalFormMahasiswa = value;
     },
+    handleUpdate(id) {
+      this.$store.dispatch("SetFormUpdateAssessmentDetail", id);
+      this.$store.commit("SET_IS_UPDATE_MAHASISWA_ASSESSMENT", id);
+
+      this.handleModalFormMahasiswa(true);
+    },
   },
   mounted() {
     this.$store.dispatch("GetAssessmentById", this.$route.params.id);
