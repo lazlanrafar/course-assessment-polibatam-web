@@ -110,8 +110,8 @@ export default {
     isLoading() {
       return this.$store.state.assessment.isLoading;
     },
-    isUpdate() {
-      return this.$store.state.assessment.isUpdate;
+    isUpdateMahasiswa() {
+      return this.$store.state.assessment.isUpdateMahasiswa;
     },
     course() {
       return this.$store.state.assessment.report.course;
@@ -215,8 +215,8 @@ export default {
       this.$refs.initialReport.validate();
 
       if (this.$refs.initialReport.validate()) {
-        if (this.isUpdate) {
-          this.$store.dispatch("UpdateAssessment", this.isUpdate).then((res) => {
+        if (this.isUpdateMahasiswa) {
+          this.$store.dispatch("UpdateAssessmentDetail", this.isUpdateMahasiswa).then((res) => {
             if (res) {
               this.$store.dispatch("GetAssessmentById", this.$route.params.id);
               this.handleClose();
