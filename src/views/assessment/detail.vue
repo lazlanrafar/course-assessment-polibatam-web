@@ -85,6 +85,9 @@
                           <v-btn icon small color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                             <v-icon small>mdi-pencil</v-icon>
                           </v-btn>
+                          <v-btn icon small color="white" class="bg-danger mr-2" @click="handleDelete(item.id)">
+                            <v-icon small>mdi-delete</v-icon>
+                          </v-btn>
                         </td>
                       </tr>
                     </tbody>
@@ -104,7 +107,7 @@
 </template>
 
 <script>
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 export default {
   name: "AssessmentDetailPage",
@@ -144,6 +147,24 @@ export default {
       this.$store.commit("SET_IS_UPDATE_MAHASISWA_ASSESSMENT", id);
 
       this.handleModalFormMahasiswa(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You will delete this data!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteAssessmentDetail", id).then((res) => {
+            if (res) {
+              this.$store.dispatch("GetAssessmentById", this.$route.params.id);
+            }
+          });
+        }
+      });
     },
   },
   mounted() {
