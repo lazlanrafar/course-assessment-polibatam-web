@@ -28,10 +28,13 @@
             <div class="card shadow-none border">
               <div class="card-header fw-medium fs-15">Course Assessment</div>
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormMahasiswa(true)">
-                  <i class="fa fa-plus mr-2"></i>
-                  Add Mahasiswa
-                </v-btn>
+                <div class="d-sm-flex gap-2">
+                  <HandleImportMahasiswa />
+                  <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormMahasiswa(true)">
+                    <i class="fa fa-plus mr-2"></i>
+                    Add Mahasiswa
+                  </v-btn>
+                </div>
 
                 <br />
                 <br />
@@ -116,6 +119,7 @@ export default {
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     TableCustom: () => import("@/components/molecules/table-custom.vue"),
     FormMahasiswa: () => import("./form-mahasiswa.vue"),
+    HandleImportMahasiswa: () => import("./handle-import-mahasiswa.vue"),
   },
   data() {
     return {

@@ -1,0 +1,152 @@
+<template>
+  <div>
+    <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleOpen()">
+      <i class="fa fa-file-excel mr-2"></i>
+      Import Mahasiswa
+    </v-btn>
+
+    <v-dialog v-model="modalImport" persistent max-width="600">
+      <form @submit.prevent="handleSubmit">
+        <v-card :loading="isLoading">
+          <div class="card-header py-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="card-title fw-medium mb-0">Form Import Mahasiswa</p>
+              <v-btn icon @click="handleClose">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </div>
+          <div class="card-body">
+            <input type="file" ref="file" class="mb-3" required @change="handleFileUpload" />
+          </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-between">
+              <v-btn class="btn" @click="handleDownloadTemplate"> Download Excel Header </v-btn>
+              <div class="d-flex justify-content-end">
+                <v-btn class="btn mr-3" @click="handleModalImportTracking(false)"> Cancel </v-btn>
+                <v-btn class="btn bg-navy" type="submit" :loading="isLoading"> Submit </v-btn>
+              </div>
+            </div>
+          </div>
+        </v-card>
+      </form>
+    </v-dialog>
+  </div>
+</template>
+
+<script>
+var XLSX = require("xlsx");
+import xlsx from "json-as-xlsx";
+const apiUrl = process.env.VUE_APP_API_URL;
+
+export default {
+  name: "FormImportReceipt",
+  components: {},
+  data() {
+    return {
+      modalImport: false,
+      docUrl: apiUrl.split("/api")[0],
+    };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.assessment.isLoading;
+    },
+    report() {
+      return this.$store.state.assessment.report;
+    },
+  },
+  methods: {
+    handleOpen() {
+      this.modalImport = true;
+    },
+    handleClose() {
+      this.$store.commit("SET_FORM_IMPORT_RECEIPT", []);
+      this.$refs.file.value = "";
+      this.modalImport = false;
+    },
+    handleDownloadTemplate() {
+      let columns_quiz = [];
+      for (let i = 0; i < this.report.course.total_quiz; i++) {
+        columns_quiz.push({ label: `Q${i + 1}` });
+      }
+
+      let columns_practice_or_project = [];
+      for (let i = 0; i < this.report.course.total_practice_or_project; i++) {
+        columns_practice_or_project.push({ label: `P${i + 1}` });
+      }
+
+      let columns_assignment = [];
+      for (let i = 0; i < this.report.course.total_assignment; i++) {
+        columns_assignment.push({ label: `A${i + 1}` });
+      }
+
+      let columns_mid_exam = [];
+      if (this.report.course.total_mid_exam > 0) {
+        columns_mid_exam.push({ label: `MSE` });
+      }
+
+      let columns_final_exam = [];
+      if (this.report.course.total_final_exam > 0) {
+        columns_final_exam.push({ label: `FSE` });
+      }
+
+      let columns_presentation = [];
+      for (let i = 0; i < this.report.course.total_presentation; i++) {
+        columns_presentation.push({ label: `PP${i + 1}` });
+      }
+
+      let data = [
+        {
+          columns: [
+            { label: "No" },
+            { label: "NIM" },
+            { label: "Name" },
+            ...columns_quiz,
+            ...columns_practice_or_project,
+            ...columns_assignment,
+            ...columns_mid_exam,
+            ...columns_final_exam,
+            ...columns_presentation,
+          ],
+          content: [],
+        },
+      ];
+
+      let settings = {
+        fileName: `Format Import Mahasiswa`, // Name of the resulting spreadsheet
+        extraLength: 3, // A bigger number means that columns will be wider
+        writeMode: "writeFile", // The available parameters are 'WriteFile' and 'write'. This setting is optional. Useful in such cases https://docs.sheetjs.com/docs/solutions/output#example-remote-file
+      };
+
+      xlsx(data, settings); // Will download the excel file
+    },
+    handleFileUpload(e) {
+      var files = e.target.files,
+        f = files[0];
+      var reader = new FileReader();
+
+      const commit = this.$store.commit;
+      reader.onload = function (e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, { type: "array" });
+        let sheetName = workbook.SheetNames[0];
+        /* DO SOMETHING WITH workbook HERE */
+        let worksheet = workbook.Sheets[sheetName];
+        let json = XLSX.utils.sheet_to_json(worksheet);
+
+        commit("SET_FORM_IMPORT_RECEIPT", json);
+        console.log("json", json);
+      };
+      reader.readAsArrayBuffer(f);
+    },
+    async handleSubmit() {
+      this.$store.dispatch("ImportReceipt").then((res) => {
+        if (res) {
+          this.handleClose();
+        }
+      });
+    },
+  },
+};
+</script>
