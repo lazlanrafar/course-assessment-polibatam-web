@@ -25,7 +25,7 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="card shadow-none border">
+            <v-card :loading="isLoading" class="card shadow-none border">
               <div class="card-header fw-medium fs-15">Course Assessment</div>
               <div class="card-body">
                 <div class="d-sm-flex gap-2">
@@ -128,7 +128,7 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </v-card>
           </div>
         </div>
       </div>
