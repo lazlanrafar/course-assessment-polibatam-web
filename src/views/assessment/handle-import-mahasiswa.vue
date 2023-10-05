@@ -37,7 +37,6 @@
 <script>
 var XLSX = require("xlsx");
 import xlsx from "json-as-xlsx";
-const apiUrl = process.env.VUE_APP_API_URL;
 
 export default {
   name: "FormImportReceipt",
@@ -45,7 +44,6 @@ export default {
   data() {
     return {
       modalImport: false,
-      docUrl: apiUrl.split("/api")[0],
     };
   },
   computed: {
@@ -61,7 +59,7 @@ export default {
       this.modalImport = true;
     },
     handleClose() {
-      this.$store.commit("SET_FORM_IMPORT_RECEIPT", []);
+      this.$store.commit("SET_FORM_IMPORT_MAHASISWA_ASSESSMENT", []);
       this.$refs.file.value = "";
       this.modalImport = false;
     },
@@ -135,13 +133,76 @@ export default {
         let worksheet = workbook.Sheets[sheetName];
         let json = XLSX.utils.sheet_to_json(worksheet);
 
-        commit("SET_FORM_IMPORT_RECEIPT", json);
+        let formatted_json = [];
+        for (const iterator of json) {
+          let quiz = [];
+          for (const key in iterator) {
+            if (key.startsWith("Q")) {
+              quiz.push(Math.round(iterator[key]));
+              delete iterator[key];
+            }
+          }
+
+          let practice_or_project = [];
+          for (const key in iterator) {
+            if (key.startsWith("P") && !key.startsWith("PP")) {
+              practice_or_project.push(Math.round(iterator[key]));
+              delete iterator[key];
+            }
+          }
+
+          let assignment = [];
+          for (const key in iterator) {
+            if (key.startsWith("A")) {
+              assignment.push(Math.round(iterator[key]));
+              delete iterator[key];
+            }
+          }
+
+          let mid_exam = "";
+          for (const key in iterator) {
+            if (key.startsWith("MSE")) {
+              mid_exam = iterator[key];
+              delete iterator[key];
+            }
+          }
+
+          let final_exam = "";
+          for (const key in iterator) {
+            if (key.startsWith("FSE")) {
+              final_exam = iterator[key];
+              delete iterator[key];
+            }
+          }
+
+          let presentation = [];
+          for (const key in iterator) {
+            if (key.startsWith("PP")) {
+              presentation.push(Math.round(iterator[key]));
+              delete iterator[key];
+            }
+          }
+
+          formatted_json.push({
+            nim: iterator.NIM,
+            name: iterator.Name,
+            quiz: quiz,
+            practice_or_project: practice_or_project,
+            assignment: assignment,
+            mid_exam: mid_exam,
+            final_exam: final_exam,
+            presentation: presentation,
+          });
+        }
+
+        commit("SET_FORM_IMPORT_MAHASISWA_ASSESSMENT", formatted_json);
         console.log("json", json);
+        console.log("formatted_json", formatted_json);
       };
       reader.readAsArrayBuffer(f);
     },
     async handleSubmit() {
-      this.$store.dispatch("ImportReceipt").then((res) => {
+      this.$store.dispatch("ImportAssessmentDetail", this.$route.params.id).then((res) => {
         if (res) {
           this.handleClose();
         }

@@ -39,6 +39,7 @@ const assessment = {
     isUpdate: false,
 
     form_mahasiswa: { ...form_mahasiswa },
+    form_import_mahasiswa: [],
     isUpdateMahasiswa: false,
   },
   mutations: {
@@ -72,6 +73,9 @@ const assessment = {
     },
     RESET_FORM_MAHASISWA_ASSESSMENT(state) {
       state.form_mahasiswa = { ...form_mahasiswa };
+    },
+    SET_FORM_IMPORT_MAHASISWA_ASSESSMENT(state, payload) {
+      state.form_import_mahasiswa = payload;
     },
     SET_IS_UPDATE_MAHASISWA_ASSESSMENT(state, payload) {
       state.isUpdateMahasiswa = payload;
@@ -269,6 +273,40 @@ const assessment = {
           data: context.state.form_mahasiswa,
         });
 
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
+    async ImportAssessmentDetail(context, id_assessment) {
+      context.commit("SET_IS_LOADING_ASSESSMENT", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/detail/import/${id_assessment}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: {
+            data: JSON.stringify(context.state.form_import_mahasiswa),
+          },
+        });
+
+        context.dispatch("GetAssessmentById", id_assessment);
         Swal.fire({
           icon: "success",
           title: "Success",

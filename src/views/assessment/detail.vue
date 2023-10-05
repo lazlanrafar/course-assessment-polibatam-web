@@ -4,7 +4,7 @@
 
     <section class="content">
       <div class="container-fluid">
-        <div class="row" v-if="report">
+        <div class="row" v-if="report.course">
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
@@ -39,7 +39,7 @@
                 <br />
                 <br />
                 <div class="table-responsive">
-                  <table class="table table-bordered fs-12">
+                  <table class="table table-bordered fs-12" v-if="report.course">
                     <thead>
                       <tr>
                         <td rowspan="3">NIM</td>
