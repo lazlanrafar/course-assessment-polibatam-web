@@ -37,11 +37,20 @@
                 </div>
 
                 <br />
-                <br />
+                <div class="d-flex justify-content-end">
+                  <v-text-field
+                    label="Cari..."
+                    style="max-width: 300px"
+                    prepend-inner-icon="mdi-magnify"
+                    outlined
+                    dense
+                    v-model="search"
+                  />
+                </div>
                 <div class="table-responsive">
                   <table class="table table-bordered fs-12" v-if="report.course">
                     <thead>
-                      <tr>
+                      <tr class="table-active fw-medium">
                         <td rowspan="3">NIM</td>
                         <td rowspan="3">Mahasiswa</td>
                         <td :colspan="report.course.total_quiz">Quizzes ({{ report.course.bobot_quiz }}%)</td>
@@ -58,7 +67,7 @@
                         <td rowspan="3">Nilai Akhir</td>
                         <td rowspan="3">Action</td>
                       </tr>
-                      <tr>
+                      <tr class="table-active fw-medium">
                         <td v-for="i in report.course.total_quiz" :key="i">Q{{ i }}</td>
                         <td v-for="i in report.course.total_practice_or_project" :key="i">P{{ i }}</td>
                         <td v-for="i in report.course.total_assignment" :key="i">A{{ i }}</td>
@@ -68,29 +77,51 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, i) in report.details" :key="i">
+                      <tr v-for="(item, i) in mahasiswa" :key="i">
                         <td>{{ item.nim }}</td>
                         <td>{{ item.name }}</td>
-                        <td v-for="(nQ, iQ) in report.course.total_quiz" :key="iQ">{{ item.quiz[iQ] }}</td>
-                        <td v-for="(nP, iP) in report.course.total_practice_or_project" :key="iP">
-                          {{ item.practice_or_project[iP] }}
-                        </td>
-                        <td v-for="(nA, iA) in report.course.total_assignment" :key="iA">
-                          {{ item.assignment[iA] }}
-                        </td>
-                        <td>{{ item.mid_exam }}</td>
-                        <td>{{ item.final_exam }}</td>
-                        <td v-for="(nPP, iPP) in report.course.total_presentation" :key="iPP">
-                          {{ item.presentation[iPP] }}
-                        </td>
-                        <td>{{ item.nilai_akhir }}</td>
+                        <TableTdCustom v-for="(nQ, iQ) in report.course.total_quiz" :key="iQ" :value="item.quiz[iQ]" />
+                        <TableTdCustom
+                          v-for="(nP, iP) in report.course.total_practice_or_project"
+                          :key="iP"
+                          :value="item.practice_or_project[iP]"
+                        />
+                        <TableTdCustom
+                          v-for="(nA, iA) in report.course.total_assignment"
+                          :key="iA"
+                          :value="item.assignment[iA]"
+                        />
+                        <TableTdCustom :value="item.mid_exam" />
+                        <TableTdCustom :value="item.final_exam" />
+                        <TableTdCustom
+                          v-for="(nPP, iPP) in report.course.total_presentation"
+                          :key="iPP"
+                          :value="item.presentation[iPP]"
+                        />
+                        <td class="table-warning">{{ item.nilai_akhir }}</td>
                         <td>
-                          <v-btn icon small color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                            <v-icon small>mdi-pencil</v-icon>
-                          </v-btn>
-                          <v-btn icon small color="white" class="bg-danger mr-2" @click="handleDelete(item.id)">
-                            <v-icon small>mdi-delete</v-icon>
-                          </v-btn>
+                          <v-menu offset-y left>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn x-small class="btn btn-outline-primary py-3" v-bind="attrs" v-on="on">
+                                <span class="fw-light mr-1">Action</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                              </v-btn>
+                            </template>
+                            <v-list min-width="150">
+                              <v-list-item @click="handleUpdate(item.id)">
+                                <v-list-item-title class="text-primary fs-12">
+                                  <i class="fas fa-edit mr-2"></i>
+                                  <span>Edit</span>
+                                </v-list-item-title>
+                              </v-list-item>
+                              <v-list-item @click="handleDelete(item.id)">
+                                <v-list-item-title class="text-primary fs-12">
+                                  <i class="fas fa-trash mr-2"></i>
+                                  <span>Delete</span>
+                                </v-list-item-title>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
                         </td>
                       </tr>
                     </tbody>
@@ -118,12 +149,15 @@ export default {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
     TableCustom: () => import("@/components/molecules/table-custom.vue"),
+    TableTdCustom: () => import("@/components/atoms/table-td-custom.vue"),
     FormMahasiswa: () => import("./form-mahasiswa.vue"),
     HandleImportMahasiswa: () => import("./handle-import-mahasiswa.vue"),
   },
   data() {
     return {
       modalFormMahasiswa: false,
+      search: "",
+      mahasiswa: [],
     };
   },
   computed: {
@@ -132,6 +166,22 @@ export default {
     },
     report() {
       return this.$store.state.assessment.report;
+    },
+  },
+  watch: {
+    search(value) {
+      if (value) {
+        this.mahasiswa = this.report.details.filter((item) => {
+          return item.name.toLowerCase().includes(value.toLowerCase()) || item.nim.includes(value);
+        });
+      } else {
+        this.mahasiswa = this.report.details;
+      }
+    },
+    report(value) {
+      if (value) {
+        this.mahasiswa = value.details;
+      }
     },
   },
   methods: {
