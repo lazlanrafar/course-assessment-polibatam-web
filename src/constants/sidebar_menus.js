@@ -71,7 +71,7 @@ const sidebar_menus = [
     children: false,
   },
   {
-    header: "JURUSAN & PROGRAM STUDI",
+    header: "PROGRAM STUDI",
     roles: ["Administrator", "Hub", "Agent"],
   },
   {

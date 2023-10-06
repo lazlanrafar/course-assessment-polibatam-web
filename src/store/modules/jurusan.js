@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
-  id_jurusan: "",
   title: "",
 };
 
@@ -108,7 +107,6 @@ const jurusan = {
         });
 
         context.state.form = {
-          id_jurusan: result.data.data.id_jurusan,
           title: result.data.data.title,
         };
       } catch (error) {
