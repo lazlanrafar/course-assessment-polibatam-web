@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Student Outcomes (SOs)" />
+    <ContentHeader header="Setup" title="Student Outcome" />
 
     <section class="content">
       <div class="container-fluid">
@@ -8,10 +8,6 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
-                  <i class="fa fa-plus"></i>
-                  Tambah
-                </v-btn>
                 <div class="d-flex justify-content-end">
                   <v-text-field
                     label="Cari..."
@@ -30,12 +26,9 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                      <v-icon small>mdi-pencil</v-icon>
+                    <v-btn icon color="white" class="bg-primary mr-2" @click="handleDetail(item.id)">
+                      <v-icon small>mdi-eye</v-icon>
                     </v-btn>
-                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
-                      <v-icon small>mdi-delete</v-icon>
-                    </v-btn> -->
                   </template>
                 </v-data-table>
               </div>
@@ -44,59 +37,50 @@
         </div>
       </div>
     </section>
-
-    <v-dialog v-model="modalForm" persistent max-width="600">
-      <Form @handleModalForm="handleModalForm" />
-    </v-dialog>
   </layout-app>
 </template>
 
 <script>
 export default {
-  name: "StudentOutcomePage",
+  name: "ProgramStudiPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
-    Form: () => import("./form.vue"),
   },
   data() {
     return {
       headers: [
-        { text: "Code", value: "code" },
-        { text: "Description", value: "title" },
+        { text: "No", value: "no" },
+        { text: "Jurusan", value: "jurusan.title" },
+        { text: "Program Studi", value: "title" },
+        { text: "Total Student Outcome", value: "_count.student_outcome" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
-      modalForm: false,
     };
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcome.isLoading;
+      return this.$store.state.programStudi.isLoading;
     },
     reports() {
-      return this.$store.state.studentOutcome.reports;
+      return this.$store.state.programStudi.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.studentOutcome.optionsTable;
+        return this.$store.state.programStudi.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_STUDENT_OUTCOME", value);
+        this.$store.commit("SET_OPTIONS_TABLE_PROGRAM_STUDI", value);
       },
     },
   },
   methods: {
-    handleModalForm(value) {
-      this.modalForm = value;
-    },
-    handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateStudentOutcome", id);
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", id);
-      this.handleModalForm(true);
+    handleDetail(id) {
+      this.$router.push(`/student-outcome/${id}`);
     },
   },
   mounted() {
-    this.$store.dispatch("GetStudentOutcome");
+    this.$store.dispatch("GetProgramStudi");
   },
 };
 </script>

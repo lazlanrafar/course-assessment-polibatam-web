@@ -17,6 +17,7 @@ const studentOutcome = {
       itemsPerPage: 10,
       search: "",
     },
+    program_studi: {},
     reports: [],
     form: { ...form },
     isUpdate: false,
@@ -27,6 +28,9 @@ const studentOutcome = {
     },
     SET_IS_LOADING_STUDENT_OUTCOME(state, payload) {
       state.isLoading = payload;
+    },
+    SET_PROGRAM_STUDI_STUDENT_OUTCOME(state, payload) {
+      state.program_studi = payload;
     },
     SET_REPORTS_STUDENT_OUTCOME(state, payload) {
       state.reports = payload;
@@ -42,11 +46,29 @@ const studentOutcome = {
     },
   },
   actions: {
-    async GetStudentOutcome(context) {
+    async GetProgramStudiStudentOutcome(context, id_program_studi) {
       context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/student-outcome`,
+          url: `${apiUrl}/program-studi/${id_program_studi}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_PROGRAM_STUDI_STUDENT_OUTCOME", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
+      }
+    },
+    async GetStudentOutcome(context, id_program_studi) {
+      context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/student-outcome?id_program_studi=${id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,

@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Program Studi" />
+    <ContentHeader header="Setup" :title="`SO ${program_studi.title}`" />
 
     <section class="content">
       <div class="container-fluid">
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "ProgramStudiPage",
+  name: "StudentOutcomePage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
@@ -62,12 +62,8 @@ export default {
   data() {
     return {
       headers: [
-        { text: "No", value: "no" },
-        { text: "Jurusan", value: "jurusan.title" },
-        { text: "Program Studi", value: "title" },
-        { text: "SO", value: "_count.student_outcome" },
-        { text: "Rubric", value: "_count.rubrik" },
-        { text: "Course", value: "_count.course" },
+        { text: "Code", value: "code" },
+        { text: "Description", value: "title" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -75,33 +71,36 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.programStudi.isLoading;
+      return this.$store.state.studentOutcome.isLoading;
+    },
+    program_studi() {
+      return this.$store.state.studentOutcome.program_studi;
     },
     reports() {
-      return this.$store.state.programStudi.reports;
+      return this.$store.state.studentOutcome.reports;
     },
     optionsTable: {
       get() {
-        return this.$store.state.programStudi.optionsTable;
+        return this.$store.state.studentOutcome.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_PROGRAM_STUDI", value);
+        this.$store.commit("SET_OPTIONS_TABLE_STUDENT_OUTCOME", value);
       },
     },
   },
   methods: {
     handleModalForm(value) {
-      if (value) this.$store.dispatch("FetchBeforeFormProgramStudi");
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateProgramStudi", id);
-      this.$store.commit("SET_IS_UPDATE_PROGRAM_STUDI", id);
+      this.$store.dispatch("SetFormUpdateStudentOutcome", id);
+      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", id);
       this.handleModalForm(true);
     },
   },
   mounted() {
-    this.$store.dispatch("GetProgramStudi");
+    this.$store.dispatch("GetProgramStudiStudentOutcome", this.$route.params.id);
+    this.$store.dispatch("GetStudentOutcome", this.$route.params.id);
   },
 };
 </script>

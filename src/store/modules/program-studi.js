@@ -72,7 +72,7 @@ const programStudi = {
       context.commit("SET_IS_LOADING_PROGRAM_STUDI", true);
       try {
         const jurusan = await axios({
-          url: `${apiUrl}/program-studi/jurusan`,
+          url: `${apiUrl}/jurusan/list`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
