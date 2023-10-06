@@ -71,8 +71,19 @@ const sidebar_menus = [
     children: false,
   },
   {
+    header: "JURUSAN & PROGRAM STUDI",
+    roles: ["Administrator", "Hub", "Agent"],
+  },
+  {
+    title: "Jurusan",
+    icon: "fa-solid fa-school",
+    link: "/jurusan",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     title: "Program Studi",
-    icon: "fa-solid fa-building",
+    icon: "fa-solid fa-school-flag",
     link: "/program-studi",
     roles: ["Administrator", "Hub", "Agent"],
     children: false,

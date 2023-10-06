@@ -21,6 +21,8 @@ import AssessmentType from "@/views/setup/assessment-type/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
+
+import Jurusan from "@/views/setup/jurusan/index.vue";
 import ProgramStudi from "@/views/setup/program-studi/index.vue";
 
 // UTILITY
@@ -140,6 +142,14 @@ const routes = [
     path: "/student-outcome-level",
     name: "StudentOutcomeLevel",
     component: StudentOutcomeLevel,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/jurusan",
+    name: "Jurusan",
+    component: Jurusan,
     meta: {
       middleware: [auth],
     },
