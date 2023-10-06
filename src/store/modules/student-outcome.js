@@ -169,6 +169,37 @@ const studentOutcome = {
         context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
       }
     },
+    async DeleteStudentOutcome(context, payload) {
+      context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/student-outcome/${payload.id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetStudentOutcome", payload.id_program_studi);
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
+      }
+    },
   },
 };
 

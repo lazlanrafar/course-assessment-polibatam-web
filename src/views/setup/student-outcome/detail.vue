@@ -33,9 +33,9 @@
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
                       <v-icon small>mdi-delete</v-icon>
-                    </v-btn> -->
+                    </v-btn>
                   </template>
                 </v-data-table>
               </div>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "StudentOutcomePage",
   components: {
@@ -63,7 +65,8 @@ export default {
     return {
       headers: [
         { text: "Code", value: "code" },
-        { text: "Description", value: "title" },
+        { text: "Description", value: "title", width: "70%" },
+        { text: "Rubrik", value: "_count.rubrik" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -102,6 +105,25 @@ export default {
       this.$store.dispatch("SetFormUpdateStudentOutcome", id);
       this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME", id);
       this.handleModalForm(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Anda akan menghapus data ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya, hapus!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteStudentOutcome", {
+            id,
+            id_program_studi: this.$route.params.id,
+          });
+        }
+      });
     },
   },
   mounted() {
