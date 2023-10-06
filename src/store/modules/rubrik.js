@@ -228,6 +228,37 @@ const rubrik = {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
+    async DeleteRubrik(context, payload) {
+      context.commit("SET_IS_LOADING_RUBRIK", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/rubrik/${payload.id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
+        context.dispatch("GetRubrik", payload.id_program_studi);
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_RUBRIK", false);
+      }
+    },
   },
 };
 

@@ -62,6 +62,9 @@
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
+                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                      <v-icon small>mdi-delete</v-icon>
+                    </v-btn>
                   </template>
                 </v-data-table>
               </div>
@@ -78,6 +81,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "CDIOSyllabusPage",
   components: {
@@ -139,6 +144,24 @@ export default {
       this.$store.dispatch("SetFormUpdateRubrik", id);
       this.$store.commit("SET_IS_UPDATE_RUBRIK", id);
       this.handleModalForm(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus ini!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteRubrik", {
+            id: id,
+            id_program_studi: this.$route.params.id,
+          });
+        }
+      });
     },
   },
   mounted() {
