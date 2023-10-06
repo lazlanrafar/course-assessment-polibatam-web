@@ -33,9 +33,9 @@
                     <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
                       <v-icon small>mdi-delete</v-icon>
-                    </v-btn> -->
+                    </v-btn>
                   </template>
                 </v-data-table>
               </div>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   name: "JurusanPage",
   components: {
@@ -94,6 +96,22 @@ export default {
       this.$store.dispatch("SetFormUpdateJurusan", id);
       this.$store.commit("SET_IS_UPDATE_JURUSAN", id);
       this.handleModalForm(true);
+    },
+    handleDelete(id) {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#aaa",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("DeleteJurusan", id);
+        }
+      });
     },
   },
   mounted() {
