@@ -19,7 +19,7 @@ import RubrikDetail from "@/views/setup/rubrik/detail.vue";
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
 import AssessmentType from "@/views/setup/assessment-type/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
-import StudentOutcomeLevel from "@/views/setup/student-outcome-level/index.vue";
+import GradingCategory from "@/views/setup/grading-category/index.vue";
 
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeDetail from "@/views/setup/student-outcome/detail.vue";
@@ -133,9 +133,9 @@ const routes = [
     },
   },
   {
-    path: "/student-outcome-level",
-    name: "StudentOutcomeLevel",
-    component: StudentOutcomeLevel,
+    path: "/grading-category",
+    name: "GradingCategory",
+    component: GradingCategory,
     meta: {
       middleware: [auth],
     },

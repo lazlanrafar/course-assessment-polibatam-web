@@ -13,7 +13,7 @@ import assessmentMethod from "./modules/assessment-method";
 import assessmentType from "./modules/assessment-type";
 import CDIOSyllabus from "./modules/cdio-syllabus";
 import studentOutcome from "./modules/student-outcome";
-import studentOutcomeLevel from "./modules/student-outcome-level";
+import gradingCategory from "./modules/grading-category";
 
 import jurusan from "./modules/jurusan";
 import programStudi from "./modules/program-studi";
@@ -31,7 +31,7 @@ export default new Vuex.Store({
     assessmentType,
     CDIOSyllabus,
     studentOutcome,
-    studentOutcomeLevel,
+    gradingCategory,
     jurusan,
     programStudi,
     userManagement,

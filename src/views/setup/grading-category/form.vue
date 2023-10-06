@@ -14,20 +14,6 @@
         <div class="row">
           <div class="col-12">
             <v-text-field
-              label="Level"
-              dense
-              outlined
-              v-model="level"
-              type="number"
-              :rules="[
-                (value) => {
-                  return genericRequiredRule(value, 'Level');
-                },
-              ]"
-            />
-          </div>
-          <div class="col-12">
-            <v-text-field
               label="Title"
               dense
               outlined
@@ -40,14 +26,42 @@
             />
           </div>
           <div class="col-12">
-            <v-textarea
-              label="Description"
+            <v-text-field
+              label="Lower Limit"
               dense
               outlined
-              v-model="description"
+              v-model="lower_limit"
+              type="number"
               :rules="[
                 (value) => {
-                  return genericRequiredRule(value, 'Description');
+                  return genericRequiredRule(value, 'Lower Limit');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-text-field
+              label="Upper Limit"
+              dense
+              outlined
+              v-model="upper_limit"
+              type="number"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Upper Limit');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-text-field
+              label="Grade"
+              dense
+              outlined
+              v-model="grade"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Grade');
                 },
               ]"
             />
@@ -68,47 +82,58 @@
 import validationRules from "@/mixins/validation-rules";
 
 export default {
-  name: "StudentOutcomeForm",
+  name: "GradingCategoryForm",
   mixins: [validationRules],
   data() {
     return {};
   },
   computed: {
     isLoading() {
-      return this.$store.state.studentOutcomeLevel.isLoading;
+      return this.$store.state.gradingCategory.isLoading;
     },
     isUpdate() {
-      return this.$store.state.studentOutcomeLevel.isUpdate;
-    },
-    level: {
-      get() {
-        return this.$store.state.studentOutcomeLevel.form.level;
-      },
-      set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
-          key: "level",
-          value,
-        });
-      },
+      return this.$store.state.gradingCategory.isUpdate;
     },
     title: {
       get() {
-        return this.$store.state.studentOutcomeLevel.form.title;
+        return this.$store.state.gradingCategory.form.title;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
+        this.$store.commit("SET_FORM_GRADING_CATEGORY", {
           key: "title",
           value,
         });
       },
     },
-    description: {
+    lower_limit: {
       get() {
-        return this.$store.state.studentOutcomeLevel.form.description;
+        return this.$store.state.gradingCategory.form.lower_limit;
       },
       set(value) {
-        this.$store.commit("SET_FORM_STUDENT_OUTCOME_LEVEL", {
-          key: "description",
+        this.$store.commit("SET_FORM_GRADING_CATEGORY", {
+          key: "lower_limit",
+          value,
+        });
+      },
+    },
+    upper_limit: {
+      get() {
+        return this.$store.state.gradingCategory.form.upper_limit;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_GRADING_CATEGORY", {
+          key: "upper_limit",
+          value,
+        });
+      },
+    },
+    grade: {
+      get() {
+        return this.$store.state.gradingCategory.form.grade;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_GRADING_CATEGORY", {
+          key: "grade",
           value,
         });
       },
@@ -117,21 +142,21 @@ export default {
   methods: {
     handleClose() {
       this.$emit("handleModalForm", false);
-      this.$store.commit("RESET_FORM_STUDENT_OUTCOME_LEVEL");
-      this.$store.commit("SET_IS_UPDATE_STUDENT_OUTCOME_LEVEL", false);
+      this.$store.commit("RESET_FORM_GRADING_CATEGORY");
+      this.$store.commit("SET_IS_UPDATE_GRADING_CATEGORY", false);
     },
     handleSubmit() {
       this.$refs.initialReport.validate();
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateStudentOutcomeLevel", this.isUpdate).then((res) => {
+          this.$store.dispatch("UpdateGradingCategory", this.isUpdate).then((res) => {
             if (res) {
               this.handleClose();
             }
           });
         } else {
-          this.$store.dispatch("CreateStudentOutcomeLevel").then((res) => {
+          this.$store.dispatch("CreateGradingCategory").then((res) => {
             if (res) {
               this.handleClose();
             }
