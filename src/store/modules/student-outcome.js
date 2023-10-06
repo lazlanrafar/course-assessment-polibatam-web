@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
+  id_program_studi: "",
   code: "",
   title: "",
 };
@@ -82,7 +83,7 @@ const studentOutcome = {
         context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
       }
     },
-    async CreateStudentOutcome(context) {
+    async CreateStudentOutcome(context, payload) {
       context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
       try {
         const result = await axios({
@@ -100,7 +101,7 @@ const studentOutcome = {
           text: result.data.message,
         });
 
-        context.dispatch("GetStudentOutcome");
+        context.dispatch("GetStudentOutcome", payload.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);
@@ -126,6 +127,7 @@ const studentOutcome = {
         });
 
         context.state.form = {
+          id_program_studi: result.data.data.id_program_studi,
           code: result.data.data.code,
           title: result.data.data.title,
         };
@@ -135,11 +137,11 @@ const studentOutcome = {
         context.commit("SET_IS_LOADING_STUDENT_OUTCOME", false);
       }
     },
-    async UpdateStudentOutcome(context, id) {
+    async UpdateStudentOutcome(context, payload) {
       context.commit("SET_IS_LOADING_STUDENT_OUTCOME", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/student-outcome/${id}`,
+          url: `${apiUrl}/student-outcome/${payload.id}`,
           method: "PUT",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -153,7 +155,7 @@ const studentOutcome = {
           text: result.data.message,
         });
 
-        context.dispatch("GetStudentOutcome");
+        context.dispatch("GetStudentOutcome", payload.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);

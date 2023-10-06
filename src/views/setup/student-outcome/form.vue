@@ -100,17 +100,26 @@ export default {
 
       if (this.$refs.initialReport.validate()) {
         if (this.isUpdate) {
-          this.$store.dispatch("UpdateStudentOutcome", this.isUpdate).then((res) => {
-            if (res) {
-              this.handleClose();
-            }
-          });
+          this.$store
+            .dispatch("UpdateStudentOutcome", {
+              id: this.isUpdate,
+              id_program_studi: this.$route.params.id,
+            })
+            .then((res) => {
+              if (res) {
+                this.handleClose();
+              }
+            });
         } else {
-          this.$store.dispatch("CreateStudentOutcome").then((res) => {
-            if (res) {
-              this.handleClose();
-            }
-          });
+          this.$store
+            .dispatch("CreateStudentOutcome", {
+              id_program_studi: this.$route.params.id,
+            })
+            .then((res) => {
+              if (res) {
+                this.handleClose();
+              }
+            });
         }
       }
     },

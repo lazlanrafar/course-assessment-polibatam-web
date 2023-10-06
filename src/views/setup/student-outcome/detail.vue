@@ -90,6 +90,12 @@ export default {
   },
   methods: {
     handleModalForm(value) {
+      if (value) {
+        this.$store.commit("SET_FORM_STUDENT_OUTCOME", {
+          key: "id_program_studi",
+          value: this.$route.params.id,
+        });
+      }
       this.modalForm = value;
     },
     handleUpdate(id) {
