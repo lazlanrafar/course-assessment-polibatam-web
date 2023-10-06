@@ -15,7 +15,7 @@
                     prepend-inner-icon="mdi-magnify"
                     outlined
                     dense
-                    v-model="optionsTable.search"
+                    v-model="search"
                   />
                 </div>
                 <v-data-table
@@ -23,7 +23,7 @@
                   :items="reports"
                   :loading="isLoading"
                   :options.sync="optionsTable"
-                  :search="optionsTable.search"
+                  :search="search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
                     <v-btn icon color="white" class="bg-primary mr-2" @click="handleDetail(item.id)">
@@ -56,6 +56,7 @@ export default {
         { text: "Total Student Outcome", value: "_count.student_outcome" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
+      search: "",
     };
   },
   computed: {

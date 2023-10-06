@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Rubrik" />
+    <ContentHeader header="Setup" title="Rubrics" />
 
     <section class="content">
       <div class="container-fluid">
@@ -15,15 +15,15 @@
                     prepend-inner-icon="mdi-magnify"
                     outlined
                     dense
-                    v-model="optionsTable.search"
+                    v-model="search"
                   />
                 </div>
                 <v-data-table
                   :headers="headers"
-                  :items="reports_program_studi"
+                  :items="reports"
                   :loading="isLoading"
                   :options.sync="optionsTable"
-                  :search="optionsTable.search"
+                  :search="search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
                     <v-btn icon color="white" class="bg-primary mr-2" @click="handleDetail(item.id)">
@@ -37,20 +37,15 @@
         </div>
       </div>
     </section>
-
-    <v-dialog v-model="modalForm" persistent max-width="600">
-      <Form @handleModalForm="handleModalForm" />
-    </v-dialog>
   </layout-app>
 </template>
 
 <script>
 export default {
-  name: "RubrikPage",
+  name: "ProgramStudiPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
-    Form: () => import("./form.vue"),
   },
   data() {
     return {
@@ -58,17 +53,18 @@ export default {
         { text: "No", value: "no" },
         { text: "Jurusan", value: "jurusan.title" },
         { text: "Program Studi", value: "title" },
-        { text: "Total Rubrik", value: "_count.rubrik" },
+        { text: "Total Rubric", value: "_count.rubrik" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
+      search: "",
     };
   },
   computed: {
     isLoading() {
-      return this.$store.state.rubrik.isLoading;
+      return this.$store.state.programStudi.isLoading;
     },
-    reports_program_studi() {
-      return this.$store.state.rubrik.reports_program_studi;
+    reports() {
+      return this.$store.state.programStudi.reports;
     },
     optionsTable: {
       get() {
@@ -85,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("GetProgramStudiRubrik");
+    this.$store.dispatch("GetProgramStudi");
   },
 };
 </script>

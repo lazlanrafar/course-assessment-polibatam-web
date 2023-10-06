@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup Rubrik" :title="reports?.program_studi.title" />
+    <ContentHeader header="Setup Rubrik" :title="program_studi?.title" />
 
     <section class="content">
       <div class="container-fluid">
@@ -27,7 +27,7 @@
                 </div>
                 <v-data-table
                   :headers="headers"
-                  :items="reports?.data"
+                  :items="reports"
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
@@ -108,6 +108,9 @@ export default {
     isLoading() {
       return this.$store.state.rubrik.isLoading;
     },
+    program_studi() {
+      return this.$store.state.rubrik.program_studi;
+    },
     reports() {
       return this.$store.state.rubrik.reports;
     },
@@ -139,7 +142,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("GetRubrikByIdProgramStudi", this.$route.params.id);
+    this.$store.dispatch("GetProgramStudiRubrik", this.$route.params.id);
+    this.$store.dispatch("GetRubrik", this.$route.params.id);
   },
 };
 </script>

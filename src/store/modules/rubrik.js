@@ -22,19 +22,13 @@ const rubrik = {
   state: {
     isLoading: false,
     isLoadingForm: false,
-
     optionsTable: {
       page: 1,
       itemsPerPage: 10,
       search: "",
     },
-
-    reports_program_studi: [],
-    reports: {
-      program_studi: {},
-      data: [],
-    },
-
+    program_studi: {},
+    reports: [],
     list_student_outcome: [],
     list_cdio_syllabus: [],
     form: { ...form },
@@ -51,14 +45,12 @@ const rubrik = {
     SET_IS_LOADING_FORM_RUBRIK(state, payload) {
       state.isLoadingForm = payload;
     },
-
-    SET_REPORTS_PROGRAM_STUDI_RUBRIK(state, payload) {
-      state.reports_program_studi = payload;
+    SET_PROGRAM_STUDI_RUBRIK(state, payload) {
+      state.program_studi = payload;
     },
     SET_REPORTS_RUBRIK(state, payload) {
       state.reports = payload;
     },
-
     SET_LIST_STUDENT_OUTCOME_RUBRIK(state, payload) {
       state.list_student_outcome = payload;
     },
@@ -79,33 +71,29 @@ const rubrik = {
     },
   },
   actions: {
-    async GetProgramStudiRubrik(context) {
+    async GetProgramStudiRubrik(context, id_program_studi) {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/program-studi`,
+          url: `${apiUrl}/program-studi/${id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
         });
 
-        result.data.data.forEach((item, i) => {
-          item.no = i + 1;
-        });
-
-        context.commit("SET_REPORTS_PROGRAM_STUDI_RUBRIK", result.data.data);
+        context.commit("SET_PROGRAM_STUDI_RUBRIK", result.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
-    async GetRubrikByIdProgramStudi(context, id_program_studi) {
+    async GetRubrik(context, id_program_studi) {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/rubrik/program-studi/${id_program_studi}`,
+          url: `${apiUrl}/rubrik?program-studi=${id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -163,7 +151,7 @@ const rubrik = {
           text: result.data.message,
         });
 
-        context.dispatch("GetRubrikByIdProgramStudi", context.state.form.id_program_studi);
+        context.dispatch("GetRubrik", context.state.form.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);
@@ -226,7 +214,7 @@ const rubrik = {
           text: result.data.message,
         });
 
-        context.dispatch("GetRubrikByIdProgramStudi", context.state.form.id_program_studi);
+        context.dispatch("GetRubrik", context.state.form.id_program_studi);
         return true;
       } catch (error) {
         catchUnauthorized(error);
