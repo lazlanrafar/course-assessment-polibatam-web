@@ -57,6 +57,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Proficiency Level",
+    icon: "fa-solid fa-layer-group",
+    link: "/proficiency-level",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     header: "PROGRAM STUDI",
     roles: ["Administrator", "Hub", "Agent"],
   },

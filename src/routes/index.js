@@ -20,6 +20,7 @@ import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
 import AssessmentType from "@/views/setup/assessment-type/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
 import GradingCategory from "@/views/setup/grading-category/index.vue";
+import ProficiencyLevel from "@/views/setup/proficiency-level/index.vue";
 
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeDetail from "@/views/setup/student-outcome/detail.vue";
@@ -152,6 +153,14 @@ const routes = [
     path: "/student-outcome/:id",
     name: "StudentOutcomeDetail",
     component: StudentOutcomeDetail,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/proficiency-level",
+    name: "ProficiencyLevel",
+    component: ProficiencyLevel,
     meta: {
       middleware: [auth],
     },
