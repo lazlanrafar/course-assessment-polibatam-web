@@ -8,16 +8,32 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <TableCustom
-                  :items="[
-                    { label: 'Study Program', value: report.course.program_studi.title },
-                    { label: 'Course Code', value: report.course.code },
-                    { label: 'Course Title', value: report.course.title },
-                    { label: 'Semester', value: report.semester },
-                    { label: 'Academic Year', value: report.academic_year },
-                    { label: 'Class', value: report.class },
-                  ]"
-                />
+                <div class="row">
+                  <div class="col-md-6">
+                    <TableCustom
+                      :items="[
+                        { label: 'Study Program', value: report.course.program_studi.title },
+                        { label: 'Course Code', value: report.course.code },
+                        { label: 'Course Title', value: report.course.title },
+                        { label: 'Teacher NIP', value: report.teacher_nip },
+                        { label: 'Teacher Name', value: report.teacher_name },
+                      ]"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <TableCustom
+                      :items="[
+                        { label: 'Semester', value: report.semester },
+                        { label: 'Academic Year', value: report.academic_year },
+                        { label: 'Class', value: report.class },
+                        {
+                          label: 'Proficiency Level',
+                          value: `${report.proficiency_level.level} (${report.proficiency_level.description})`,
+                        },
+                      ]"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

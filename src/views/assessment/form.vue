@@ -30,6 +30,32 @@
           </div>
           <div class="col-12">
             <v-text-field
+              label="Teacher NIP"
+              dense
+              outlined
+              v-model="teacher_nip"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Teacher NIP');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-text-field
+              label="Teacher Name"
+              dense
+              outlined
+              v-model="teacher_name"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Teacher Name');
+                },
+              ]"
+            />
+          </div>
+          <div class="col-12">
+            <v-text-field
               label="Semester"
               dense
               outlined
@@ -67,6 +93,22 @@
               ]"
             />
           </div>
+          <div class="col-12">
+            <v-autocomplete
+              label="Target Level"
+              :items="list_proficiency_level"
+              item-text="label"
+              item-value="id"
+              dense
+              outlined
+              v-model="id_proficiency_level"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Target Level');
+                },
+              ]"
+            />
+          </div>
         </div>
       </div>
       <div class="card-footer">
@@ -98,6 +140,9 @@ export default {
     list_course() {
       return this.$store.state.assessment.list_course;
     },
+    list_proficiency_level() {
+      return this.$store.state.assessment.list_proficiency_level;
+    },
     id_course: {
       get() {
         return this.$store.state.assessment.form.id_course;
@@ -105,6 +150,39 @@ export default {
       set(value) {
         this.$store.commit("SET_FORM_ASSESSMENT", {
           key: "id_course",
+          value,
+        });
+      },
+    },
+    id_proficiency_level: {
+      get() {
+        return this.$store.state.assessment.form.id_proficiency_level;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_ASSESSMENT", {
+          key: "id_proficiency_level",
+          value,
+        });
+      },
+    },
+    teacher_nip: {
+      get() {
+        return this.$store.state.assessment.form.teacher_nip;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_ASSESSMENT", {
+          key: "teacher_nip",
+          value,
+        });
+      },
+    },
+    teacher_name: {
+      get() {
+        return this.$store.state.assessment.form.teacher_name;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_ASSESSMENT", {
+          key: "teacher_name",
           value,
         });
       },

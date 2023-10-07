@@ -18,6 +18,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Course Learning Outcome",
+    icon: "fa-solid fa-graduation-cap",
+    link: "/course-learning-outcome",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     header: "SETUP",
     roles: ["Administrator", "Hub", "Agent"],
   },

@@ -105,7 +105,6 @@ export default {
         { text: "Name", value: "title" },
         { text: "Program Studi", value: "program_studi.title" },
         { text: "SKS", value: "sks" },
-        { text: "Target Level", value: "target_level" },
         { text: "Total CLOs", value: "_count.course_learning_outcome" },
         { text: "Is Ready", value: "is_ready" },
         { text: "Action", value: "action", align: "right", sortable: false },

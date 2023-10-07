@@ -6,6 +6,11 @@ const apiUrl = process.env.VUE_APP_API_URL;
 
 const form = {
   id_course: "",
+  id_proficiency_level: "",
+
+  teacher_nip: "",
+  teacher_name: "",
+
   semester: "",
   academic_year: "",
   class: "",
@@ -35,6 +40,7 @@ const assessment = {
     reports: [],
     report: {},
     list_course: [],
+    list_proficiency_level: [],
     form: { ...form },
     isUpdate: false,
 
@@ -57,6 +63,9 @@ const assessment = {
     },
     SET_LIST_COURSE_ASSESSMENT(state, payload) {
       state.list_course = payload;
+    },
+    SET_LIST_PROFICIENCY_LEVEL_ASSESSMENT(state, payload) {
+      state.list_proficiency_level = payload;
     },
     SET_FORM_ASSESSMENT(state, payload) {
       state.form[payload.key] = payload.value;
@@ -133,6 +142,15 @@ const assessment = {
           },
         });
         context.commit("SET_LIST_COURSE_ASSESSMENT", COURSE.data.data);
+
+        const PROFICIENCY_LEVEL = await axios({
+          url: `${apiUrl}/proficiency-level/list`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+        context.commit("SET_LIST_PROFICIENCY_LEVEL_ASSESSMENT", PROFICIENCY_LEVEL.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {

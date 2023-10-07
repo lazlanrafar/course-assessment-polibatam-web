@@ -89,9 +89,11 @@ export default {
       headers: [
         { text: "Course Code", value: "course.code" },
         { text: "Course Name", value: "course.title" },
-        { text: "Semester", value: "semester" },
+        { text: "Teacher", value: "teacher_name" },
         { text: "Academic Year", value: "academic_year" },
+        { text: "Semester", value: "semester" },
         { text: "Class", value: "class" },
+        { text: "Target", value: "proficiency_level.level" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
