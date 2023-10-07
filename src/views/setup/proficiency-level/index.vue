@@ -30,8 +30,8 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
-                      <v-icon small>mdi-pencil</v-icon>
+                    <v-btn icon color="white" class="bg-primary mr-2" @click="handleDetail(item.id)">
+                      <v-icon small>mdi-eye</v-icon>
                     </v-btn>
                     <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
                       <v-icon small>mdi-delete</v-icon>
@@ -88,6 +88,9 @@ export default {
   methods: {
     handleModalForm(value) {
       this.modalForm = value;
+    },
+    handleDetail(id) {
+      this.$router.push(`/proficiency-level/${id}`);
     },
   },
   mounted() {

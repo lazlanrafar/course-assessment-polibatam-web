@@ -8,6 +8,11 @@ const form = {
   level: "",
 };
 
+const form_detail = {
+  lower_limit: "",
+  upper_limit: "",
+};
+
 const proficiencyLevel = {
   state: {
     isLoading: false,
@@ -17,8 +22,12 @@ const proficiencyLevel = {
       search: "",
     },
     reports: [],
+    report: {},
     form: { ...form },
     isUpdate: false,
+
+    form_detail: { ...form_detail },
+    isUpdate_detail: false,
   },
   mutations: {
     SET_OPTIONS_TABLE_PROFICIENCY_LEVEL(state, payload) {
@@ -30,6 +39,9 @@ const proficiencyLevel = {
     SET_REPORTS_PROFICIENCY_LEVEL(state, payload) {
       state.reports = payload;
     },
+    SET_REPORT_PROFICIENCY_LEVEL(state, payload) {
+      state.report = payload;
+    },
     SET_FORM_PROFICIENCY_LEVEL(state, payload) {
       state.form[payload.key] = payload.value;
     },
@@ -38,6 +50,16 @@ const proficiencyLevel = {
     },
     SET_IS_UPDATE_PROFICIENCY_LEVEL(state, payload) {
       state.isUpdate = payload;
+    },
+
+    SET_FORM_DETAIL_PROFICIENCY_LEVEL(state, payload) {
+      state.form_detail[payload.key] = payload.value;
+    },
+    RESET_FORM_DETAIL_PROFICIENCY_LEVEL(state) {
+      state.form_detail = { ...form_detail };
+    },
+    SET_IS_UPDATE_DETAIL_PROFICIENCY_LEVEL(state, payload) {
+      state.isUpdate_detail = payload;
     },
   },
   actions: {
@@ -53,6 +75,24 @@ const proficiencyLevel = {
         });
 
         context.commit("SET_REPORTS_PROFICIENCY_LEVEL", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", false);
+      }
+    },
+    async GetProficiencyLevelById(context, id) {
+      context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/proficiency-level/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_REPORT_PROFICIENCY_LEVEL", result.data.data);
       } catch (error) {
         catchUnauthorized(error);
       } finally {
@@ -78,6 +118,60 @@ const proficiencyLevel = {
         });
 
         context.dispatch("GetProficiencyLevel");
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", false);
+      }
+    },
+    async SetFormUpdateProficiencyLevelDetail(context, id) {
+      context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/proficiency-level/detail/${id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        const data = result.data.data;
+
+        context.state.form_detail = {
+          lower_limit: data.lower_limit,
+          upper_limit: data.upper_limit,
+        };
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", false);
+      }
+    },
+    async UpdateProficiencyLevelDetail(context, id) {
+      context.commit("SET_IS_LOADING_PROFICIENCY_LEVEL", true);
+      try {
+        const result = await axios({
+          url: `${apiUrl}/proficiency-level/detail/${id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+          data: context.state.form_detail,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: result.data.message,
+        });
+
         return true;
       } catch (error) {
         catchUnauthorized(error);

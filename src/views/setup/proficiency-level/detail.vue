@@ -1,6 +1,6 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" title="Assessment Method" />
+    <ContentHeader header="Setup" :title="`Proficiency Level ${report.level} (Detail)`" />
 
     <section class="content">
       <div class="container-fluid">
@@ -8,10 +8,6 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
-                  <i class="fa fa-plus"></i>
-                  Tambah
-                </v-btn>
                 <div class="d-flex justify-content-end">
                   <v-text-field
                     label="Cari..."
@@ -24,7 +20,7 @@
                 </div>
                 <v-data-table
                   :headers="headers"
-                  :items="reports"
+                  :items="report.details"
                   :loading="isLoading"
                   :options.sync="optionsTable"
                   :search="optionsTable.search"
@@ -46,24 +42,26 @@
     </section>
 
     <v-dialog v-model="modalForm" persistent max-width="600">
-      <Form @handleModalForm="handleModalForm" />
+      <FormDetail @handleModalForm="handleModalForm" />
     </v-dialog>
   </layout-app>
 </template>
 
 <script>
 export default {
-  name: "AssessmentMethodPage",
+  name: "ProficiencyLevelPage",
   components: {
     LayoutApp: () => import("@/layouts/layout-app.vue"),
     ContentHeader: () => import("@/components/molecules/content-header.vue"),
-    Form: () => import("./form.vue"),
+    FormDetail: () => import("./form-detail.vue"),
   },
   data() {
     return {
       headers: [
-        // { text: "No", value: "no" },
-        { text: "Assessment Method", value: "title" },
+        { text: "Level", value: "level" },
+        { text: "Description", value: "description" },
+        { text: "Lower Limit", value: "lower_limit" },
+        { text: "Upper Limit", value: "upper_limit" },
         { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
@@ -71,17 +69,17 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.assessmentMethod.isLoading;
+      return this.$store.state.proficiencyLevel.isLoading;
     },
-    reports() {
-      return this.$store.state.assessmentMethod.reports;
+    report() {
+      return this.$store.state.proficiencyLevel.report;
     },
     optionsTable: {
       get() {
-        return this.$store.state.assessmentMethod.optionsTable;
+        return this.$store.state.proficiencyLevel.optionsTable;
       },
       set(value) {
-        this.$store.commit("SET_OPTIONS_TABLE_ASSESSMENT_METHOD", value);
+        this.$store.commit("SET_OPTIONS_TABLE_PROFICIENCY_LEVEL", value);
       },
     },
   },
@@ -90,13 +88,14 @@ export default {
       this.modalForm = value;
     },
     handleUpdate(id) {
-      this.$store.dispatch("SetFormUpdateAssessmentMethod", id);
-      this.$store.commit("SET_IS_UPDATE_ASSESSMENT_METHOD", id);
+      this.$store.dispatch("SetFormUpdateProficiencyLevelDetail", id);
+      this.$store.commit("SET_IS_UPDATE_DETAIL_PROFICIENCY_LEVEL", id);
+
       this.handleModalForm(true);
     },
   },
   mounted() {
-    this.$store.dispatch("GetAssessmentMethod");
+    this.$store.dispatch("GetProficiencyLevelById", this.$route.params.id);
   },
 };
 </script>
