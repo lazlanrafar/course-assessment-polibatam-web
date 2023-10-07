@@ -93,7 +93,7 @@ const rubrik = {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const result = await axios({
-          url: `${apiUrl}/rubrik?program-studi=${id_program_studi}`,
+          url: `${apiUrl}/rubrik?id_program_studi=${id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
@@ -107,11 +107,11 @@ const rubrik = {
         context.commit("SET_IS_LOADING_RUBRIK", false);
       }
     },
-    async FetchBeforeFormRubrik(context) {
+    async FetchBeforeFormRubrik(context, payload) {
       context.commit("SET_IS_LOADING_RUBRIK", true);
       try {
         const studentOutcome = await axios({
-          url: `${apiUrl}/student-outcome`,
+          url: `${apiUrl}/student-outcome?id_program_studi=${payload.id_program_studi}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,

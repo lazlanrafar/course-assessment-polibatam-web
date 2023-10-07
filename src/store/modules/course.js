@@ -9,7 +9,6 @@ const form = {
   code: "",
   title: "",
   sks: "",
-  target_level: "",
 
   bobot_assignment: 0,
   bobot_quiz: 0,
@@ -279,7 +278,6 @@ const course = {
           code: data.code,
           title: data.title,
           sks: data.sks,
-          target_level: data.target_level,
 
           bobot_assignment: data.bobot_assignment,
           bobot_quiz: data.bobot_quiz,

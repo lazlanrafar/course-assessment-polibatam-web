@@ -8,7 +8,7 @@ const gradingCategory = {
     isLoading: false,
     optionsTable: {
       page: 1,
-      itemsPerPage: 10,
+      itemsPerPage: -1,
       search: "",
     },
     reports: [],

@@ -67,19 +67,6 @@
               ]"
             />
           </div>
-          <div class="col-12">
-            <v-text-field
-              label="Level Target"
-              v-model="target_level"
-              dense
-              outlined
-              :rules="[
-                (value) => {
-                  return genericRequiredRule(value, 'Level Target');
-                },
-              ]"
-            />
-          </div>
         </div>
         <fieldset class="border px-5 py-3">
           <legend class="fs-14 fw-medium py-1 px-3 bg-navy w-auto">Weight of Course</legend>
@@ -267,17 +254,6 @@ export default {
       set(value) {
         this.$store.commit("SET_FORM_COURSE", {
           key: "sks",
-          value,
-        });
-      },
-    },
-    target_level: {
-      get() {
-        return this.$store.state.course.form.target_level;
-      },
-      set(value) {
-        this.$store.commit("SET_FORM_COURSE", {
-          key: "target_level",
           value,
         });
       },

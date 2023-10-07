@@ -131,7 +131,9 @@ export default {
   methods: {
     handleModalForm(value) {
       if (value) {
-        this.$store.dispatch("FetchBeforeFormRubrik");
+        this.$store.dispatch("FetchBeforeFormRubrik", {
+          id_program_studi: this.$route.params.id,
+        });
 
         this.$store.commit("SET_FORM_RUBRIK", {
           key: "id_program_studi",
