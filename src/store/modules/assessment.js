@@ -35,6 +35,7 @@ const assessment = {
     loading: {
       percentage_of_student_within_each_category: false,
       student_proficiency_level_attainment_for_each_assessment_tool: false,
+      percentage_of_student_within_each_proficiency_level: false,
     },
     optionsTable: {
       page: 1,
@@ -54,6 +55,7 @@ const assessment = {
 
     percentage_of_student_within_each_category: [],
     student_proficiency_level_attainment_for_each_assessment_tool: [],
+    percentage_of_student_within_each_proficiency_level: [],
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -105,6 +107,9 @@ const assessment = {
     },
     SET_STUDENT_PROFICIENCY_LEVEL_ATTAINMENT_FOR_EACH_ASSESSMENT_TOOL_ASSESSMENT(state, payload) {
       state.student_proficiency_level_attainment_for_each_assessment_tool = payload;
+    },
+    SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_PROFICIENCY_LEVEL_ASSESSMENT(state, payload) {
+      state.percentage_of_student_within_each_proficiency_level = payload;
     },
   },
   actions: {
@@ -502,6 +507,30 @@ const assessment = {
       } finally {
         context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
           key: "student_proficiency_level_attainment_for_each_assessment_tool",
+          value: false,
+        });
+      }
+    },
+    async GetPercentageOfStudentWithinEachProficiencyLevel(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "percentage_of_student_within_each_proficiency_level",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/percentage-of-student-within-each-proficiency-level/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_PROFICIENCY_LEVEL_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "percentage_of_student_within_each_proficiency_level",
           value: false,
         });
       }
