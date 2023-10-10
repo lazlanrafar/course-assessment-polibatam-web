@@ -12,7 +12,7 @@ import AssessmentDetail from "@/views/assessment/detail.vue";
 
 // SETUP
 import Course from "@/views/setup/course/index.vue";
-import CourseLearningOutcome from "@/views/setup/course/course-learning-outcome.vue";
+import CourseCLO from "@/views/setup/course/course-learning-outcome.vue";
 import CourseAssessmentPlan from "@/views/setup/course/course-assessment-plan.vue";
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import RubrikDetail from "@/views/setup/rubrik/detail.vue";
@@ -81,8 +81,8 @@ const routes = [
   },
   {
     path: "/course/clo/:id",
-    name: "CourseLearningOutcome",
-    component: CourseLearningOutcome,
+    name: "CourseCLO",
+    component: CourseCLO,
     meta: {
       middleware: [auth],
     },

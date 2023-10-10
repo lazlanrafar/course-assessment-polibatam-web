@@ -146,6 +146,10 @@
               </div>
             </v-card>
           </div>
+
+          <div class="col-12">
+            <PercentageOfStudentWithinEachCategory />
+          </div>
         </div>
       </div>
     </section>
@@ -168,6 +172,7 @@ export default {
     TableTdCustom: () => import("@/components/atoms/table-td-custom.vue"),
     FormMahasiswa: () => import("./form-mahasiswa.vue"),
     HandleImportMahasiswa: () => import("./handle-import-mahasiswa.vue"),
+    PercentageOfStudentWithinEachCategory: () => import("@/components/organisms/percentage-of-student-within-each-category.vue"),
   },
   data() {
     return {

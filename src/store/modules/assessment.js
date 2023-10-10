@@ -32,6 +32,9 @@ const form_mahasiswa = {
 const assessment = {
   state: {
     isLoading: false,
+    isLoadingDetail: {
+      percentage_of_student_within_each_category: false,
+    },
     optionsTable: {
       page: 1,
       itemsPerPage: -1,
@@ -47,6 +50,8 @@ const assessment = {
     form_mahasiswa: { ...form_mahasiswa },
     form_import_mahasiswa: [],
     isUpdateMahasiswa: false,
+
+    percentage_of_student_within_each_category: [],
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -54,6 +59,9 @@ const assessment = {
     },
     SET_IS_LOADING_ASSESSMENT(state, payload) {
       state.isLoading = payload;
+    },
+    SET_IS_LOADING_DETAIL_ASSESSMENT(state, payload) {
+      state.isLoadingDetail[payload.key] = payload.value;
     },
     SET_REPORTS_ASSESSMENT(state, payload) {
       state.reports = payload;
@@ -88,6 +96,10 @@ const assessment = {
     },
     SET_IS_UPDATE_MAHASISWA_ASSESSMENT(state, payload) {
       state.isUpdateMahasiswa = payload;
+    },
+
+    SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_CATEGORY_ASSESSMENT(state, payload) {
+      state.percentage_of_student_within_each_category = payload;
     },
   },
   actions: {
@@ -435,6 +447,31 @@ const assessment = {
         });
       } finally {
         context.commit("SET_IS_LOADING_ASSESSMENT", false);
+      }
+    },
+
+    async GetPercentageOfStudentWithinEachCategory(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "percentage_of_student_within_each_category",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/percentage-of-students-within-each-category/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_CATEGORY_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "percentage_of_student_within_each_category",
+          value: false,
+        });
       }
     },
   },
