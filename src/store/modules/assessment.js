@@ -32,8 +32,9 @@ const form_mahasiswa = {
 const assessment = {
   state: {
     isLoading: false,
-    isLoadingDetail: {
+    loading: {
       percentage_of_student_within_each_category: false,
+      student_proficiency_level_attainment_for_each_assessment_tool: false,
     },
     optionsTable: {
       page: 1,
@@ -52,6 +53,7 @@ const assessment = {
     isUpdateMahasiswa: false,
 
     percentage_of_student_within_each_category: [],
+    student_proficiency_level_attainment_for_each_assessment_tool: [],
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -61,7 +63,7 @@ const assessment = {
       state.isLoading = payload;
     },
     SET_IS_LOADING_DETAIL_ASSESSMENT(state, payload) {
-      state.isLoadingDetail[payload.key] = payload.value;
+      state.loading[payload.key] = payload.value;
     },
     SET_REPORTS_ASSESSMENT(state, payload) {
       state.reports = payload;
@@ -100,6 +102,9 @@ const assessment = {
 
     SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_CATEGORY_ASSESSMENT(state, payload) {
       state.percentage_of_student_within_each_category = payload;
+    },
+    SET_STUDENT_PROFICIENCY_LEVEL_ATTAINMENT_FOR_EACH_ASSESSMENT_TOOL_ASSESSMENT(state, payload) {
+      state.student_proficiency_level_attainment_for_each_assessment_tool = payload;
     },
   },
   actions: {
@@ -470,6 +475,33 @@ const assessment = {
       } finally {
         context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
           key: "percentage_of_student_within_each_category",
+          value: false,
+        });
+      }
+    },
+    async GetStudentProficiencyLevelAttainmentForEachAssessmentTool(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "student_proficiency_level_attainment_for_each_assessment_tool",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/student-proficiency-level-attainment-for-each-assessment-tool/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit(
+          "SET_STUDENT_PROFICIENCY_LEVEL_ATTAINMENT_FOR_EACH_ASSESSMENT_TOOL_ASSESSMENT",
+          result.data.data
+        );
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "student_proficiency_level_attainment_for_each_assessment_tool",
           value: false,
         });
       }

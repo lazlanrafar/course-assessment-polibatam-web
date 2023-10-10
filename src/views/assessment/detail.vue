@@ -73,7 +73,9 @@
                         <td :colspan="report.course.total_practice_or_project">
                           Practice or Project ({{ report.course.bobot_practice_or_project }}%)
                         </td>
-                        <td :colspan="report.course.total_assignment">Assignment ({{ report.course.bobot_assignment }}%)</td>
+                        <td :colspan="report.course.total_assignment">
+                          Assignment ({{ report.course.bobot_assignment }}%)
+                        </td>
                         <td :colspan="+report.course.total_mid_exam + +report.course.total_final_exam">
                           Exam ({{ +report.course.bobot_mid_exam + +report.course.bobot_final_exam }}%)
                         </td>
@@ -150,6 +152,9 @@
           <div class="col-12">
             <PercentageOfStudentWithinEachCategory />
           </div>
+          <div class="col-12">
+            <StudentProficiencyLevelAttainmentForEachAssessmentTool />
+          </div>
         </div>
       </div>
     </section>
@@ -172,7 +177,10 @@ export default {
     TableTdCustom: () => import("@/components/atoms/table-td-custom.vue"),
     FormMahasiswa: () => import("./form-mahasiswa.vue"),
     HandleImportMahasiswa: () => import("./handle-import-mahasiswa.vue"),
-    PercentageOfStudentWithinEachCategory: () => import("@/components/organisms/percentage-of-student-within-each-category.vue"),
+    PercentageOfStudentWithinEachCategory: () =>
+      import("@/components/organisms/percentage-of-student-within-each-category.vue"),
+    StudentProficiencyLevelAttainmentForEachAssessmentTool: () =>
+      import("@/components/organisms/student-proficiency-level-attainment-for-each-assessment-tool.vue"),
   },
   data() {
     return {
