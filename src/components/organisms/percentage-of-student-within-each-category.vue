@@ -26,22 +26,22 @@
             <tr v-for="(item, i) in percentage_of_student_within_each_category" :key="i">
               <td>{{ item.title }}</td>
               <td v-for="(nQ, iQ) in report.course.total_quiz" :key="iQ">
-                {{ item.percentage_quiz[iQ] }}
+                {{ item.quiz[iQ] }}
               </td>
               <td v-for="(nP, iP) in report.course.total_practice_or_project" :key="iP">
-                {{ item.percentage_practice_or_project[iP] }}
+                {{ item.practice_or_project[iP] }}
               </td>
               <td v-for="(nA, iA) in report.course.total_assignment" :key="iA">
-                {{ item.percentage_assignment[iA] }}
+                {{ item.assignment[iA] }}
               </td>
               <td>
-                {{ item.percentage_mid_exam }}
+                {{ item.mid_exam }}
               </td>
               <td>
-                {{ item.percentage_final_exam }}
+                {{ item.final_exam }}
               </td>
               <td v-for="(nPP, iPP) in report.course.total_presentation" :key="iPP">
-                {{ item.percentage_presentation[iPP] }}
+                {{ item.presentation[iPP] }}
               </td>
             </tr>
           </tbody>
