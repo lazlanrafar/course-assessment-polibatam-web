@@ -158,6 +158,9 @@
           <div class="col-12">
             <PercentageOfStudentWithinEachProficiencyLevel />
           </div>
+          <div class="col-12">
+            <AttainmentOfEachPerformanceIndicator />
+          </div>
         </div>
       </div>
     </section>
@@ -186,6 +189,8 @@ export default {
       import("@/components/organisms/student-proficiency-level-attainment-for-each-assessment-tool.vue"),
     PercentageOfStudentWithinEachProficiencyLevel: () =>
       import("@/components/organisms/percentage-of-student-within-each-proficiency-level.vue"),
+    AttainmentOfEachPerformanceIndicator: () =>
+      import("@/components/organisms/attainment-of-each-performance-indicator.vue"),
   },
   data() {
     return {

@@ -36,6 +36,7 @@ const assessment = {
       percentage_of_student_within_each_category: false,
       student_proficiency_level_attainment_for_each_assessment_tool: false,
       percentage_of_student_within_each_proficiency_level: false,
+      attainment_of_each_performance_indicator: false,
     },
     optionsTable: {
       page: 1,
@@ -56,6 +57,7 @@ const assessment = {
     percentage_of_student_within_each_category: [],
     student_proficiency_level_attainment_for_each_assessment_tool: [],
     percentage_of_student_within_each_proficiency_level: [],
+    attainment_of_each_performance_indicator: [],
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -110,6 +112,9 @@ const assessment = {
     },
     SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_PROFICIENCY_LEVEL_ASSESSMENT(state, payload) {
       state.percentage_of_student_within_each_proficiency_level = payload;
+    },
+    SET_ATTAINMENT_OF_EACH_PERFORMANCE_INDICATOR_ASSESSMENT(state, payload) {
+      state.attainment_of_each_performance_indicator = payload;
     },
   },
   actions: {
@@ -459,7 +464,9 @@ const assessment = {
         context.commit("SET_IS_LOADING_ASSESSMENT", false);
       }
     },
-
+    // ===========================================================
+    // ASSESSMENT REPORT
+    // ===========================================================
     async GetPercentageOfStudentWithinEachCategory(context, id_assessment) {
       context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
         key: "percentage_of_student_within_each_category",
@@ -531,6 +538,30 @@ const assessment = {
       } finally {
         context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
           key: "percentage_of_student_within_each_proficiency_level",
+          value: false,
+        });
+      }
+    },
+    async GetAttainmentOfEachPerformanceIndicator(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "attainment_of_each_performance_indicator",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/attainment-of-each-performance-indicator/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_ATTAINMENT_OF_EACH_PERFORMANCE_INDICATOR_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "attainment_of_each_performance_indicator",
           value: false,
         });
       }
