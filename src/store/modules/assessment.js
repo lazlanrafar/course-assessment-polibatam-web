@@ -37,6 +37,7 @@ const assessment = {
       student_proficiency_level_attainment_for_each_assessment_tool: false,
       percentage_of_student_within_each_proficiency_level: false,
       attainment_of_each_performance_indicator: false,
+      summary_of_course_assessment_results: false,
     },
     optionsTable: {
       page: 1,
@@ -58,6 +59,7 @@ const assessment = {
     student_proficiency_level_attainment_for_each_assessment_tool: [],
     percentage_of_student_within_each_proficiency_level: [],
     attainment_of_each_performance_indicator: [],
+    summary_of_course_assessment_results: {},
   },
   mutations: {
     SET_OPTIONS_TABLE_ASSESSMENT(state, payload) {
@@ -115,6 +117,9 @@ const assessment = {
     },
     SET_ATTAINMENT_OF_EACH_PERFORMANCE_INDICATOR_ASSESSMENT(state, payload) {
       state.attainment_of_each_performance_indicator = payload;
+    },
+    SET_SUMMARY_OF_COURSE_ASSESSMENT_RESULTS_ASSESSMENT(state, payload) {
+      state.summary_of_course_assessment_results = payload;
     },
   },
   actions: {
@@ -562,6 +567,30 @@ const assessment = {
       } finally {
         context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
           key: "attainment_of_each_performance_indicator",
+          value: false,
+        });
+      }
+    },
+    async GetSummaryOfCourseAssessmentResults(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "summary_of_course_assessment_results",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/summary-of-course-assessment-results/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_SUMMARY_OF_COURSE_ASSESSMENT_RESULTS_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "summary_of_course_assessment_results",
           value: false,
         });
       }

@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     handleDetail(id) {
-      this.$router.push(`/assessment/${id}`);
+      this.$router.push(`/summary-assessment/${id}`);
     },
   },
   mounted() {

@@ -10,6 +10,7 @@ import Dashboard from "@/views/dashboard/index.vue";
 import Assessment from "@/views/assessment/index.vue";
 import AssessmentDetail from "@/views/assessment/detail.vue";
 import SummaryAssessment from "@/views/summary-assessment/index.vue";
+import SummaryAssessmentDetail from "@/views/summary-assessment/detail.vue";
 
 // SETUP
 import Course from "@/views/setup/course/index.vue";
@@ -73,6 +74,14 @@ const routes = [
     path: "/summary-assessment",
     name: "SummaryAssessment",
     component: SummaryAssessment,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/summary-assessment/:id",
+    name: "SummaryAssessmentDetail",
+    component: SummaryAssessmentDetail,
     meta: {
       middleware: [auth],
     },
