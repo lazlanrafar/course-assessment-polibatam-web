@@ -9,6 +9,7 @@ import Login from "@/views/auth/login.vue";
 import Dashboard from "@/views/dashboard/index.vue";
 import Assessment from "@/views/assessment/index.vue";
 import AssessmentDetail from "@/views/assessment/detail.vue";
+import SummaryAssessment from "@/views/summary-assessment/index.vue";
 
 // SETUP
 import Course from "@/views/setup/course/index.vue";
@@ -64,6 +65,14 @@ const routes = [
     path: "/assessment/:id",
     name: "AssessmentDetail",
     component: AssessmentDetail,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/summary-assessment",
+    name: "SummaryAssessment",
+    component: SummaryAssessment,
     meta: {
       middleware: [auth],
     },

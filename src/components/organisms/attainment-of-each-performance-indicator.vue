@@ -17,6 +17,7 @@
                     <th v-for="(nPP, iPP) in item.category[0].presentation" :key="iPP">{{ nPP.key }}</th>
                     <th v-if="'mid_exam' in item.category[0]">MSE</th>
                     <th v-if="'final_exam' in item.category[0]">FSE</th>
+                    <th style="width: 80px" class="table-warning">Avg</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                     <td v-for="(nPP, iPP) in itemC.presentation" :key="iPP">{{ nPP.value }}</td>
                     <td v-if="'mid_exam' in itemC">{{ itemC.mid_exam }}</td>
                     <td v-if="'final_exam' in itemC">{{ itemC.final_exam }}</td>
+                    <td class="table-warning">{{ itemC.average }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -43,6 +45,7 @@
                     <th v-for="(nPP, iPP) in item.proficiency_level[0].presentation" :key="iPP">{{ nPP.key }}</th>
                     <th v-if="'mid_exam' in item.proficiency_level[0]">MSE</th>
                     <th v-if="'final_exam' in item.proficiency_level[0]">FSE</th>
+                    <th style="width: 80px" class="table-warning">Avg</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,6 +57,7 @@
                     <td v-for="(nPP, iPP) in itemP.presentation" :key="iPP">{{ nPP.value }}</td>
                     <td v-if="'mid_exam' in itemP">{{ itemP.mid_exam }}</td>
                     <td v-if="'final_exam' in itemP">{{ itemP.final_exam }}</td>
+                    <td class="table-warning">{{ itemP.average }}</td>
                   </tr>
                 </tbody>
               </table>

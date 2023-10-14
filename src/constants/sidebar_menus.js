@@ -18,6 +18,13 @@ const sidebar_menus = [
     children: false,
   },
   {
+    title: "Summary Assessment",
+    icon: "fa-solid fa-chalkboard-teacher",
+    link: "/summary-assessment",
+    roles: ["Administrator", "Hub", "Agent"],
+    children: false,
+  },
+  {
     header: "SETUP",
     roles: ["Administrator", "Hub", "Agent"],
   },
