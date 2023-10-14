@@ -4,9 +4,7 @@
     <div class="card-body">
       <div v-for="(item, i) in attainment_of_each_performance_indicator" :key="i">
         <div class="card shadow-none border">
-          <div class="card-header bg-secondary">
-            {{ item.so_pi }}
-          </div>
+          <div class="card-header bg-secondary">{{ item.so_pi }}. {{ item.title }}</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered fs-12">
