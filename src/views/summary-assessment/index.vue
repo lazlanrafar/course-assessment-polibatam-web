@@ -27,34 +27,11 @@
                 >
                   <template v-slot:[`item.action`]="{ item }">
                     <!-- right aligned menu -->
-                    <v-menu offset-y left>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
-                          <span class="fw-light mr-1">Action</span>
-                          <i class="fa-solid fa-chevron-down"></i>
-                        </v-btn>
-                      </template>
-                      <v-list min-width="150">
-                        <v-list-item @click="handleDetail(item.id)">
-                          <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-eye mr-2"></i>
-                            <span>Detail</span>
-                          </v-list-item-title>
-                        </v-list-item>
-                        <v-list-item @click="handleUpdate(item.id)">
-                          <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-edit mr-2"></i>
-                            <span>Edit</span>
-                          </v-list-item-title>
-                        </v-list-item>
-                        <v-list-item @click="handleDelete(item.id)">
-                          <v-list-item-title class="text-primary fs-12">
-                            <i class="fas fa-trash mr-2"></i>
-                            <span>Delete</span>
-                          </v-list-item-title>
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
+                    <v-btn small class="btn btn-outline-primary py-4" @click="handleDetail(item.id)">
+                      <i class="fa-solid fa-eye"></i>
+                      <div class="m-1"></div>
+                      <span class="fw-light">Detail</span>
+                    </v-btn>
                   </template>
                 </v-data-table>
               </div>
