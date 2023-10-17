@@ -39,13 +39,57 @@
           </tbody>
         </table>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card shadow-none border">
+            <div class="card-header">SA - RE202 Student Outcomes Attainment</div>
+            <div class="card-body">
+              <GChart
+                type="ColumnChart"
+                :data="summary_of_course_assessment_results.category_chart"
+                :options="chartOptions"
+                v-if="summary_of_course_assessment_results.category_chart"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-none border">
+            <div class="card-header">SA - RE202 Student Outcomes Attainment</div>
+            <div class="card-body">
+              <GChart
+                type="ColumnChart"
+                :data="summary_of_course_assessment_results.proficiency_level_chart"
+                :options="chartOptions"
+                v-if="summary_of_course_assessment_results.proficiency_level_chart"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </v-card>
 </template>
 
 <script>
+import { GChart } from "vue-google-charts/legacy";
+
 export default {
   name: "SummaryOfCourseAssessmentResults",
+  components: {
+    GChart,
+  },
+  data() {
+    return {
+      chartOptions: {
+        isStacked: "percent",
+        height: 350,
+        legend: { position: "bottom", maxLines: 5 },
+        chartArea: { width: "85%" },
+      },
+    };
+  },
   computed: {
     report() {
       return this.$store.state.assessment.report;
