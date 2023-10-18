@@ -2,7 +2,7 @@
   <v-card :loading="isLoading" class="card shadow-none border">
     <div class="card-header fw-medium">Summary of Course Assessment Results</div>
 
-    <div class="card-body">
+    <div class="card-body" v-if="summary_of_course_assessment_results">
       <div class="row">
         <div class="col-12" v-if="assessment">
           <div class="card shadow-none border">
@@ -12,7 +12,7 @@
                   <TableCustom
                     :items="[
                       { label: 'Study Program', value: assessment.course.program_studi.title },
-                      { label: 'Course Code', value: assessment.course.code },
+                      { label: 'Course Code', value: assessment?.course.code },
                       { label: 'Course Title', value: assessment.course.title },
                       { label: 'Teacher NIP', value: assessment.teacher_nip },
                       { label: 'Teacher Name', value: assessment.teacher_name },
@@ -78,7 +78,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="card shadow-none border">
-            <div class="card-header">SA - {{ assessment.course.code }} Student Outcomes Attainment</div>
+            <div class="card-header">SA - {{ assessment?.course.code }} Student Outcomes Attainment</div>
             <div class="card-body">
               <GChart
                 type="ColumnChart"
@@ -91,7 +91,7 @@
         </div>
         <div class="col-md-6">
           <div class="card shadow-none border">
-            <div class="card-header">SA - {{ assessment.course.code }} Attainment</div>
+            <div class="card-header">SA - {{ assessment?.course.code }} Attainment</div>
             <div class="card-body">
               <GChart
                 type="ColumnChart"
@@ -104,7 +104,7 @@
         </div>
         <div class="col-md-6">
           <div class="card shadow-none border">
-            <div class="card-header">SA - {{ assessment.course.code }} Proficiency Level Attainment</div>
+            <div class="card-header">SA - {{ assessment?.course.code }} Proficiency Level Attainment</div>
             <div class="card-body">
               <GChart
                 type="ColumnChart"
@@ -117,7 +117,7 @@
         </div>
         <div class="col-md-6">
           <div class="card shadow-none border">
-            <div class="card-header">SA - {{ assessment.course.code }} Level Proficiency Level Attainment</div>
+            <div class="card-header">SA - {{ assessment?.course.code }} Level Proficiency Level Attainment</div>
             <div class="card-body">
               <GChart
                 type="ColumnChart"
@@ -125,6 +125,14 @@
                 v-if="summary_of_course_assessment_results.proficiency_level_chart_target"
                 :options="chartTargetOptions(1)"
               />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-none border">
+            <div class="card-header">SA - {{ assessment?.course.code }} Level Proficiency Level Attainment</div>
+            <div class="card-body">
+              <RadarChart />
             </div>
           </div>
         </div>
@@ -141,6 +149,7 @@ export default {
   components: {
     GChart,
     TableCustom: () => import("@/components/molecules/table-custom.vue"),
+    RadarChart: () => import("@/components/molecules/radar-chart.vue"),
   },
   data() {
     return {
