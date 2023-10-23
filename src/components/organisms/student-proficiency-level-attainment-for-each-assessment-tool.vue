@@ -56,6 +56,15 @@
                 :value="item.presentation[iPP]"
               />
             </tr>
+            <tr class="table-primary" v-if="!isLoadingAverage">
+              <td colspan="2">Proficiency Level Average</td>
+              <td v-for="(item, i) in proficiency_level_average.quiz" :key="i">{{ item }}</td>
+              <td v-for="(item, i) in proficiency_level_average.practice_or_project" :key="i">{{ item }}</td>
+              <td v-for="(item, i) in proficiency_level_average.assignment" :key="i">{{ item }}</td>
+              <td v-if="proficiency_level_average.mid_exam">{{ proficiency_level_average.mid_exam }}</td>
+              <td v-if="proficiency_level_average.final_exam">{{ proficiency_level_average.final_exam }}</td>
+              <td v-for="(item, i) in proficiency_level_average.presentation" :key="i">{{ item }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -96,12 +105,19 @@ export default {
     isLoading() {
       return this.$store.state.assessment.loading.student_proficiency_level_attainment_for_each_assessment_tool;
     },
+    isLoadingAverage() {
+      return this.$store.state.assessment.loading.proficiency_level_average;
+    },
     student_proficiency_level_attainment_for_each_assessment_tool() {
       return this.$store.state.assessment.student_proficiency_level_attainment_for_each_assessment_tool;
+    },
+    proficiency_level_average() {
+      return this.$store.state.assessment.proficiency_level_average;
     },
   },
   mounted() {
     this.$store.dispatch("GetStudentProficiencyLevelAttainmentForEachAssessmentTool", this.$route.params.id);
+    this.$store.dispatch("GetProficiencyLevelAverageAssessment", this.$route.params.id);
   },
 };
 </script>

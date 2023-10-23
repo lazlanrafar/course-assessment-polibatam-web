@@ -35,6 +35,7 @@ const assessment = {
     loading: {
       percentage_of_student_within_each_category: false,
       student_proficiency_level_attainment_for_each_assessment_tool: false,
+      proficiency_level_average: false,
       percentage_of_student_within_each_proficiency_level: false,
       attainment_of_each_performance_indicator: false,
       summary_of_course_assessment_results: false,
@@ -57,6 +58,7 @@ const assessment = {
 
     percentage_of_student_within_each_category: [],
     student_proficiency_level_attainment_for_each_assessment_tool: [],
+    proficiency_level_average: [],
     percentage_of_student_within_each_proficiency_level: [],
     attainment_of_each_performance_indicator: [],
     summary_of_course_assessment_results: {},
@@ -111,6 +113,9 @@ const assessment = {
     },
     SET_STUDENT_PROFICIENCY_LEVEL_ATTAINMENT_FOR_EACH_ASSESSMENT_TOOL_ASSESSMENT(state, payload) {
       state.student_proficiency_level_attainment_for_each_assessment_tool = payload;
+    },
+    SET_PROFICIENCY_LEVEL_AVERAGE_ASSESSMENT(state, payload) {
+      state.proficiency_level_average = payload;
     },
     SET_PERCENTAGE_OF_STUDENT_WITHIN_EACH_PROFICIENCY_LEVEL_ASSESSMENT(state, payload) {
       state.percentage_of_student_within_each_proficiency_level = payload;
@@ -519,6 +524,30 @@ const assessment = {
       } finally {
         context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
           key: "student_proficiency_level_attainment_for_each_assessment_tool",
+          value: false,
+        });
+      }
+    },
+    async GetProficiencyLevelAverageAssessment(context, id_assessment) {
+      context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+        key: "proficiency_level_average",
+        value: true,
+      });
+      try {
+        const result = await axios({
+          url: `${apiUrl}/assessment/proficiency-level-average/${id_assessment}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.commit("SET_PROFICIENCY_LEVEL_AVERAGE_ASSESSMENT", result.data.data);
+      } catch (error) {
+        catchUnauthorized(error);
+      } finally {
+        context.commit("SET_IS_LOADING_DETAIL_ASSESSMENT", {
+          key: "proficiency_level_average",
           value: false,
         });
       }
