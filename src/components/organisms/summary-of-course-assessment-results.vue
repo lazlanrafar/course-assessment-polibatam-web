@@ -56,11 +56,35 @@
           </tbody>
         </table>
       </div>
+      <div class="table-responsive" v-if="summary_of_course_assessment_results.category_target">
+        <table class="table table-bordered fs-12">
+          <thead class="table-success">
+            <tr>
+              <th>Category</th>
+              <th v-for="(item, i) in summary_of_course_assessment_results.category_target[0].data" :key="i">
+                {{ item.so_pi }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, i) in summary_of_course_assessment_results.category_target"
+              :key="i"
+              :class="item.title == 'Target Attainment' ? 'table-success' : ''"
+            >
+              <td>{{ item.title }}</td>
+              <td v-for="(subItem, j) in item.data" :key="j">{{ subItem.average }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <br />
       <div class="table-responsive" v-if="summary_of_course_assessment_results.proficiency_level">
         <table class="table table-bordered fs-12">
           <thead class="table-primary">
             <tr>
-              <th>Proficiency Level</th>
+              <th>Proficiency Level (%)</th>
               <th v-for="(item, i) in summary_of_course_assessment_results.proficiency_level[0].data" :key="i">
                 {{ item.so_pi }}
               </th>
@@ -69,6 +93,24 @@
           <tbody>
             <tr v-for="(item, i) in summary_of_course_assessment_results.proficiency_level" :key="i">
               <td>{{ item.level }}. {{ item.description }}</td>
+              <td v-for="(subItem, j) in item.data" :key="j">{{ subItem.average }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-responsive" v-if="summary_of_course_assessment_results.proficiency_level">
+        <table class="table table-bordered fs-12">
+          <thead class="table-primary">
+            <tr>
+              <th>Proficiency Level</th>
+              <th v-for="(item, i) in summary_of_course_assessment_results.proficiency_level_target[0].data" :key="i">
+                {{ item.so_pi }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, i) in summary_of_course_assessment_results.proficiency_level_target" :key="i">
+              <td>{{ item.title }}</td>
               <td v-for="(subItem, j) in item.data" :key="j">{{ subItem.average }}</td>
             </tr>
           </tbody>
