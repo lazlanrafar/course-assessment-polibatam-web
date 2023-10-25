@@ -174,7 +174,10 @@
           <div class="card shadow-none border">
             <div class="card-header">SA - {{ assessment?.course.code }} Level Proficiency Level Attainment</div>
             <div class="card-body">
-              <RadarChart />
+              <RadarChart
+                v-if="summary_of_course_assessment_results.data_radar"
+                :chartData="summary_of_course_assessment_results.data_radar"
+              />
             </div>
           </div>
         </div>

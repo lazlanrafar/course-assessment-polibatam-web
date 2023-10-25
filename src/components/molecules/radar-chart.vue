@@ -53,25 +53,27 @@ export default {
       type: Array,
       default: () => [],
     },
+    chartData: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
-      chartData: {
-        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-        datasets: [
-          {
-            label: "My First dataset",
-            data: [65, 59, 90, 81, 56, 55, 40],
-          },
-          {
-            label: "My Second dataset",
-            data: [28, 48, 40, 19, 96, 27, 100],
-          },
-        ],
-      },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true, // Ensure the scale starts at 0
+          },
+        },
+        elements: {
+          line: {
+            borderWidth: 2, // Adjust the line width as needed
+            borderCapStyle: "round", // Make the lines rounded
+          },
+        },
       },
     };
   },
