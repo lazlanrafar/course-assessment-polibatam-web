@@ -109,6 +109,20 @@
               ]"
             />
           </div>
+          <div class="col-12">
+            <v-text-field
+              label="Target Attainment"
+              dense
+              outlined
+              v-model="target_attainment"
+              type="number"
+              :rules="[
+                (value) => {
+                  return genericRequiredRule(value, 'Target Attainment');
+                },
+              ]"
+            />
+          </div>
         </div>
       </div>
       <div class="card-footer">
@@ -216,6 +230,17 @@ export default {
       set(value) {
         this.$store.commit("SET_FORM_ASSESSMENT", {
           key: "class",
+          value,
+        });
+      },
+    },
+    target_attainment: {
+      get() {
+        return this.$store.state.assessment.form.target_attainment;
+      },
+      set(value) {
+        this.$store.commit("SET_FORM_ASSESSMENT", {
+          key: "target_attainment",
           value,
         });
       },

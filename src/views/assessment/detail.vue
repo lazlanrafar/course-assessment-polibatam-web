@@ -83,6 +83,7 @@
                           Presentation ({{ report.course.bobot_presentation }}%)
                         </td>
                         <td rowspan="3">Nilai Akhir</td>
+                        <td rowspan="3">Nilai Huruf</td>
                         <td rowspan="3">Action</td>
                       </tr>
                       <tr class="table-active fw-medium">
@@ -117,6 +118,7 @@
                           :value="item.presentation[iPP]"
                         />
                         <td class="table-warning">{{ item.nilai_akhir }}</td>
+                        <td :class="item.grade == 'E' ? 'table-danger' : 'table-success'">{{ item.grade }}</td>
                         <td>
                           <v-menu offset-y left>
                             <template v-slot:activator="{ on, attrs }">
@@ -149,16 +151,16 @@
             </v-card>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" v-if="mahasiswa.length > 0">
             <PercentageOfStudentWithinEachCategory />
           </div>
-          <div class="col-12">
+          <div class="col-12" v-if="mahasiswa.length > 0">
             <StudentProficiencyLevelAttainmentForEachAssessmentTool />
           </div>
-          <div class="col-12">
+          <div class="col-12" v-if="mahasiswa.length > 0">
             <PercentageOfStudentWithinEachProficiencyLevel />
           </div>
-          <div class="col-12">
+          <div class="col-12" v-if="mahasiswa.length > 0">
             <AttainmentOfEachPerformanceIndicator />
           </div>
         </div>

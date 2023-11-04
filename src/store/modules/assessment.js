@@ -14,6 +14,8 @@ const form = {
   semester: "",
   academic_year: "",
   class: "",
+
+  target_attainment: "",
 };
 
 const form_mahasiswa = {
@@ -243,6 +245,10 @@ const assessment = {
           semester: data.semester,
           academic_year: data.academic_year,
           class: data.class,
+          target_attainment: data.target_attainment,
+          id_proficiency_level: data.id_proficiency_level,
+          teacher_nip: data.teacher_nip,
+          teacher_name: data.teacher_name,
         };
       } catch (error) {
         catchUnauthorized(error);
