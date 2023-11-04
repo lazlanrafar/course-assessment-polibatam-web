@@ -19,20 +19,19 @@ import CourseAssessmentPlan from "@/views/setup/course/course-assessment-plan.vu
 import Rubrik from "@/views/setup/rubrik/index.vue";
 import RubrikDetail from "@/views/setup/rubrik/detail.vue";
 import AssessmentMethod from "@/views/setup/assessment-method/index.vue";
-import AssessmentType from "@/views/setup/assessment-type/index.vue";
 import CDIOSyllabus from "@/views/setup/cdio-syllabus/index.vue";
-import GradingCategory from "@/views/setup/grading-category/index.vue";
-
 import ProficiencyLevel from "@/views/setup/proficiency-level/index.vue";
 import ProficiencyLevelDetail from "@/views/setup/proficiency-level/detail.vue";
-
 import StudentOutcome from "@/views/setup/student-outcome/index.vue";
 import StudentOutcomeDetail from "@/views/setup/student-outcome/detail.vue";
 
+// PROGRAM STUDI
 import Jurusan from "@/views/setup/jurusan/index.vue";
 import ProgramStudi from "@/views/setup/program-studi/index.vue";
 
 // UTILITY
+import AssessmentType from "@/views/utility/assessment-type/index.vue";
+import GradingCategory from "@/views/utility/grading-category/index.vue";
 import UserManagement from "@/views/utility/user-management/index.vue";
 
 Vue.use(VueRouter);
@@ -138,25 +137,9 @@ const routes = [
     },
   },
   {
-    path: "/assessment-type",
-    name: "AssessmentType",
-    component: AssessmentType,
-    meta: {
-      middleware: [auth],
-    },
-  },
-  {
     path: "/cdio-syllabus",
     name: "CDIOSyllabus",
     component: CDIOSyllabus,
-    meta: {
-      middleware: [auth],
-    },
-  },
-  {
-    path: "/grading-category",
-    name: "GradingCategory",
-    component: GradingCategory,
     meta: {
       middleware: [auth],
     },
@@ -212,6 +195,22 @@ const routes = [
   // ===================================================
   // UTILITY
   // ===================================================
+  {
+    path: "/assessment-type",
+    name: "AssessmentType",
+    component: AssessmentType,
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
+    path: "/grading-category",
+    name: "GradingCategory",
+    component: GradingCategory,
+    meta: {
+      middleware: [auth],
+    },
+  },
   {
     path: "/user-management",
     name: "UserManagement",
