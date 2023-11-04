@@ -172,7 +172,7 @@
         </div>
         <div class="col-md-6">
           <div class="card shadow-none border">
-            <div class="card-header">SA - {{ assessment?.course.code }} Level Proficiency Level Attainment</div>
+            <div class="card-header">SA - {{ assessment?.course.code }} Average Proficiency Level Attainment</div>
             <div class="card-body">
               <RadarChart
                 v-if="summary_of_course_assessment_results.data_radar"
