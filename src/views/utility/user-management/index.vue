@@ -10,20 +10,7 @@
               <div class="card-body">
                 <div class="row justify-content-end">
                   <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
-                    <label class="fw-medium fs-14 mb-3">Unit</label>
-                    <v-autocomplete
-                      outlined
-                      dense
-                      v-model="unit_active"
-                      :items="list_unit"
-                      item-text="UNIT"
-                      item-value="ID"
-                      @input="handleFetch"
-                      :loading="isLoadingUnit"
-                    />
-                  </div>
-                  <div class="col-12 col-sm-5 col-lg-4 col-xl-3">
-                    <label class="fw-medium fs-14 mb-3">Serach</label>
+                    <label class="fw-medium fs-14 mb-3">Search</label>
                     <v-text-field
                       outlined
                       dense
@@ -88,12 +75,6 @@ export default {
     isLoading() {
       return this.$store.state.userManagement.isLoading;
     },
-    isLoadingUnit() {
-      return this.$store.state.userManagement.isLoadingUnit;
-    },
-    list_unit() {
-      return this.$store.state.userManagement.list_unit;
-    },
     reports() {
       return this.$store.state.userManagement.reports;
     },
@@ -105,28 +86,15 @@ export default {
         this.$store.commit("SET_OPTIONS_TABLE_USER_MANAGEMENT", value);
       },
     },
-    unit_active: {
-      get() {
-        return this.$store.state.userManagement.unit_active;
-      },
-      set(value) {
-        this.$store.commit("SET_UNIT_ACTIVE_USER_MANAGEMENT", value);
-      },
-    },
   },
   methods: {
     handleModalDetail(value, nip) {
       if (value) this.$store.dispatch("GetPegawaiByNIP", nip);
       this.modalDetail = value;
     },
-    handleFetch() {
-      this.$store.dispatch("GetUserManagement");
-    },
   },
   mounted() {
-    this.$store.dispatch("GetUnitUserManagement").then(() => {
-      this.handleFetch();
-    });
+    this.$store.dispatch("GetUserManagement");
   },
 };
 </script>
