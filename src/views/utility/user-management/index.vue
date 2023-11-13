@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$store.state.userManagement.isLoading;
+      return this.$store.state.userManagement.isLoading.reports;
     },
     reports() {
       return this.$store.state.userManagement.reports;

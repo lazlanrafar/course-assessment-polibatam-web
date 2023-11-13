@@ -31,7 +31,7 @@ export default {
       return this.$store.state.userManagement.report;
     },
     isLoading() {
-      return this.$store.state.userManagement.isLoading;
+      return this.$store.state.userManagement.isLoading.report;
     },
   },
   methods: {

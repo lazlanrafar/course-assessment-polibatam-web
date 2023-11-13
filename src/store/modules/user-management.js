@@ -4,7 +4,10 @@ const apiUrl = process.env.VUE_APP_API_URL;
 
 const userManagement = {
   state: {
-    isLoading: false,
+    isLoading: {
+      reports: false,
+      report: false,
+    },
     optionsTable: {
       page: 1,
       itemsPerPage: 10,
@@ -15,7 +18,7 @@ const userManagement = {
   },
   mutations: {
     SET_IS_LOADING_USER_MANAGEMENT(state, payload) {
-      state.isLoading = payload;
+      state.isLoading[payload.key] = payload.value;
     },
     SET_OPTIONS_TABLE_USER_MANAGEMENT(state, payload) {
       state.optionsTable = Object.assign({}, payload);
@@ -29,7 +32,10 @@ const userManagement = {
   },
   actions: {
     GetUserManagement: async (context) => {
-      context.commit("SET_IS_LOADING_USER_MANAGEMENT", true);
+      context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+        key: "reports",
+        value: true,
+      });
 
       try {
         const result = await axios({
@@ -52,11 +58,17 @@ const userManagement = {
       } catch (error) {
         catchUnauthorized(error);
       } finally {
-        context.commit("SET_IS_LOADING_USER_MANAGEMENT", false);
+        context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+          key: "reports",
+          value: false,
+        });
       }
     },
     GetPegawaiByNIP: async (context, nip) => {
-      context.commit("SET_IS_LOADING_USER_MANAGEMENT", true);
+      context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+        key: "report",
+        value: true,
+      });
 
       try {
         const result = await axios({
@@ -80,7 +92,10 @@ const userManagement = {
       } catch (error) {
         catchUnauthorized(error);
       } finally {
-        context.commit("SET_IS_LOADING_USER_MANAGEMENT", false);
+        context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+          key: "report",
+          value: false,
+        });
       }
     },
   },
