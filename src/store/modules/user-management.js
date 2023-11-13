@@ -1,5 +1,6 @@
 import axios from "axios";
 import catchUnauthorized from "@/utils/catch-unauthorized";
+import Swal from "sweetalert2";
 const apiUrl = process.env.VUE_APP_API_URL;
 
 const userManagement = {
@@ -95,6 +96,34 @@ const userManagement = {
         context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
           key: "report",
           value: false,
+        });
+      }
+    },
+    SetPegawaiAsAdmin: async (context, nip) => {
+      try {
+        const result = await axios({
+          url: `${apiUrl}/user-management/${nip}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.dispatch("GetUserManagement");
+        Swal.fire({
+          title: "Success!",
+          text: result.data.message,
+          icon: "success",
+        });
+
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
         });
       }
     },

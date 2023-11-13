@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$emit("handleModalDetail", false);
+      this.$emit("handleDetail", false);
     },
   },
 };
