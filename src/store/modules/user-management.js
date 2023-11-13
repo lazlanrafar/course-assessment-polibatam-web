@@ -102,8 +102,36 @@ const userManagement = {
     SetPegawaiAsAdmin: async (context, nip) => {
       try {
         const result = await axios({
-          url: `${apiUrl}/user-management/${nip}`,
+          url: `${apiUrl}/user-management/admin/${nip}`,
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${context.rootState.app.token}`,
+          },
+        });
+
+        context.dispatch("GetUserManagement");
+        Swal.fire({
+          title: "Success!",
+          text: result.data.message,
+          icon: "success",
+        });
+
+        return true;
+      } catch (error) {
+        catchUnauthorized(error);
+
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+        });
+      }
+    },
+    SetPegawaiAsNotAdmin: async (context, nip) => {
+      try {
+        const result = await axios({
+          url: `${apiUrl}/user-management/admin/${nip}`,
+          method: "DELETE",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },

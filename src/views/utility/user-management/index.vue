@@ -48,10 +48,16 @@
                             <span>Detail</span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleSetAdmin(item.NIP)">
+                        <v-list-item @click="handleSetAdmin(item.NIP)" v-if="!item.is_admin">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
                             <span> Set as Admin </span>
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="handleSetNotAdmin(item.NIP)" v-else>
+                          <v-list-item-title class="text-primary fs-12">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span> Set as Pegawai </span>
                           </v-list-item-title>
                         </v-list-item>
                       </v-list>
@@ -129,6 +135,22 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$store.dispatch("SetPegawaiAsAdmin", nip);
+        }
+      });
+    },
+    handleSetNotAdmin(nip) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("SetPegawaiAsNotAdmin", nip);
         }
       });
     },
