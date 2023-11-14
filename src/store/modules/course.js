@@ -10,12 +10,12 @@ const form = {
   title: "",
   sks: "",
 
-  bobot_assignment: 0,
-  bobot_quiz: 0,
-  bobot_mid_exam: 0,
-  bobot_final_exam: 0,
-  bobot_practice_or_project: 0,
-  bobot_presentation: 0,
+  bobot_assignment: 20,
+  bobot_quiz: 10,
+  bobot_mid_exam: 30,
+  bobot_final_exam: 30,
+  bobot_practice_or_project: 5,
+  bobot_presentation: 5,
 
   bobot_total: 0,
 };
@@ -215,7 +215,7 @@ const course = {
       context.commit("SET_IS_LOADING_COURSE", true);
       try {
         const programStudi = await axios({
-          url: `${apiUrl}/program-studi`,
+          url: `${apiUrl}/program-studi/list`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${context.rootState.app.token}`,
