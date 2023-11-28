@@ -100,6 +100,11 @@ const userManagement = {
       }
     },
     SetPegawaiAsAdmin: async (context, nip) => {
+      context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+        key: "reports",
+        value: true,
+      });
+
       try {
         const result = await axios({
           url: `${apiUrl}/user-management/admin/${nip}`,
@@ -125,9 +130,18 @@ const userManagement = {
           text: error.response.data.message,
           icon: "error",
         });
+      } finally {
+        context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+          key: "reports",
+          value: false,
+        });
       }
     },
     SetPegawaiAsNotAdmin: async (context, nip) => {
+      context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+        key: "reports",
+        value: true,
+      });
       try {
         const result = await axios({
           url: `${apiUrl}/user-management/admin/${nip}`,
@@ -152,6 +166,11 @@ const userManagement = {
           title: "Error!",
           text: error.response.data.message,
           icon: "error",
+        });
+      } finally {
+        context.commit("SET_IS_LOADING_USER_MANAGEMENT", {
+          key: "reports",
+          value: false,
         });
       }
     },
