@@ -23,7 +23,7 @@ const rubrik = {
     isLoading: false,
     isLoadingForm: false,
     optionsTable: {
-      page: 1,
+      page: -1,
       itemsPerPage: 10,
       search: "",
     },
@@ -117,7 +117,10 @@ const rubrik = {
             Authorization: `Bearer ${context.rootState.app.token}`,
           },
         });
-        context.commit("SET_LIST_STUDENT_OUTCOME_RUBRIK", studentOutcome.data.data);
+        context.commit(
+          "SET_LIST_STUDENT_OUTCOME_RUBRIK",
+          studentOutcome.data.data
+        );
 
         const CDIOSyllabus = await axios({
           url: `${apiUrl}/cdio-syllabus`,
@@ -134,7 +137,7 @@ const rubrik = {
       }
     },
     async CreateRubrik(context) {
-      context.commit("SET_IS_LOADING_RUBRIK", true);
+      context.commit("SET_IS_LOADING_FORM_RUBRIK", true);
       try {
         const result = await axios({
           url: `${apiUrl}/rubrik`,
@@ -162,7 +165,7 @@ const rubrik = {
           text: error.response.data.message,
         });
       } finally {
-        context.commit("SET_IS_LOADING_RUBRIK", false);
+        context.commit("SET_IS_LOADING_FORM_RUBRIK", false);
       }
     },
     async SetFormUpdateRubrik(context, id) {
@@ -197,7 +200,7 @@ const rubrik = {
       }
     },
     async UpdateRubrik(context, id) {
-      context.commit("SET_IS_LOADING_RUBRIK", true);
+      context.commit("SET_IS_LOADING_FORM_RUBRIK", true);
       try {
         const result = await axios({
           url: `${apiUrl}/rubrik/${id}`,
@@ -225,7 +228,7 @@ const rubrik = {
           text: error.response.data.message,
         });
       } finally {
-        context.commit("SET_IS_LOADING_RUBRIK", false);
+        context.commit("SET_IS_LOADING_FORM_RUBRIK", false);
       }
     },
     async DeleteRubrik(context, payload) {

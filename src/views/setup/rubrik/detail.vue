@@ -9,7 +9,10 @@
             <div class="card shadow-none border">
               <div class="card-body">
                 <div class="d-flex gap-3">
-                  <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                  <v-btn
+                    class="btn bg-navy mb-3 mb-md-0"
+                    @click="handleModalForm(true)"
+                  >
                     <i class="fa fa-plus"></i>
                     Tambah Rubrik
                   </v-btn>
@@ -59,10 +62,20 @@
                     </span>
                   </template>
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                    <v-btn
+                      icon
+                      color="white"
+                      class="bg-warning mr-2"
+                      @click="handleUpdate(item.id)"
+                    >
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                    <v-btn
+                      icon
+                      color="white"
+                      class="bg-danger"
+                      @click="handleDelete(item.id)"
+                    >
                       <v-icon small>mdi-delete</v-icon>
                     </v-btn>
                   </template>
