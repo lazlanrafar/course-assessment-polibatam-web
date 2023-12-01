@@ -1,6 +1,9 @@
 <template>
   <layout-app>
-    <ContentHeader header="Setup" :title="`Proficiency Level ${report.level} (Detail)`" />
+    <ContentHeader
+      header="Setup"
+      :title="`Proficiency Level ${report.level} (Detail)`"
+    />
 
     <section class="content">
       <div class="container-fluid">
@@ -26,7 +29,12 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                    <v-btn
+                      icon
+                      color="white"
+                      class="bg-warning mr-2"
+                      @click="handleUpdate(item.id)"
+                    >
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
                     <!-- <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
@@ -62,7 +70,7 @@ export default {
         { text: "Description", value: "description" },
         { text: "Lower Limit", value: "lower_limit" },
         { text: "Upper Limit", value: "upper_limit" },
-        { text: "Action", value: "action", align: "right", sortable: false },
+        // { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
     };
@@ -73,6 +81,9 @@ export default {
     },
     report() {
       return this.$store.state.proficiencyLevel.report;
+    },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
     },
     optionsTable: {
       get() {
@@ -96,6 +107,15 @@ export default {
   },
   mounted() {
     this.$store.dispatch("GetProficiencyLevelById", this.$route.params.id);
+
+    if (this.isAdmin) {
+      this.headers.push({
+        text: "Action",
+        value: "action",
+        align: "right",
+        sortable: false,
+      });
+    }
   },
 };
 </script>
