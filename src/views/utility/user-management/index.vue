@@ -50,10 +50,7 @@
                         </v-btn>
                       </template>
                       <v-list min-width="150">
-                        <v-list-item
-                          @click="handleDetail(true, item.NIP)"
-                          v-if="isAdmin"
-                        >
+                        <v-list-item @click="handleDetail(true, item.NIP)">
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-eye mr-2"></i>
                             <span>Detail</span>
@@ -70,7 +67,7 @@
                         </v-list-item>
                         <v-list-item
                           @click="handleSetNotAdmin(item.NIP)"
-                          v-else
+                          v-if="item.is_admin && isAdmin"
                         >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
