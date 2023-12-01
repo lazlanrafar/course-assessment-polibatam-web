@@ -8,7 +8,11 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                <v-btn
+                  class="btn bg-navy mb-3 mb-md-0"
+                  @click="handleModalForm(true)"
+                  v-if="isAdmin"
+                >
                   <i class="fa fa-plus"></i>
                   Tambah
                 </v-btn>
@@ -31,10 +35,20 @@
                   group-by="parent"
                 >
                   <template v-slot:[`item.action`]="{ item }">
-                    <v-btn icon color="white" class="bg-warning mr-2" @click="handleUpdate(item.id)">
+                    <v-btn
+                      icon
+                      color="white"
+                      class="bg-warning mr-2"
+                      @click="handleUpdate(item.id)"
+                    >
                       <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn icon color="white" class="bg-danger" @click="handleDelete(item.id)">
+                    <v-btn
+                      icon
+                      color="white"
+                      class="bg-danger"
+                      @click="handleDelete(item.id)"
+                    >
                       <v-icon small>mdi-delete</v-icon>
                     </v-btn>
                   </template>
@@ -68,7 +82,7 @@ export default {
         { text: "Level", value: "level" },
         { text: "Description", value: "title" },
         { text: "Total Rubric", value: "_count.rubrik" },
-        { text: "Action", value: "action", align: "right", sortable: false },
+        // { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
     };
@@ -79,6 +93,9 @@ export default {
     },
     reports() {
       return this.$store.state.CDIOSyllabus.reports;
+    },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
     },
     optionsTable: {
       get() {
@@ -118,6 +135,15 @@ export default {
   },
   mounted() {
     this.$store.dispatch("GetCDIOSyllabus");
+
+    if (this.isAdmin) {
+      this.headers.push({
+        text: "Action",
+        value: "action",
+        align: "right",
+        sortable: false,
+      });
+    }
   },
 };
 </script>
