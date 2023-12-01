@@ -12,6 +12,7 @@
                   <v-btn
                     class="btn bg-navy mb-3 mb-md-0"
                     @click="handleModalForm(true)"
+                    v-if="isAdmin"
                   >
                     <i class="fa fa-plus"></i>
                     Tambah Rubrik
@@ -117,7 +118,7 @@ export default {
         // { text: "Proficiency Level 3", value: "desc_level_3" },
         // { text: "Proficiency Level 4", value: "desc_level_4" },
         // { text: "Proficiency Level 5", value: "desc_level_5" },
-        { text: "Action", value: "action", align: "right", sortable: false },
+        // { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalForm: false,
     };
@@ -131,6 +132,9 @@ export default {
     },
     reports() {
       return this.$store.state.rubrik.reports;
+    },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
     },
     optionsTable: {
       get() {
@@ -182,6 +186,15 @@ export default {
   mounted() {
     this.$store.dispatch("GetProgramStudiRubrik", this.$route.params.id);
     this.$store.dispatch("GetRubrik", this.$route.params.id);
+
+    if (this.isAdmin) {
+      this.headers.push({
+        text: "Action",
+        value: "action",
+        align: "right",
+        sortable: false,
+      });
+    }
   },
 };
 </script>
