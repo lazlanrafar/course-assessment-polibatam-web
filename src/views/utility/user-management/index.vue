@@ -29,32 +29,49 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.is_admin`]="{ item }">
-                    <v-chip :color="item.is_admin ? 'success' : 'red'" dark small>{{
-                      item.is_admin ? "ADMIN" : "USER"
-                    }}</v-chip>
+                    <v-chip
+                      :color="item.is_admin ? 'success' : 'red'"
+                      dark
+                      small
+                      >{{ item.is_admin ? "ADMIN" : "USER" }}</v-chip
+                    >
                   </template>
                   <template v-slot:[`item.action`]="{ item }">
                     <v-menu offset-y left>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                        <v-btn
+                          small
+                          class="btn btn-outline-primary py-4"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
                           <span class="fw-light mr-1">Action</span>
                           <i class="fa-solid fa-chevron-down"></i>
                         </v-btn>
                       </template>
                       <v-list min-width="150">
-                        <v-list-item @click="handleDetail(true, item.NIP)">
+                        <v-list-item
+                          @click="handleDetail(true, item.NIP)"
+                          v-if="isAdmin"
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-eye mr-2"></i>
                             <span>Detail</span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleSetAdmin(item.NIP)" v-if="!item.is_admin">
+                        <v-list-item
+                          @click="handleSetAdmin(item.NIP)"
+                          v-if="!item.is_admin && isAdmin"
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
                             <span> Set as Admin </span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleSetNotAdmin(item.NIP)" v-else>
+                        <v-list-item
+                          @click="handleSetNotAdmin(item.NIP)"
+                          v-else
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
                             <span> Set as Pegawai </span>
@@ -107,6 +124,9 @@ export default {
     },
     reports() {
       return this.$store.state.userManagement.reports;
+    },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
     },
     optionsTable: {
       get() {
