@@ -13,7 +13,10 @@
                     { label: 'Code', value: report.code },
                     { label: 'Nama Mata Kuliah', value: report.title },
                     { label: 'SKS', value: report.sks },
-                    { label: 'Program Studi', value: report.program_studi.title },
+                    {
+                      label: 'Program Studi',
+                      value: report.program_studi.title,
+                    },
                     {
                       label: 'Aspek Penilaian',
                       value: `Assignment (${report.bobot_assignment}%), Quizzes (${report.bobot_quiz}%), Mid-semester Exam (${report.bobot_mid_exam}%), Final-semester Exam (${report.bobot_final_exam}%), Practice / Project (${report.bobot_practice_or_project}%), Project Presentation (${report.bobot_presentation}%)`,
@@ -28,9 +31,15 @@
         <div class="row">
           <div class="col-12">
             <div class="card shadow-none border">
-              <div class="card-header fw-medium fs-15">Course Learning Outcomes (CLOs)</div>
+              <div class="card-header fw-medium fs-15">
+                Course Learning Outcomes (CLOs)
+              </div>
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalFormCLO(true)">
+                <v-btn
+                  class="btn bg-navy mb-3 mb-md-0"
+                  @click="handleModalFormCLO(true)"
+                  v-if="isAdmin"
+                >
                   <i class="fa fa-plus"></i>
                   Tambah CLO
                 </v-btn>
@@ -52,14 +61,25 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.rubrik`]="{ item }">
-                    <v-chip v-for="(rubrik, i) in item.details" :key="i" small color="primary" class="m-1">
+                    <v-chip
+                      v-for="(rubrik, i) in item.details"
+                      :key="i"
+                      small
+                      color="primary"
+                      class="m-1"
+                    >
                       {{ rubrik.rubrik.label }}
                     </v-chip>
                   </template>
                   <template v-slot:[`item.action`]="{ item }">
                     <v-menu offset-y>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                        <v-btn
+                          small
+                          class="btn btn-outline-primary py-4"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
                           <span class="fw-light mr-1">Action</span>
                           <i class="fa-solid fa-chevron-down"></i>
                         </v-btn>
@@ -88,7 +108,12 @@
       </div>
     </section>
 
-    <v-dialog v-if="modalFormCLO" v-model="modalFormCLO" persistent max-width="600">
+    <v-dialog
+      v-if="modalFormCLO"
+      v-model="modalFormCLO"
+      persistent
+      max-width="600"
+    >
       <FormCLO @handleModalFormCLO="handleModalFormCLO" />
     </v-dialog>
   </layout-app>
@@ -116,8 +141,11 @@ export default {
         { text: "Code", value: "code", width: "100px" },
         { text: "Course Learning Outcomes (CLOs)", value: "title" },
         { text: "Assessment Method", value: "assessment_method.title" },
-        { text: "Support Level for each SO and CDIO Syllabus", value: "rubrik" },
-        { text: "Action", value: "action", align: "right", sortable: false },
+        {
+          text: "Support Level for each SO and CDIO Syllabus",
+          value: "rubrik",
+        },
+        // { text: "Action", value: "action", align: "right", sortable: false },
       ],
       modalFormCLO: false,
     };
@@ -129,6 +157,9 @@ export default {
     report() {
       return this.$store.state.course.report;
     },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
+    },
   },
   methods: {
     handleModalFormCLO(value) {
@@ -138,7 +169,10 @@ export default {
           value: this.$route.params.id,
         });
 
-        this.$store.dispatch("FetchBeforeFormCourseLearningOutcome", this.$route.params.id);
+        this.$store.dispatch(
+          "FetchBeforeFormCourseLearningOutcome",
+          this.$route.params.id
+        );
       }
       this.modalFormCLO = value;
     },
@@ -169,6 +203,15 @@ export default {
   },
   mounted() {
     this.$store.dispatch("GetCourseById", this.$route.params.id);
+
+    if (this.isAdmin) {
+      this.headers.push({
+        text: "Action",
+        value: "action",
+        align: "right",
+        sortable: false,
+      });
+    }
   },
 };
 </script>

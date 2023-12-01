@@ -8,7 +8,11 @@
           <div class="col-12">
             <div class="card shadow-none border">
               <div class="card-body">
-                <v-btn class="btn bg-navy mb-3 mb-md-0" @click="handleModalForm(true)">
+                <v-btn
+                  class="btn bg-navy mb-3 mb-md-0"
+                  @click="handleModalForm(true)"
+                  v-if="isAdmin"
+                >
                   <i class="fa fa-plus"></i>
                   Tambah
                 </v-btn>
@@ -30,7 +34,12 @@
                   :search="optionsTable.search"
                 >
                   <template v-slot:[`item.is_ready`]="{ item }">
-                    <v-chip :color="item.is_ready ? 'success' : 'error'" text-color="white" small class="text-capitalize">
+                    <v-chip
+                      :color="item.is_ready ? 'success' : 'error'"
+                      text-color="white"
+                      small
+                      class="text-capitalize"
+                    >
                       {{ item.is_ready ? "Ready" : "Not Ready" }}
                     </v-chip>
                   </template>
@@ -38,7 +47,12 @@
                     <!-- right aligned menu -->
                     <v-menu offset-y left>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn small class="btn btn-outline-primary py-4" v-bind="attrs" v-on="on">
+                        <v-btn
+                          small
+                          class="btn btn-outline-primary py-4"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
                           <span class="fw-light mr-1">Action</span>
                           <i class="fa-solid fa-chevron-down"></i>
                         </v-btn>
@@ -50,19 +64,26 @@
                             <span> Performance Indicator </span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleCourseLearningOutcome(item.id)">
+                        <v-list-item
+                          @click="handleCourseLearningOutcome(item.id)"
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-book mr-2"></i>
                             <span>Course Learning Outcomes</span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleCourseAssessmentPlan(item.id)">
+                        <v-list-item
+                          @click="handleCourseAssessmentPlan(item.id)"
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-book mr-2"></i>
                             <span>Course Assessment Plan</span>
                           </v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="handleUpdate(item.id)">
+                        <v-list-item
+                          @click="handleUpdate(item.id)"
+                          v-if="isAdmin"
+                        >
                           <v-list-item-title class="text-primary fs-12">
                             <i class="fas fa-edit mr-2"></i>
                             <span>Edit</span>
@@ -119,6 +140,9 @@ export default {
     },
     reports() {
       return this.$store.state.course.reports;
+    },
+    isAdmin() {
+      return this.$store.state.app.user.is_admin;
     },
     optionsTable: {
       get() {
